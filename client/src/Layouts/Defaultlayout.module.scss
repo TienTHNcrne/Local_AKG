@@ -1,0 +1,21 @@
+.wrapper {
+    min-height: 100vh;
+    background-color: #f5f7fa;
+}
+
+.contain {
+    display: flex;
+
+    min-height: calc(100vh - 70px);
+}
+
+.content {
+    position: absolute;
+    top: 10%;
+    transition: all 0.5s ease-in-out;
+}
+.content_full {
+    transition: all 0.5s ease-in-out;
+
+    left: 100px;
+}

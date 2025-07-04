@@ -1,0 +1,53 @@
+.header {
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.headerContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e74c3c;
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+
+    a {
+        margin-left: 24px;
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+
+        &:hover {
+            color: #e74c3c;
+        }
+    }
+}
+
+/* Responsive (ẩn menu khi nhỏ hơn 768px, có thể dùng icon sau) */
+@media (max-width: 768px) {
+    .nav {
+        display: none;
+    }
+
+    .menuToggle {
+        display: block;
+    }
+}
