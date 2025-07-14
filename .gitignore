@@ -4,10 +4,10 @@ node_modules/
 .env.local
 .env.development
 .env.production
-
+builder.config.json
 # VS Code
 .vscode/
-
+PROJECT-REACT-EXPRESS-NEW-AG-KG (KHKT).code-workspace
 # System
 .DS_Store
 Thumbs.db
