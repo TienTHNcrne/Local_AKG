@@ -6,7 +6,6 @@ export const tab = Extension.create({
     addKeyboardShortcuts() {
         return {
             Tab: () => {
-                console.log("test");
                 return this.editor.commands.insertContent("     ");
             },
         };

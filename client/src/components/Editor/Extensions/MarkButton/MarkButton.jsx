@@ -12,21 +12,35 @@ import {
     FaAlignCenter,
     FaAlignRight,
     FaHighlighter,
+    FaIndent,
+    FaOutdent,
+    FaUndo,
+    FaRedo,
+    FaImages,
 } from "react-icons/fa";
 const IconMap = {
     Bold: FaBold,
     Italic: FaItalic,
     Underline: FaUnderline,
-    Blockquote: FaQuoteRight,
+    setBlockquote: FaIndent,
+    unsetBlockquote: FaOutdent,
     Link: FaLink,
     BulletList: FaListUl,
     OrderedList: FaListOl,
     AlignLeft: FaAlignLeft,
     AlignCenter: FaAlignCenter,
     AlignRight: FaAlignRight,
-    Highlighter: FaHighlighter,
+    undo: FaUndo,
+    redo: FaRedo,
 };
+
 const out = {
+    undo: (editor) => editor.chain().focus().undo().run(),
+    redo: (editor) => editor.chain().focus().redo().run(),
+
+    setBlockquote: (editor) => editor.chain().focus().setBlockquote().run(),
+    unsetBlockquote: (editor) => editor.chain().focus().unsetBlockquote().run(),
+
     AlignLeft: (editor) => editor.chain().focus().setTextAlign("left").run(),
     AlignCenter: (editor) =>
         editor.chain().focus().setTextAlign("center").run(),
@@ -39,26 +53,35 @@ const out = {
 //EXPORT
 export default function MarkButton({ mark, editor, color }) {
     const Icon = IconMap[mark];
-    const isActive = editor.isActive(mark.toLowerCase());
+    const isActive = () => {
+        if (mark === "unsetBlockquote" || mark === "setBlockquote")
+            return editor.isActive("blockquote");
+        return editor.isActive(mark.toLowerCase());
+
+        //
+    };
+
     if (!editor || !Icon) return null;
     return (
         <div className={styles.icon}>
             <button
                 onClick={() => {
-                    if (mark === "Highlighter") {
-                        console.log(color);
+                    console.log(mark);
+                    if (mark === "Highlighter")
                         return editor
                             .chain()
                             .focus()
                             .setHighlight({ color })
                             .run();
-                    }
-                    if (out[mark]) return out[mark](editor);
-
+                    if (out[mark])
+                        //
+                        return out[mark](editor);
+                    //
                     const e = editor.chain().focus()[`toggle${mark}`];
+                    console.log(e);
                     if (typeof e === "function") e().run();
                 }}
-                className={isActive ? styles.ok : ""}
+                className={console.log(isActive)}
             >
                 {Icon && <Icon />}
             </button>

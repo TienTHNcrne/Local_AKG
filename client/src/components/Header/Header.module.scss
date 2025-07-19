@@ -11,6 +11,9 @@
     gap: 20px;
     padding: 0 20px;
 }
+a {
+    text-decoration: none;
+}
 //SINGLE SCSS
 .head {
     background-color: #b1d1b8;
@@ -28,7 +31,8 @@
 }
 .Right {
     .Bell,
-    .Acc {
+    .Acc,
+    .Edit {
         color: #d0a284;
         background-color: #ffffff;
         border-radius: 50%;

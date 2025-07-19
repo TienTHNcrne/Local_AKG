@@ -5,9 +5,9 @@ import styles from "./Before_Login.module.scss";
 export default function Before_Login({ children }) {
     return (
         <div className={styles.wrapper}>
-            <Header />
+            <Header className={styles.header} />
             <div className={styles.content}>{children}</div>
-            <Footer />
+            <Footer className={styles.footer} />
         </div>
     );
 }
