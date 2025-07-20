@@ -5,11 +5,16 @@ import { IoMenu } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
-export default function Header() {
+export default function Header({ show, setShow }) {
     return (
         <div className={styles.head}>
             <div className={styles.Left}>
-                <IoMenu className={styles.sidebar} />
+                <IoMenu
+                    className={styles.sidebar}
+                    onClick={() => {
+                        setShow(!show);
+                    }}
+                />
                 <Link to="/">
                     {" "}
                     <h1>AKG</h1>
