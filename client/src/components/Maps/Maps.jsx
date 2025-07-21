@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
-export default function Maps() {
+export default function Maps({ className }) {
     const [data, setData] = useState(null);
 
     useEffect(() => {
@@ -14,13 +14,9 @@ export default function Maps() {
     return (
         <MapContainer
             center={[10.173, 104.237]}
-            zoom={9.35}
-            minZoom={9}
-            style={{
-                height: "708px ",
-                width: "1246px",
-                margin: "0 auto",
-            }}
+            zoom={8}
+            minZoom={8}
+            className={className}
         >
             <TileLayer
                 attribution="&copy; OpenStreetMap contributors"
