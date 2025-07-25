@@ -12,3 +12,5 @@ PROJECT-REACT-EXPRESS-NEW-AG-KG (KHKT).code-workspace
 .DS_Store
 Thumbs.db
 builder.io/
+client/node_modules/
+server/node_modules/

@@ -19,6 +19,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/v1/api", userRouter);
 app.use("/v1/api", aiRoute);
+app.get("/", (req, res) => {
+    res.send("Backend is running!");
+});
 (async () => {
     try {
         await connection();

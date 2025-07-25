@@ -1,9 +1,11 @@
+/* global process */
 import { useState } from "react";
 import axios from "axios";
 import styles from "./AI.module.scss";
 import { useEffect } from "react";
 import { IoSend } from "react-icons/io5";
 export default function Ai() {
+    const URL = import.meta.env.VITE_BE_URL;
     const [hide, setHide] = useState(false);
     const [rep, setRep] = useState("");
     const [content, setContent] = useState("");
@@ -12,7 +14,7 @@ export default function Ai() {
         setSave((prev) => [...prev, { role: "user", text: content }]);
         axios
             .post(
-                "http://localhost:8081/v1/api/ai",
+                `${URL}/v1/api/ai`,
                 { prompt: content },
                 {
                     headers: {
@@ -36,7 +38,7 @@ export default function Ai() {
     useEffect(() => {
         console.log("first effect");
         axios
-            .post("http://localhost:8081/v1/api/historicAI", {
+            .post(`${URL}v1/api/historicAI`, {
                 userId: localStorage.getItem("userid"),
             })
             .then((res) => setSave(res.data))
@@ -51,7 +53,6 @@ export default function Ai() {
                         <h3>chatbot name</h3>
                         <button
                             onClick={() => {
-                                setShowAI(!hide);
                                 setHide(!hide);
                             }}
                         >
@@ -84,8 +85,6 @@ export default function Ai() {
             ) : (
                 <button
                     onClick={() => {
-                        setShowAI(!hide);
-
                         setHide(!hide);
                     }}
                 >
