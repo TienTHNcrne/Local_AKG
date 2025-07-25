@@ -4,6 +4,7 @@ import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Rich_text from "./pages/Rich_text/Rich_text";
 import Home from "./pages/Home/Home";
+import AI from "./components/AI/Ai";
 import Location from "./pages/Location/Location";
 import "leaflet/dist/leaflet.css";
 import "./index.css";

@@ -22,34 +22,35 @@ export default function Sidebar({ show }) {
 
                     <li>
                         <Link to="/">
-                            <IoHome /> <span>Home</span>
+                            <IoHome />
+                            <span>Home</span>
                         </Link>
+                        <ol>
+                            <Link to="/Location">
+                                <ul>Location</ul>
+                            </Link>
+                            <Link to="/">
+                                <ul>Climate</ul>
+                            </Link>
+                            <Link to="/">
+                                <ul>History</ul>
+                            </Link>
+                            <Link to="/">
+                                <ul>Culture-Society</ul>
+                            </Link>
+                            <Link to="/">
+                                <ul>Note</ul>
+                            </Link>
+                            <Link to="/">
+                                <ul>Food</ul>
+                            </Link>
+                        </ol>
                     </li>
                     {/*SECOND */}
                     <li>
                         <Link to="/Explore">
                             <IoShareSocial /> <span>Explore</span>
                         </Link>
-                        <ol>
-                            <Link to="/">
-                                <ul>Location</ul>
-                            </Link>
-                            <Link to="/">
-                                <ul>Climate</ul>
-                            </Link>{" "}
-                            <Link to="/">
-                                <ul>History</ul>
-                            </Link>{" "}
-                            <Link to="/">
-                                <ul>Culture-Society</ul>
-                            </Link>{" "}
-                            <Link to="/">
-                                <ul>Note</ul>
-                            </Link>{" "}
-                            <Link to="/">
-                                <ul>Food</ul>
-                            </Link>{" "}
-                        </ol>
                     </li>
                     {/*THIRD */}
 

@@ -7,6 +7,7 @@ import { Outlet } from "react-router-dom";
 export default function App() {
     return (
         <div>
+            {localStorage.setItem("userid", "688346cd44f8765b168c2932")}
             <Before_Login>
                 <Outlet />
             </Before_Login>
