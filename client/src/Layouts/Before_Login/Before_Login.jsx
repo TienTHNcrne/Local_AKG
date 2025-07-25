@@ -3,7 +3,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import styles from "./Before_Login.module.scss";
-import Ai from "../../components/AI/Ai";
+import AI from "../../components/AI/AI";
 import { useLocation } from "react-router-dom";
 
 export default function Before_Login({ children }) {
@@ -27,7 +27,7 @@ export default function Before_Login({ children }) {
             <div className={styles.content}>
                 {children}
                 <div className={styles.extra}>
-                    <Ai />
+                    <AI />
                 </div>
             </div>
             <Footer className={styles.footer} />
