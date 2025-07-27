@@ -29,10 +29,10 @@ export default function Sidebar({ show }) {
                             <Link to="/Location">
                                 <ul>Location</ul>
                             </Link>
-                            <Link to="/">
+                            <Link to="/Climate">
                                 <ul>Climate</ul>
                             </Link>
-                            <Link to="/">
+                            <Link to="/History">
                                 <ul>History</ul>
                             </Link>
                             <Link to="/">

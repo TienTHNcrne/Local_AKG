@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Home.module.scss";
 import ConLmg from "../../components/ConImg/ConImg";
+import { Outlet } from "react-router-dom";
 export default function Home() {
     const boxes = [
         "Vị trí",
@@ -16,6 +17,7 @@ export default function Home() {
             {boxes.map((value, id) => (
                 <ConLmg />
             ))}
+            <Outlet />
         </div>
     );
 }

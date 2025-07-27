@@ -1,5 +1,5 @@
 import React from "react";
-import Maps from "../../components/Maps/Maps";
+import Maps from "../../../components/Maps/Maps";
 import styles from "./Location.module.scss";
 export default function Location() {
     // const file = localStorage.getItem("editor");
