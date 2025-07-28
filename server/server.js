@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import FindRouter from "./Routers/FindRouter.js";
 import mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/v1/api", userRouter);
 app.use("/v1/api", aiRoute);
+app.use("/v1/api", FindRouter);
 app.get("/", (req, res) => {
     res.send("Backend is running!");
 });

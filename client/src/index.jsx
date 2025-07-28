@@ -7,7 +7,13 @@ import Home from "./pages/Home/Home";
 import Climate from "./pages/Home/Climate/Climate";
 import Location from "./pages/Home/Location/Location";
 import History from "./pages/Home/History/History";
+import CulSoc from "./pages/Home/CulSoc/CulSoc";
+import Explore from "./pages/Explore/Explore";
+import Map from "./pages/Explore/Map/Map";
+import Add from "./pages/Add/Add";
+import Event from "./pages/Explore/Event/Event";
 import "leaflet/dist/leaflet.css";
+
 import "./index.css";
 const router = createBrowserRouter([
     {
@@ -23,6 +29,17 @@ const router = createBrowserRouter([
             { path: "Climate", element: <Climate /> },
             { path: "Location", element: <Location /> },
             { path: "History", element: <History /> },
+            { path: "CulSoc", element: <CulSoc /> },
+            { path: "add", element: <Add /> },
+
+            {
+                path: "Explore",
+                element: <Explore />,
+                children: [
+                    { path: "event", element: <Event /> },
+                    { path: "map", element: <Map /> },
+                ],
+            },
         ],
     },
 ]);

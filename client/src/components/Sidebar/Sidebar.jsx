@@ -11,63 +11,87 @@ import {
 
 export default function Sidebar({ show }) {
     return (
-        <>
-            <aside
-                className={`${styles.Sidebar} ${
-                    show ? styles.open : styles.hidden
-                }`}
-            >
-                <div>
-                    {/*FIRST */}
+        <aside
+            className={`${styles.Sidebar} ${
+                show ? styles.open : styles.hidden
+            }`}
+        >
+            <div>
+                {/*FIRST */}
 
-                    <li>
-                        <Link to="/">
-                            <IoHome />
-                            <span>Home</span>
-                        </Link>
-                        <ol>
+                <li>
+                    <Link to="/">
+                        <IoHome />
+                        <span>Home</span>
+                    </Link>
+                    <ol>
+                        <li>
                             <Link to="/Location">
-                                <ul>Location</ul>
+                                <span>Location</span>
                             </Link>
+                        </li>
+                        <li>
                             <Link to="/Climate">
-                                <ul>Climate</ul>
+                                <span>Climate</span>
                             </Link>
+                        </li>
+                        <li>
                             <Link to="/History">
-                                <ul>History</ul>
+                                <span>History</span>
                             </Link>
+                        </li>
+                        <li>
+                            <Link to="/CulSoc">
+                                <span>Culture-Society</span>
+                            </Link>
+                        </li>
+                        <li>
                             <Link to="/">
-                                <ul>Culture-Society</ul>
+                                <span>Note</span>
                             </Link>
+                        </li>
+                        <li>
                             <Link to="/">
-                                <ul>Note</ul>
+                                <span>Food</span>
                             </Link>
-                            <Link to="/">
-                                <ul>Food</ul>
+                        </li>
+                    </ol>
+                </li>
+                {/*SECOND */}
+                <li>
+                    <Link to="/Explore">
+                        <IoShareSocial />
+                        <span>Explore</span>
+                    </Link>
+                    <ol>
+                        <li>
+                            <Link to="/Explore/map">
+                                <span>Map</span>
                             </Link>
-                        </ol>
-                    </li>
-                    {/*SECOND */}
-                    <li>
-                        <Link to="/Explore">
-                            <IoShareSocial /> <span>Explore</span>
-                        </Link>
-                    </li>
-                    {/*THIRD */}
+                        </li>
+                        <li>
+                            <Link to="/Explore/event">
+                                <span>Event</span>
+                            </Link>
+                        </li>
+                    </ol>
+                </li>
 
-                    <li>
-                        <Link to="/Events">
-                            <IoHappy /> <span>Events</span>
-                        </Link>
-                    </li>
-                    {/*FOUR */}
+                {/*THIRD */}
 
-                    <li>
-                        <Link to="/About">
-                            <IoInformationCircle /> <span>About</span>
-                        </Link>
-                    </li>
-                </div>
-            </aside>
-        </>
+                <li>
+                    <Link to="/Events">
+                        <IoHappy /> <span>Events</span>
+                    </Link>
+                </li>
+                {/*FOUR */}
+
+                <li>
+                    <Link to="/About">
+                        <IoInformationCircle /> <span>About</span>
+                    </Link>
+                </li>
+            </div>
+        </aside>
     );
 }

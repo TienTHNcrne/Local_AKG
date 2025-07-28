@@ -10,7 +10,6 @@ export default function Ai() {
     const [rep, setRep] = useState("");
     const [content, setContent] = useState("");
     const [save, setSave] = useState([]);
-    console.log(save);
     const submit = () => {
         setSave((prev) => [...prev, { role: "user", text: content }]);
         axios
@@ -35,14 +34,12 @@ export default function Ai() {
     };
     //
     useEffect(() => {
-        console.log("first effect");
         axios
             .post(`${URL}/v1/api/historicAI`, {
                 userId: localStorage.getItem("userid"),
             })
             .then((res) => {
                 setSave(res.data);
-                console.log("oke");
             })
             .catch((err) => console.error("Lỗi API:", err));
     }, []);

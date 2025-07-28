@@ -24,15 +24,6 @@ li {
     padding: 1rem 0;
     font-family: "Segoe UI", Roboto, sans-serif;
 
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 3px;
-    }
-
     div {
         padding: 0 0.5rem;
     }
@@ -94,11 +85,8 @@ li {
             max-height: 500px;
         }
     }
-
-    // Active state
 }
 
-// Animation states
 .open {
     transform: translateX(0);
 }
