@@ -10,7 +10,6 @@ import History from "./pages/Home/History/History";
 import CulSoc from "./pages/Home/CulSoc/CulSoc";
 import Explore from "./pages/Explore/Explore";
 import Map from "./pages/Explore/Map/Map";
-import Add from "./pages/Add/Add";
 import Event from "./pages/Explore/Event/Event";
 import "leaflet/dist/leaflet.css";
 
@@ -30,7 +29,6 @@ const router = createBrowserRouter([
             { path: "Location", element: <Location /> },
             { path: "History", element: <History /> },
             { path: "CulSoc", element: <CulSoc /> },
-            { path: "add", element: <Add /> },
 
             {
                 path: "Explore",
