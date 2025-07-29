@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import styles from "./Map.module.scss";
 import {
     MapContainer,
@@ -15,9 +15,11 @@ import UpImg from "../../../components/UpImg/UpImg";
 import { IoIosAddCircle } from "react-icons/io";
 export default function Map() {
     const [add, setAdd] = useState(true);
+    const [suggest, setSuggest] = useState([]);
     const [content, setContent] = useState(false);
     const [data, setData] = useState(null);
     const [coordinates, setCoordinates] = useState(null);
+    const [search, setSearch] = useState("");
     const [popup, setPopup] = useState(false);
     useEffect(() => {
         axios.get("/data.geojson").then((res) => {
@@ -27,15 +29,42 @@ export default function Map() {
             setCoordinates(res.data);
         });
     }, []);
+    //CALL BE
 
+    useEffect(() => {
+        const findata = async () => {
+            try {
+                const res = await axios.get(
+                    `${
+                        import.meta.env.VITE_BE_URL
+                    }/v1/api/find?q=${encodeURIComponent(search)}`
+                );
+                console.log(res);
+                setSuggest(res.data);
+            } catch (err) {
+                console.log(err.message);
+            }
+        };
+        findata();
+    }, [search]);
     return (
         <div className={styles.container}>
             {" "}
             {add && (
                 <div className={styles.add}>
                     <label htmlFor="name">Tên địa điểm</label>
-                    <input type="text" name="name" required />
-
+                    <input
+                        type="text"
+                        name="name"
+                        required
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                    {suggest && (
+                        <div className={styles.suggest}>
+                            {suggest.map((value, id) => console.log(value))}
+                        </div>
+                    )}
                     <label htmlFor="description">Mô tả</label>
                     <textarea name="description" required></textarea>
 

@@ -7,6 +7,8 @@ const Find = async (place) => {
                 params: {
                     q: place,
                     format: "json",
+                    viewbox: "102.15,23.3833,109.4,8.5667",
+                    bounded: 1,
                 },
                 headers: { "User-Agent": "MyApp/1.0 (your@email.com)" },
             }
