@@ -55,9 +55,19 @@ export default function Map() {
             clearTimeout(time);
         };
     }, [search]);
+    // FindCoordinate
+    useEffect(() => {
+        axios
+            .get(`${import.meta.env.VITE_BE_URL}/v1/api/gps/find`)
+            .then((res) => {
+                console.log("axios", res);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [center]);
     return (
         <div className={styles.container}>
-            {" "}
             <div
                 className={`${styles.add} ${
                     add === true ? styles.open : styles.close

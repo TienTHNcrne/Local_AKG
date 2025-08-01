@@ -9,7 +9,8 @@ const Gs = async (lat, lng, name) => {
 };
 const Fid = async (lat, lng, name) => {
     try {
-        const results = Gps.findOne({ name, lat, lng });
+        const results = await Gps.findOne({ name, lat, lng });
+        console.log(results);
         if (results !== null) {
             return { status: 200, data: "existed" };
         }
