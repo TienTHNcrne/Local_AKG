@@ -1,17 +1,14 @@
 .container {
     width: 100%;
-    height: 100vh;
+    max-height: 100%;
     position: relative;
 }
-
-/* Phần bản đồ */
 .map {
     width: 100%;
-    height: 100%;
-    z-index: 1;
+    height: 100vh;
+    z-index: 2;
 }
-
-/* Nút bật/tắt thêm địa danh */
+//
 .but {
     position: absolute;
     left: 95%;
@@ -21,85 +18,58 @@
     border: none;
     font-size: 50px;
     color: blue;
-
+    transition: transform 0.5s ease;
     &:hover {
-        color: darkblue;
+        transform: scale(1.2);
     }
 }
 
-/* Form thêm địa danh */
+//
 .add {
     position: absolute;
-    top: 10%;
-    right: 5%;
-    background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 4;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
     width: 300px;
-    .suggest {
-        position: absolute;
-        top: 100%; // ngay dưới input
-        left: 0;
-        width: 100%;
-        background: white;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        max-height: 200px;
-        overflow-y: auto;
-        z-index: 10;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.5s ease;
+    gap: 0.5rem;
 
-        div {
-            padding: 8px;
-            cursor: pointer;
-
-            &:hover {
-                background: #f0f0f0;
-            }
-        }
-    }
     label {
-        display: block;
-        margin-top: 10px;
         font-weight: bold;
     }
-
-    input,
-    textarea,
-    select {
-        width: 100%;
-        margin-top: 5px;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
+    textarea {
+        height: 200px;
+        min-width: 100px;
     }
+}
 
-    button {
-        margin-top: 12px;
-        width: 100%;
-        padding: 10px;
-        background-color: #00cc66;
-        border: none;
-        color: white;
-        border-radius: 6px;
+//
+.suggest {
+    max-height: 120px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin-top: -0.5rem;
+    .sug {
+        padding: 0.5rem;
         cursor: pointer;
 
         &:hover {
-            background-color: #00994d;
+            background: #e6f7ff;
         }
     }
 }
 
-/* Popup hiển thị thông tin địa danh */
-.infor {
-    position: absolute;
-    top: 10%;
-    left: 5%;
-    background: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 5;
+.close {
+    transform: translateX(-100%);
+}
+.open {
+    transform: translateX(0);
 }

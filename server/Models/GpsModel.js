@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const GpsSchema = new Schema({
+const Gps = new Schema({
     lat: {
         type: Number,
         required: true,

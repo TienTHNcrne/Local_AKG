@@ -9,10 +9,13 @@ const Find = async (place) => {
                     format: "json",
                     viewbox: "102.15,23.3833,109.4,8.5667",
                     bounded: 1,
+                    countrycodes: "vn",
                 },
                 headers: { "User-Agent": "MyApp/1.0 (your@email.com)" },
             }
         );
+        const bruh = [];
+
         return {
             status: 200,
             data: result.data,
