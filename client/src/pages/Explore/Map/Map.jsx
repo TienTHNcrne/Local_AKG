@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Map.module.scss";
 import {
     MapContainer,
@@ -14,6 +14,7 @@ import UpImg from "../../../components/UpImg/UpImg";
 import "@ant-design/v5-patch-for-react-19";
 import { message, notification } from "antd";
 import { IoIosAddCircle } from "react-icons/io";
+
 export default function Map() {
     const [add, setAdd] = useState(true);
     const [suggest, setSuggest] = useState([]);
@@ -21,57 +22,82 @@ export default function Map() {
     const [description, setDescription] = useState("");
     const [content, setContent] = useState(false);
     const [data, setData] = useState(null);
-    const [coordinates, setCoordinates] = useState(null);
+    const [coordinates, setCoordinates] = useState([]);
     const [search, setSearch] = useState("");
     const [popup, setPopup] = useState(false);
-    console.log(center);
+    const [existed, setExisted] = useState(false);
+    const [place, setPlace] = useState(false);
+
     useEffect(() => {
-        axios.get("/data.geojson").then((res) => {
-            setData(res.data);
-        });
-        axios.get("/coordinates.json").then((res) => {
-            setCoordinates(res.data);
-        });
+        axios.get("/data.geojson").then((res) => setData(res.data));
+        axios.get("/coordinates.json").then((res) => setCoordinates(res.data));
     }, []);
-    //CALL BE
+
+    // Gợi ý địa điểm theo từ khóa
     useEffect(() => {
+        if (!search) return;
+
         const time = setTimeout(() => {
-            const findata = async () => {
+            const fetchSuggestions = async () => {
                 try {
                     const res = await axios.get(
                         `${
                             import.meta.env.VITE_BE_URL
                         }/v1/api/find?q=${encodeURIComponent(search)}`
                     );
-                    console.log(res);
                     setSuggest(res.data);
                 } catch (err) {
-                    console.log(err.message);
+                    console.error("Gợi ý thất bại:", err.message);
                 }
             };
-            findata();
+            fetchSuggestions();
         }, 400);
-        return () => {
-            clearTimeout(time);
-        };
+
+        return () => clearTimeout(time);
     }, [search]);
-    // FindCoordinate
+
+    // Kiểm tra trùng tọa độ
     useEffect(() => {
+        if (!center.lat || !center.lng || !search) return;
+
         axios
-            .get(`${import.meta.env.VITE_BE_URL}/v1/api/gps/find`)
-            .then((res) => {
-                console.log("axios", res);
+            .get(`${import.meta.env.VITE_BE_URL}/v1/api/gps/find`, {
+                params: {
+                    lat: center.lat,
+                    lng: center.lng,
+                    name: search,
+                },
             })
-            .catch((err) => {
-                console.error(err);
-            });
+            .then((res) => {
+                if (res.data.name === "existed") setExisted(true);
+            })
+            .catch((err) => console.error("Lỗi kiểm tra toạ độ:", err));
     }, [center]);
+
+    // Gửi thông tin địa điểm lên server
+    const SubPlace = async () => {
+        if (!center.lat || !center.lng || !search) return;
+        try {
+            const res = await axios.get(
+                `${import.meta.env.VITE_BE_URL}/v1/api/gps`,
+                {
+                    params: {
+                        lat: center.lat,
+                        lng: center.lng,
+                        name: search,
+                    },
+                }
+            );
+            console.log("Đã gửi:", res);
+        } catch (err) {
+            console.error("Gửi thất bại:", err.message);
+        }
+    };
+
     return (
         <div className={styles.container}>
             <div
-                className={`${styles.add} ${
-                    add === true ? styles.open : styles.close
-                }`}
+                className={`${styles.add} ${add ? styles.open : styles.close}`}
             >
                 <label htmlFor="name">Tên địa điểm</label>
                 <input
@@ -81,7 +107,8 @@ export default function Map() {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
-                {suggest && (
+
+                {suggest?.length > 0 && (
                     <div className={styles.suggest}>
                         {suggest.map((value, id) => (
                             <div
@@ -93,20 +120,21 @@ export default function Map() {
                                         lat: value.lat,
                                         lng: value.lng,
                                     });
-                                    setSuggest(null);
+                                    setSuggest([]);
                                 }}
                             >
                                 {value.name}
                             </div>
-                        ))}{" "}
+                        ))}
                     </div>
                 )}
+
                 <label htmlFor="description">Mô tả</label>
                 <textarea
                     name="description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                ></textarea>
+                />
 
                 <label htmlFor="category">Phân loại</label>
                 <select name="category">
@@ -117,24 +145,14 @@ export default function Map() {
 
                 <label htmlFor="image">Hình ảnh</label>
                 <UpImg />
-                <button
-                    type="submit"
-                    onClick={() => {
-                        if (
-                            center.lat === null ||
-                            center.lng === null ||
-                            description === ""
-                        )
-                            return notification.error({
-                                message: "Hãy nhập thông tin đầy đủ",
-                            });
-                        return notification.success({ message: "Cảm ơn bạn" });
-                    }}
-                >
+
+                <button type="submit" onClick={SubPlace}>
                     Thêm địa danh
                 </button>
             </div>
-            {popup && <div className={styles.infor}>sdfsdf</div>}
+
+            {popup && <div className={styles.infor}>Thông tin địa điểm</div>}
+
             <MapContainer
                 center={[10.173, 104.237]}
                 zoom={9}
@@ -153,21 +171,22 @@ export default function Map() {
                         data={data}
                         style={() => ({
                             fillColor: "#00cc66",
+                            weight: 1,
                         })}
                     />
                 )}
-                {coordinates &&
-                    coordinates.map((value) => (
+                {coordinates?.length > 0 &&
+                    coordinates.map((value, index) => (
                         <Marker
+                            key={index}
                             position={[value.lat, value.lng]}
                             eventHandlers={{
-                                click: () => {
-                                    setPopup(true);
-                                },
+                                click: () => setPopup(true),
                             }}
                         />
                     ))}
             </MapContainer>
+
             <button
                 className={styles.but}
                 onClick={() => {
@@ -177,7 +196,6 @@ export default function Map() {
             >
                 <IoIosAddCircle />
             </button>
-            {/*ADDITIONAL */}
         </div>
     );
 }

@@ -4,7 +4,7 @@ const Gs = async (lat, lng, name) => {
     const results = Gps.create({ name, lat, lng });
     return {
         status: 200,
-        data: results,
+        data: "New Local",
     };
 };
 const Fid = async (lat, lng, name) => {

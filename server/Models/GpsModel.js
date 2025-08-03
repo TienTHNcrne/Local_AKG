@@ -2,11 +2,11 @@ import mongoose, { Schema } from "mongoose";
 
 const Gps = new Schema({
     lat: {
-        type: Number,
+        type: String,
         required: true,
     },
     lng: {
-        type: Number,
+        type: String,
         required: true,
     },
     name: {
