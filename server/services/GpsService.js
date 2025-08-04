@@ -1,6 +1,6 @@
 import Gps from "../Models/GpsModel.js";
 import GpsModel from "../Models/GpsModel.js";
-const Gs = async (lat, lng, name) => {
+const Gs = async (lat, lng, name, description) => {
     const results = Gps.create({ name, description, lat, lng });
     return {
         status: 200,
