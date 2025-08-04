@@ -1,7 +1,7 @@
 import Gps from "../Models/GpsModel.js";
 import GpsModel from "../Models/GpsModel.js";
 const Gs = async (lat, lng, name) => {
-    const results = Gps.create({ name, lat, lng });
+    const results = Gps.create({ name, description, lat, lng });
     return {
         status: 200,
         data: "New Local",
