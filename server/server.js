@@ -16,7 +16,11 @@ import userRouter from "./Routers/userRouter.js";
 import { EventEmitter } from "events";
 import GpsRouter from "./Routers/GpsRouter.js";
 EventEmitter.defaultMaxListeners = 20;
-app.use(cors());
+app.use(
+    cors({
+        origin: "*",
+    })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/v1/api", userRouter);
