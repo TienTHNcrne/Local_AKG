@@ -1,4 +1,6 @@
 import { Gs, Fid } from "../services/GpsService.js";
+
+import gps from "../Models/GpsModel.js";
 const Gps = async (req, res) => {
     try {
         const data = await Gs({
@@ -21,4 +23,13 @@ const GpsFind = async (req, res) => {
         return res.status(500).json(err);
     }
 };
-export { Gps, GpsFind };
+
+const getAll = async (req, res) => {
+    try {
+        const data = await gps.find();
+        res.status(200).json(data);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+export { Gps, GpsFind, getAll };
