@@ -10,6 +10,7 @@ export default function CreateForm({
     setCenter,
     setSearch,
     search,
+    AddNewLocal,
 }) {
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
@@ -66,7 +67,7 @@ export default function CreateForm({
                 <textarea
                     name="description"
                     e={description}
-                    onChange={(e) => setDescription(e.target.e)}
+                    onChange={(e) => setDescription(e.target.value)}
                 />
 
                 <label htmlFor="category">Phân loại</label>
@@ -94,7 +95,7 @@ export default function CreateForm({
                             description !== "" &&
                             search !== ""
                         ) {
-                            Create(center, search, description);
+                            Create(center, search, description, AddNewLocal);
                         }
                     }}
                 >

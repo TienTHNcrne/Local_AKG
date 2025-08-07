@@ -13,7 +13,7 @@ import CreateForm from "./components/CreateForm/CreateForm";
 import axios from "axios";
 import "@ant-design/v5-patch-for-react-19";
 import { IoIosAddCircle } from "react-icons/io";
-
+import FlyToPlace from "./components/FlyToPlace/FlyToPlace";
 export default function Map() {
     const [add, setAdd] = useState(true);
     const [center, setCenter] = useState({ lat: null, lng: null });
@@ -26,9 +26,13 @@ export default function Map() {
 
     useEffect(() => {
         axios.get("/data.geojson").then((res) => setData(res.data));
-        axios.get("/coordinates.json").then((res) => setCoordinates(res.data));
     }, []);
-
+    useEffect(() => {
+        axios
+            .get(`${import.meta.env.VITE_BE_URL}/v1/api/gps/all`)
+            .then((res) => setCoordinates(res.data))
+            .catch((err) => console.log(err));
+    }, []);
     return (
         <div className={styles.container}>
             <CreateForm
@@ -37,6 +41,12 @@ export default function Map() {
                 setCenter={setCenter}
                 search={search}
                 setSearch={setSearch}
+                AddNewLocal={() => {
+                    axios
+                        .get(`${import.meta.env.VITE_BE_URL}/v1/api/gps/all`)
+                        .then((res) => setCoordinates(res.data))
+                        .catch((err) => console.log(err));
+                }}
             />
 
             {popup && <div className={styles.infor}>Thông tin địa điểm</div>}
@@ -72,7 +82,13 @@ export default function Map() {
                                 click: () => setPopup(true),
                             }}
                         />
-                    ))}
+                    ))}{" "}
+                {center.lat !== null && center.lng !== null && (
+                    <div>
+                        <Marker position={[center.lat, center.lng]} />{" "}
+                        <FlyToPlace center={center} />
+                    </div>
+                )}
             </MapContainer>
 
             <button
