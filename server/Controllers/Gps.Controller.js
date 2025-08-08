@@ -4,17 +4,18 @@ import { Gs, Fid } from "../services/GpsService.js";
 
 import gps from "../Models/Gps.model.js";
 const Gps = async (req, res) => {
+	console.log(req.body);
 	try {
-		console.log(req.body.params);
 		const data = await Gs({
-			name: req.body.params.name,
-			lat: req.body.params.lat,
-			lng: req.body.params.lng,
-			description: req.body.params.description,
+			name: req.body.name,
+			lat: req.body.lat,
+			lng: req.body.lng,
+			territory: req.body.territory,
+			description: req.body.description,
 		});
 		return res.status(200).json(data.data);
 	} catch (err) {
-		return res.status(500).json(err);
+		return res.status(500).json(err.message);
 	}
 };
 const GpsFind = async (req, res) => {

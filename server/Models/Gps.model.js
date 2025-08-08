@@ -19,6 +19,10 @@ const Gps = new Schema({
 		type: String,
 		required: true,
 	},
+	territory: {
+		type: String,
+		required: true,
+	},
 	img: {
 		type: [String],
 	},
