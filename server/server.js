@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 8081;
 import userRouter from "./Routers/user.router.js";
 import { EventEmitter } from "events";
 import GpsRouter from "./Routers/Gps.router.js";
+import UploadImg from "./Routers/UploadImg.router.js";
 EventEmitter.defaultMaxListeners = 20;
 app.use(cors());
 app.use(bodyParser.json());
@@ -25,7 +26,7 @@ app.use("/v1/api", userRouter);
 app.use("/v1/api", aiRoute);
 app.use("/v1/api", FindRouter);
 app.use("/v1/api", GpsRouter);
-
+app.use("/v2/api", UploadImg);
 app.get("/", (req, res) => {
 	res.send("Backend is running!");
 });

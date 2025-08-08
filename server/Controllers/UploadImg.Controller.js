@@ -1,37 +1,28 @@
 /** @format */
 
 import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
 
-const UploadImg = async (req, res) => {
+export const UploadImg = async (req, res) => {
 	try {
-		const urls = [];
+		const uploads = await Promise.all(
+			req.files.map((file) => {
+				return new Promise((resolve, reject) => {
+					const stream = cloudinary.uploader.upload_stream(
+						{ folder: "your-folder-name" },
+						(err, result) => {
+							if (err) reject(err);
+							else resolve(result.secure_url);
+						}
+					);
+					streamifier.createReadStream(file.buffer).pipe(stream);
+				});
+			})
+		);
 
-		for (const file of req.files) {
-			const result = await new Promise((resolve, reject) => {
-				const stream = cloudinary.uploader.upload_stream(
-					{
-						folder: "Place",
-						transformation: [
-							{ width: 800, height: 800, crop: "limit" },
-						],
-					},
-					(error, result) => {
-						if (error) return reject(error);
-						resolve(result);
-					}
-				);
-
-				stream.end(file.buffer);
-			});
-
-			urls.push(result.secure_url);
-		}
-
-		res.status(200).json({ urls });
+		res.json({ urls: uploads });
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({ error: "Upload failed" });
 	}
 };
-
-export default UploadImg;
