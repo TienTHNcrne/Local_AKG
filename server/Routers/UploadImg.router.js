@@ -4,7 +4,7 @@ import express from "express";
 import multer from "multer";
 import streamifier from "streamifier";
 import cloudinary from "../config/cloudinary.config.js";
-import Gps from "../models/Gps.model.js";
+import Gps from "../Models/Gps.model.js";
 
 const router = express.Router();
 const upload = multer();
