@@ -4,7 +4,6 @@ import { Gs, Fid } from "../services/GpsService.js";
 
 import gps from "../Models/Gps.model.js";
 const Gps = async (req, res) => {
-	console.log(req.body);
 	try {
 		const data = await Gs({
 			name: req.body.name,
