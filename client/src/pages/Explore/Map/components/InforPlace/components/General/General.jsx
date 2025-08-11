@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { RiMapPinFill } from "react-icons/ri";
-import styles from "./general.module.scss";
+import styles from "./General.module.scss";
 import { FaHeart } from "react-icons/fa6";
 import { MdGpsFixed } from "react-icons/md";
 import { IoShareSocial } from "react-icons/io5";
