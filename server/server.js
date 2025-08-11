@@ -20,6 +20,7 @@ import GpsRouter from "./Routers/Gps.router.js";
 import UploadImg from "./Routers/UploadImg.router.js";
 import weather from "./Routers/Weather.router.js";
 EventEmitter.defaultMaxListeners = 20;
+console.log(process.env.WEATHER_API_KEY);
 app.use(cors());
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
