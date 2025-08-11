@@ -18,11 +18,12 @@ import userRouter from "./Routers/user.router.js";
 import { EventEmitter } from "events";
 import GpsRouter from "./Routers/Gps.router.js";
 import UploadImg from "./Routers/UploadImg.router.js";
+import weather from "./Routers/Weather.router.js";
 EventEmitter.defaultMaxListeners = 20;
 app.use(cors());
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
-
+app.use("/v2/api", weather);
 app.use("/v1/api", userRouter);
 app.use("/v1/api", aiRoute);
 app.use("/v1/api", FindRouter);

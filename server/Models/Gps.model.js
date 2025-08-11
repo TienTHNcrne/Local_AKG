@@ -19,7 +19,7 @@ const Gps = new Schema({
 		type: String,
 		required: true,
 	},
-	territory: {
+	category: {
 		type: String,
 		required: true,
 	},

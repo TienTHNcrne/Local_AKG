@@ -1,13 +1,20 @@
 {
-    "folders": [
+	"folders": [
 		{
 			"path": "."
 		}
 	],
-    "settings": {
-        "editor.bracketPairColorization.enabled": true,
-        "editor.guides.bracketPairs": "active",
-        "files.autoSave": "onFocusChange",
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+	"settings": {
+		"prettier.experimentalTernaries": true,
+		"prettier.insertPragma": true,
+		"prettier.jsxSingleQuote": true,
+		"prettier.useTabs": true,
+		"files.autoSave": "onFocusChange",
+		"files.autoSaveWhenNoErrors": true,
+		"files.autoSaveWorkspaceFilesOnly": true,
+		"editor.formatOnSave": true,
+		"editor.codeActions.triggerOnFocusChange": true,
+		"editor.autoClosingBrackets": "always",
+		"editor.autoClosingComments": "always"
+	}
 }

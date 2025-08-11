@@ -1,6 +1,6 @@
 /** @format */
 
-import Find from "../services/FindService.js";
+import Find from "../services/Find.service.js";
 const FL = async (req, res) => {
 	try {
 		const result = await Find(req.query.q);

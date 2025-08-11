@@ -1,6 +1,6 @@
 /** @format */
 
-import { Gs, Fid } from "../services/GpsService.js";
+import { Gs, Fid } from "../services/Gps.service.js";
 
 import gps from "../Models/Gps.model.js";
 const Gps = async (req, res) => {

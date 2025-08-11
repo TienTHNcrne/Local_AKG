@@ -9,7 +9,7 @@ import Gps from "../Models/Gps.model.js";
 const router = express.Router();
 const upload = multer();
 
-router.post("/upload", upload.array("images", 5), async (req, res) => {
+router.post("/upload", upload.array("images", 20), async (req, res) => {
 	try {
 		const uploadImages = req.files.map((file) => {
 			return new Promise((resolve, reject) => {
@@ -30,6 +30,7 @@ router.post("/upload", upload.array("images", 5), async (req, res) => {
 			lat: req.body.lat,
 			lng: req.body.lng,
 			name: req.body.name,
+			category: req.body.category,
 			description: req.body.description,
 			img: imageUrls,
 		});

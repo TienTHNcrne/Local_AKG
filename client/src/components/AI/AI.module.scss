@@ -1,70 +1,160 @@
-.chatbot {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 300px;
-    height: 400px;
-    padding: 10px 5px;
-    position: fixed;
-    bottom: 60px;
-    right: 40px;
-    .head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #e3f2fd;
-    }
-    .content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
+/** @format */
 
-        padding: 20px 20px;
-        scrollbar-width: thin;
-        scrollbar-color: #ccc transparent;
-    }
-    .input {
-        display: flex;
-        gap: 5px;
-        align-items: center;
-        justify-content: center;
-        input {
-            align-self: flex-start;
-            width: 100%;
-            height: 20px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            padding: 0 5px;
-        }
-        button {
-            align-self: flex-end;
-            font-size: 20px;
-            background: none;
-            border: none;
-            color: blue;
-        }
-    }
+.container {
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	z-index: 1000;
+
+	.but {
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		background-color: #4285f4;
+		color: white;
+		border: none;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 24px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+
+		&:hover {
+			transform: scale(1.1);
+			background-color: #3367d6;
+		}
+	}
+
+	.chatbot {
+		width: 350px;
+		max-height: 500px;
+		background-color: white;
+		border-radius: 12px;
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+
+		.head {
+			padding: 16px;
+			background-color: #4285f4;
+			color: white;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			h3 {
+				margin: 0;
+				font-size: 16px;
+				font-weight: 600;
+			}
+
+			button {
+				background: none;
+				border: none;
+				color: white;
+				font-size: 18px;
+				cursor: pointer;
+				padding: 4px;
+			}
+		}
+
+		.content {
+			flex: 1;
+			padding: 16px;
+			overflow-y: auto;
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+
+			.user {
+				align-self: flex-end;
+				background-color: #e3f2fd;
+				border-radius: 12px 12px 0 12px;
+				padding: 10px 14px;
+				max-width: 80%;
+
+				p {
+					margin: 0;
+					color: #0d47a1;
+				}
+			}
+
+			.assistant {
+				align-self: flex-start;
+				background-color: #f1f1f1;
+				border-radius: 12px 12px 12px 0;
+				padding: 10px 14px;
+				max-width: 80%;
+
+				p {
+					margin: 0;
+					color: #333;
+				}
+			}
+		}
+
+		.input {
+			display: flex;
+			padding: 12px;
+			border-top: 1px solid #eee;
+			gap: 8px;
+
+			input {
+				flex: 1;
+				padding: 10px 14px;
+				border: 1px solid #ddd;
+				border-radius: 20px;
+				outline: none;
+				font-size: 14px;
+
+				&:focus {
+					border-color: #4285f4;
+				}
+			}
+
+			button {
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				background-color: #4285f4;
+				color: white;
+				border: none;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: background-color 0.2s;
+
+				&:hover {
+					background-color: #3367d6;
+				}
+
+				&:disabled {
+					background-color: #cccccc;
+					cursor: not-allowed;
+				}
+			}
+		}
+	}
 }
 
-.assistant,
-.user {
-    max-width: 70%;
-    margin-bottom: 10px;
-    padding: 8px 12px;
+/* Scrollbar styling */
+::-webkit-scrollbar {
+	width: 6px;
 }
 
-.assistant {
-    align-self: flex-start;
-    background-color: blue;
-    border-radius: 16px 16px 16px 0px;
-    background-color: #d4eafd;
-    color: #003366;
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
 }
-.user {
-    background-color: black;
-    align-self: flex-end;
-    border-radius: 16px 16px 0 16px;
-    background-color: #e0e0e0;
-    color: #111;
+
+::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
 }
