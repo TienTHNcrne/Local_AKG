@@ -17,6 +17,7 @@ const weather = async (lat, lng) => {
 		);
 		return result.data;
 	} catch (err) {
+		console.log(err);
 		return err.message;
 	}
 };

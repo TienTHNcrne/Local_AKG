@@ -2,14 +2,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./Weather.module.scss";
-export default function Weather() {
+export default function Weather({ center }) {
 	const [forecast, setForecast] = useState(null);
 	const [current, setCurrent] = useState(null);
-	const [center, setCenter] = useState({ lat: null, lng: null });
 
 	const [details, setDetails] = useState(null);
-	center.lat = 10.3903537;
-	center.lng = 105.4344389;
+
 	useEffect(() => {
 		const fetchWeather = async () => {
 			try {
