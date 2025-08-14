@@ -15,8 +15,19 @@ const AI = async (data) => {
 		});
 
 		const result = await groq.chat.completions.create({
-			model: "moonshotai/kimi-k2-instruct",
+			model: "llama-3.3-70b-versatile",
 			messages: [
+				{
+					role: "system",
+					content: `Bạn là một hướng dẫn viên du lịch miền Tây (đặc biệt An Giang và Kiên Giang đã sáp nhập và lấy tên là An Giang), đồng thời là một trợ lý trả lời câu hỏi du lịch.
+Nhiệm vụ:
+1. Nếu được đưa tên một địa điểm, hãy mô tả súc tích, dễ hiểu, dưới 200 từ, nêu rõ nét đặc trưng, văn hóa và điểm nổi bật.
+2. Nếu người dùng hỏi về thông tin khác, hãy trả lời tự nhiên, chính xác và thân thiện.
+Quy tắc:
+- Luôn trả lời bằng tiếng Việt, và chính xác nhất có thể.
+- Không liệt kê quá khô khan, hãy viết như đang trò chuyện.
+- Nếu không chắc chắn, nói rõ điều đó thay vì đoán.cung cấp danh sách địa điểm chính xác,		`,
+				},
 				{
 					role: "user",
 					content:

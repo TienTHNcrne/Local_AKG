@@ -89,9 +89,44 @@
 				padding: 10px 14px;
 				max-width: 80%;
 
+				h1,
+				h2,
+				h3,
+				h4 {
+					margin-top: 8px;
+					margin-bottom: 4px;
+					font-weight: 600;
+					color: #0d47a1;
+				}
 				p {
-					margin: 0;
+					margin: 0 0 6px 0;
 					color: #333;
+					line-height: 1.5;
+				}
+				strong {
+					color: #d32f2f;
+				}
+				ul {
+					margin: 4px 0 8px 20px;
+					padding-left: 16px;
+					li {
+						list-style: disc;
+						margin-bottom: 2px;
+					}
+				}
+				ol {
+					margin: 4px 0 8px 20px;
+					padding-left: 16px;
+					li {
+						list-style: decimal;
+						margin-bottom: 2px;
+					}
+				}
+				code {
+					background: #eee;
+					padding: 2px 4px;
+					border-radius: 4px;
+					font-size: 90%;
 				}
 			}
 		}

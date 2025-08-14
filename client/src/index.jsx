@@ -1,3 +1,5 @@
+/** @format */
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
@@ -12,39 +14,47 @@ import Explore from "./pages/Explore/Explore";
 import Map from "./pages/Explore/Map/Map";
 import Event from "./pages/Explore/Event/Event";
 import "leaflet/dist/leaflet.css";
-
+import Register from "./pages/Register/Register";
+import Login from "./pages/Login/Login";
 import "./index.css";
+import Auth from "./Contexts/Auth/Auth";
+import Profile from "./pages/Profile/Profile";
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <App />,
-        children: [
-            {
-                index: true,
-                element: <Home />,
-            },
+	{
+		path: "/",
+		element: <App />,
+		children: [
+			{
+				index: true,
+				element: <Home />,
+			},
+			{ path: "/Login", element: <Login /> },
+			{ path: "/Register", element: <Register /> },
+			{ path: "/profile", element: <Profile /> },
 
-            { path: "/Edit", element: <Rich_text /> },
-            { path: "Climate", element: <Climate /> },
-            { path: "Location", element: <Location /> },
-            { path: "History", element: <History /> },
-            { path: "CulSoc", element: <CulSoc /> },
+			{ path: "/Edit", element: <Rich_text /> },
+			{ path: "Climate", element: <Climate /> },
+			{ path: "Location", element: <Location /> },
+			{ path: "History", element: <History /> },
+			{ path: "CulSoc", element: <CulSoc /> },
 
-            {
-                path: "Explore",
-                element: <Explore />,
-                children: [
-                    { path: "event", element: <Event /> },
-                    { path: "map", element: <Map /> },
-                ],
-            },
-        ],
-    },
+			{
+				path: "Explore",
+				element: <Explore />,
+				children: [
+					{ path: "event", element: <Event /> },
+					{ path: "map", element: <Map /> },
+				],
+			},
+		],
+	},
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <React.StrictMode>
-        <RouterProvider router={router} />
-    </React.StrictMode>
+	<React.StrictMode>
+		<Auth>
+			<RouterProvider router={router} />
+		</Auth>
+	</React.StrictMode>
 );

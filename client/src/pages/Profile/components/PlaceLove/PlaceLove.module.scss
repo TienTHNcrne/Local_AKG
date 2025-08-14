@@ -1,0 +1,59 @@
+/** @format */
+.title {
+	text-align: left;
+	font-size: 24px;
+}
+.places {
+	display: flex;
+	gap: 20px;
+	padding: 20px;
+	.place {
+		display: flex;
+		max-height: 30%;
+		width: 100%;
+		font-size: larger;
+		gap: 20px;
+		padding: 20px;
+		border-radius: 10px;
+		box-shadow: 0 0 5px 5px rgba(104, 103, 103, 0.156);
+		.address {
+			p {
+				margin: 0 0 12px 0;
+				font-size: 18px;
+				color: #666;
+			}
+			h4 {
+				margin: 0 0 8px 0;
+				font-size: 20px;
+				color: #333;
+			}
+		}
+		.describe {
+			p {
+				font-size: 18px;
+				color: #141414;
+				line-height: 1.5;
+			}
+			h3 {
+				margin: 0 0 8px 0;
+				font-size: 20px;
+				color: #333;
+			}
+		}
+		img {
+			width: 40%;
+			height: 200px;
+			object-fit: cover;
+			border-radius: 10px;
+			box-shadow: 0 0 5px 5px rgba(104, 103, 103, 0.156);
+			transition: all 0.3s ease;
+			&:hover {
+				transform: scale(1.05);
+			}
+		}
+		transition: all 0.3s ease;
+		&:hover {
+			transform: translateY(-4px);
+		}
+	}
+}

@@ -42,6 +42,7 @@ export default function Map() {
 				center={{ lat: inFor.lat, lng: inFor.lng }}
 				popup={popup}
 				inFor={inFor}
+				setPopup={setPopup}
 			/>
 			<CreateForm
 				add={add}

@@ -1,0 +1,117 @@
+/** @format */
+
+.header {
+	background: #a4c8a3;
+	padding: 10px 20px;
+	border-bottom: 3px solid #ffffff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.logo {
+	font-size: 24px;
+	font-weight: bold;
+	color: white;
+	text-decoration: none;
+	align-self: flex-start;
+}
+
+.menuIcon {
+	font-size: 24px;
+	color: white;
+	cursor: pointer;
+}
+
+.nav {
+	display: flex;
+	align-self: center;
+	gap: 50px;
+	z-index: 1000;
+	a {
+		color: black;
+		text-decoration: none;
+		font-weight: 500;
+		display: flex;
+		align-items: center;
+		font-size: 20px;
+		gap: 5px;
+		padding: 8px 0;
+	}
+}
+
+.dropdown {
+	position: relative;
+
+	&:hover .dropdownMenu {
+		display: block;
+	}
+}
+
+.dropdownMenu {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background: #f4f4f4;
+	padding: 10px 0;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+	z-index: 99;
+	min-width: 160px;
+
+	li {
+		list-style: none;
+
+		a {
+			display: block;
+			padding: 8px 20px;
+			color: black;
+			text-decoration: none;
+
+			&:hover {
+				background: #d4f4f4;
+			}
+		}
+	}
+}
+
+.right {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+
+	a {
+		text-decoration: none;
+
+		button {
+			padding: 8px 16px;
+			font-size: 16px;
+			font-weight: 500;
+			border-radius: 6px;
+			cursor: pointer;
+			border: none;
+			transition: all 0.3s ease;
+		}
+	}
+
+	/* Nút Sign Up */
+	a:first-child button {
+		background-color: #ffffff;
+		color: #4a7c4a;
+
+		&:hover {
+			background-color: #e6f5e6;
+		}
+	}
+
+	/* Nút Sign In */
+	a:last-child button {
+		background-color: #4a7c4a;
+		color: #ffffff;
+
+		&:hover {
+			background-color: #3b633b;
+		}
+	}
+}
