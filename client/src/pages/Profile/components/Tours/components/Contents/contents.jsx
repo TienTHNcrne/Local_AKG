@@ -3,7 +3,7 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
-import styles from "./Contents.module.scss";
+import styles from "./contents.module.scss";
 export default function Contents({ name, details, setShow }) {
 	return (
 		<div className={styles.container}>
