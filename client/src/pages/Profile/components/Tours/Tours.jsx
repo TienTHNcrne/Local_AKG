@@ -7,7 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import { IoAddCircleSharp } from "react-icons/io5";
 import ReactMarkdown from "react-markdown";
 import TourAi from "./components/TourAi/TourAi";
-import Contents from "./components/Contents/Contents";
+import Contents from "./components/Contents/contents";
 import { useAuth } from "../../../../Contexts/Auth/Auth";
 
 export default function Tours({ className }) {
