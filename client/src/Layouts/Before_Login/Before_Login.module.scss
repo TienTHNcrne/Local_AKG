@@ -1,51 +1,54 @@
+/** @format */
+
 // Before_Login.module.scss
 
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #f5f7fa;
-    position: relative;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	background-color: #f5f7fa;
+	position: relative;
 }
 
 .content {
-    position: relative;
-    top: 0;
-    bottom: auto;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    max-width: auto;
-    min-height: 0;
-    max-height: 100%;
-    @media (max-width: 768px) {
-        margin: 1rem;
-        padding: 1.5rem;
-    }
+	position: relative;
+	top: 0;
+	bottom: auto;
+	background-color: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+	transition: all 0.3s ease;
+	overflow-y: auto;
+	max-width: auto;
+	min-height: 0;
+	max-height: 100%;
+	@media (max-width: 768px) {
+		margin: 1rem;
+		padding: 1.5rem;
+	}
 }
 
 .footer {
-    margin-top: 100%;
-    background-color: #fff;
+	margin-top: 100%;
+	background-color: #fff;
 
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03);
+	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03);
 }
 
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 10000;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 10000;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .extra {
-    position: fixed;
-    top: 90%;
-    left: 90%;
-    z-index: 1000;
+	position: fixed;
+	top: 90%;
+	left: 90%;
+	z-index: 1000;
 }

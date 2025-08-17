@@ -1,58 +1,52 @@
+/** @format */
+
 .container {
-    padding: 20px 30px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    .content {
-        display: flex;
-        flex-direction: column;
-        border: 2px solid black;
-        gap: 10px;
-        padding: 10px 20px;
-        margin-top: 10px;
-        padding-top: 20px;
-        //
-        .AG,
-        .KG {
-            display: flex;
-            flex-direction: column;
-            padding: 20px 20px;
-            height: 281px;
-        }
-        .AG {
-            background-color: #c6f3d6;
-        }
-        .KG {
-            background-color: #bde9dd;
-            h4 {
-                align-self: flex-end;
-            }
-        }
-    }
+	padding: 10px 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
 }
-.merge,
-.process,
-.after {
-    display: flex;
-    flex-direction: column;
-    .bet {
-        position: absolute;
-        background-color: white;
-        font-size: 20px;
-        padding: 0 5px;
-    }
-}
-
-.process {
-    .bet {
-        left: 45%;
-        padding: 0 5px;
-    }
-}
-.after {
-    .bet {
-        left: 87.8%;
-        padding-left: 5px;
-    }
+.header {
+	display: flex;
+	gap: 20px;
+	h2 {
+		font-size: 1.5rem;
+		position: relative;
+		cursor: pointer;
+		color: #888;
+		padding-bottom: 6px;
+		transition: color 0.3s ease;
+		&::after {
+			content: "";
+			color: #007bff;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 0;
+			height: 2px;
+			background: #007bff;
+			border-radius: 2px;
+			transition: width 0.3s ease, left 0.3s ease;
+		}
+		&:hover {
+			color: #0056b3;
+			&::after {
+				width: 50%;
+				left: 0;
+			}
+		}
+		&.processing {
+			color: #007bff;
+			&::after {
+				width: 100%;
+			}
+			&:hover {
+				color: #0056b3;
+				&::after {
+					width: 50%;
+					left: 25%;
+				}
+			}
+		}
+	}
 }

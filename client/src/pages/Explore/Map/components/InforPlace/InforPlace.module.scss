@@ -137,18 +137,24 @@
 		}
 		&:hover {
 			color: #0056b3;
-
 			&::after {
 				width: 50%;
-				left: 25%;
+				left: 0;
 			}
 		}
-	}
-}
-.processing {
-	color: #007bff;
-	&::after {
-		width: 100%;
+		&.processing {
+			color: #007bff;
+			&::after {
+				width: 100%;
+			}
+			&:hover {
+				color: #0056b3;
+				&::after {
+					width: 50%;
+					left: 25%;
+				}
+			}
+		}
 	}
 }
 
