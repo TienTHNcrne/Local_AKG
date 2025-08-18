@@ -2,12 +2,24 @@
 
 import Gps from "../Models/Gps.model.js";
 import GpsModel from "../Models/Gps.model.js";
-const Gs = async ({ lat, lng, name, territory, description }) => {
-	const results = Gps.create({ name, description, lat, territory, lng });
-	return {
-		status: 200,
-		data: "New Local",
-	};
+const Gs = async ({ lat, lng, name, category, description, time }) => {
+	try {
+		const results = await Gps.create({
+			name,
+			description,
+			lat,
+			category,
+			time,
+			lng,
+		});
+		console.log("oke", results.Promise);
+		return {
+			status: 200,
+			data: results,
+		};
+	} catch (err) {
+		return { status: 500, data: err };
+	}
 };
 const Fid = async (lat, lng, name) => {
 	try {

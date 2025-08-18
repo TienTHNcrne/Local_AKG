@@ -38,14 +38,9 @@ const router = createBrowserRouter([
 			{ path: "History", element: <History /> },
 			{ path: "CulSoc", element: <CulSoc /> },
 
-			{
-				path: "Explore",
-				element: <Explore />,
-				children: [
-					{ path: "event", element: <Event /> },
-					{ path: "map", element: <Map /> },
-				],
-			},
+			{ path: "Explore", element: <Explore /> },
+			{ path: "Explore/map", element: <Map /> },
+			{ path: "Explore/event", element: <Event /> },
 		],
 	},
 ]);

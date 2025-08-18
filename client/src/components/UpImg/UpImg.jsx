@@ -8,25 +8,28 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useEffect } from "react";
 export default function UpImg({ setImages }) {
 	const [img, setImg] = useState([]);
-	const onDrop = useCallback((useActive) => {
-		console.log(useActive);
+	const onDrop = useCallback((files) => {
+		let data = [];
+		files.forEach((value) => {
+			data.push({ File: value, URL: URL.createObjectURL(value) });
+		});
+		console.log(data);
+		setImg((pre) => [...data, ...pre]);
 	}, []);
-	const { getRootProps, getInputProps, isDragActive } = useDropzone({
-		onDrop,
-	});
+	console.log(img);
+
 	useEffect(() => {
 		setImages(img);
 	}, [img]);
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({
+		onDrop,
+	});
 	return (
 		<div className={styles.container}>
 			<div
 				className={styles.upload}
 				{...getRootProps()}
 				style={{
-					border: "2px dashed gray",
-					padding: "40px",
-					textAlign: "center",
-					borderRadius: "10px",
 					backgroundColor: isDragActive ? "#e6f7ff" : "#fafafa",
 				}}
 			>
@@ -49,10 +52,7 @@ export default function UpImg({ setImages }) {
 				) : (
 					<>
 						<FiUpload />
-						<p>
-							Drag & drop some files here, or click to select
-							files
-						</p>
+						<p>Upload or drop some files here!</p>
 					</>
 				)}{" "}
 			</div>

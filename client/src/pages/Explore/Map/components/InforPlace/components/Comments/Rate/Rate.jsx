@@ -16,48 +16,58 @@ export default function Rate({ setShow }) {
 	};
 	return (
 		<div className={styles.container}>
-			<div className={styles.star}>
-				{[1, 2, 3, 4, 5].map((star) => (
-					<span
-						style={{
-							cursor: "pointer",
-							color: (mark || rate) >= star ? "yellow" : "#ccc",
+			<div className={styles.content}>
+				<div className={styles.star}>
+					{[1, 2, 3, 4, 5].map((star) => (
+						<span
+							style={{
+								cursor: "pointer",
+								color:
+									(mark || rate) >= star ? "yellow" : "#ccc",
+							}}
+							onMouseEnter={() => setMark(star)}
+							onMouseLeave={() => setMark(0)}
+							onClick={() => setRate(star)}
+						>
+							<FaStar />
+						</span>
+					))}
+				</div>
+				<div className={styles.inFor}>
+					<textarea
+						className={styles.text}
+						type='text'
+						placeholder='Please describe your feeling'
+						onInput={autoResize}
+						rows={1}
+						value={describe}
+						onChange={(e) => {
+							setDescribe(e.target.value);
 						}}
-						onMouseEnter={() => setMark(star)}
-						onMouseLeave={() => setMark(0)}
-						onClick={() => setRate(star)}
+					/>
+					<UpImg setImages={setImg} />
+				</div>
+				<div className={styles.confirm}>
+					<button
+						type='submit'
+						className={styles.cancel}
+						onClick={() => setShow(false)}
 					>
-						<FaStar />
-					</span>
-				))}
-			</div>
-			<div className={styles.inFor}>
-				<textarea
-					className={styles.text}
-					type='text'
-					placeholder='Please describe your feeling'
-					onInput={autoResize}
-					rows={1}
-					value={describe}
-					onChange={(e) => {
-						setDescribe(e.target.value);
-					}}
-				/>
-				<UpImg setImages={setImg} />
-			</div>
-			<div className={styles.confirm}>
-				<button
-					className={styles.submit}
-					type='submit'
-					onClick={() => {
-						if (rate) {
-							notification.success({ description: "thanks" });
-							setShow(false);
-						}
-					}}
-				>
-					Submit
-				</button>
+						Cancel
+					</button>
+					<button
+						className={styles.submit}
+						type='submit'
+						onClick={() => {
+							if (rate) {
+								notification.success({ description: "thanks" });
+								setShow(false);
+							}
+						}}
+					>
+						Submit
+					</button>
+				</div>
 			</div>
 		</div>
 	);

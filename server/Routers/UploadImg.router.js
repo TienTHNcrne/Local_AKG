@@ -32,6 +32,8 @@ router.post("/upload", upload.array("images", 20), async (req, res) => {
 			name: req.body.name,
 			category: req.body.category,
 			description: req.body.description,
+			time: req.body.time,
+
 			img: imageUrls,
 		});
 

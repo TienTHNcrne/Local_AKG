@@ -9,10 +9,12 @@ const Gps = async (req, res) => {
 			name: req.body.name,
 			lat: req.body.lat,
 			lng: req.body.lng,
-			territory: req.body.territory,
+			category: req.body.category,
 			description: req.body.description,
+			time: req.body.time,
 		});
-		return res.status(200).json(data.data);
+
+		return res.status(data.status).json(data.data);
 	} catch (err) {
 		return res.status(500).json(err.message);
 	}
