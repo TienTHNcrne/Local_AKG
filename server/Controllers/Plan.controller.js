@@ -1,6 +1,11 @@
 /** @format */
 
-import { GetAll, remove, CreatePlan } from "../services/Plan.service.js";
+import {
+	GetAll,
+	remove,
+	CreatePlan,
+	updateName,
+} from "../services/Plan.service.js";
 
 const Create = async (req, res) => {
 	try {
@@ -47,5 +52,13 @@ const removedPlan = async (req, res) => {
 		console.log(err.message);
 	}
 };
+const updatePlanName = async (req, res) => {
+	const result = await updateName({
+		id: req.body.id,
+		UserId: req.body.UserId,
+		name: req.body.name,
+	});
+	res.status(result.status).json(result.data || { error: result.error });
+};
 
-export { removedPlan, Create, GetPlan };
+export { removedPlan, Create, GetPlan, updatePlanName };

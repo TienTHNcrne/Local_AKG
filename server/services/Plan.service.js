@@ -56,4 +56,23 @@ const remove = async ({ UserId, name, details }) => {
 	}
 };
 
-export { GetAll, remove, CreatePlan };
+const updateName = async ({ UserId, id, name }) => {
+	try {
+		console.log(UserId, " ", id, " ", name);
+		const result = await PlansModel.findOneAndUpdate(
+			{ _id: id, UserId: UserId },
+			{ $set: { name: name } },
+			{ new: true }
+		);
+
+		if (!result) {
+			return { status: 404, error: "Plan not found" };
+		}
+
+		return { status: 200, data: result };
+	} catch (err) {
+		console.log(err.message);
+		return { status: 500, error: err.message };
+	}
+};
+export { GetAll, remove, CreatePlan, updateName };
