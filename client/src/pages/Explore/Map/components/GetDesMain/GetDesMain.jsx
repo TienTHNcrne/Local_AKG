@@ -12,6 +12,8 @@ export default function GetDesMain({
 	general,
 	name,
 	time,
+	lat,
+	lng,
 	images,
 	setPopup,
 }) {
@@ -20,7 +22,7 @@ export default function GetDesMain({
 	return (
 		<div className={styles.container}>
 			{" "}
-			{show && <Rate setShow={setShow} />}
+			{show && <Rate setShow={setShow} lat={lat} lng={lng} />}
 			<div className={styles.content}>
 				{" "}
 				<div className={styles.header}>

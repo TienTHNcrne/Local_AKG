@@ -3,10 +3,6 @@
 import mongoose, { Schema } from "mongoose";
 
 const Rate = new Schema({
-	name: {
-		type: String,
-		required: true,
-	},
 	lat: {
 		type: Number,
 		required: true,

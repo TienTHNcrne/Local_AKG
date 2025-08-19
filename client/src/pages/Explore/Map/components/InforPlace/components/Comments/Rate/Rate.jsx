@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import styles from "./Rate.module.scss";
 import { FaStar } from "react-icons/fa6";
 import UpImg from "../../../../../../../../components/UpImg/UpImg";
-import { notification } from "antd";
-export default function Rate({ setShow }) {
+import RateCreate from "../../../../../Hooks/RateCreate";
+export default function Rate({ setShow, lng, lat }) {
 	const [mark, setMark] = useState(0);
 	const [img, setImg] = useState([]);
 	const [rate, setRate] = useState(0);
@@ -59,10 +59,14 @@ export default function Rate({ setShow }) {
 						className={styles.submit}
 						type='submit'
 						onClick={() => {
-							if (rate) {
-								notification.success({ description: "thanks" });
-								setShow(false);
-							}
+							RateCreate({
+								lat: lat,
+								lng: lng,
+								comment: describe,
+								rate: rate,
+								img: img,
+								setShow: setShow,
+							});
 						}}
 					>
 						Submit

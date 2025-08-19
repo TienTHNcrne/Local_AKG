@@ -82,7 +82,9 @@ export default function InForPlace({ center, popup, setPopup, inFor }) {
 							img={images.length > 0 && images[0]}
 						/>
 					)}
-					{choose === "rate" && <Comments />}
+					{choose === "rate" && (
+						<Comments lat={center.lat} lng={center.lng} />
+					)}
 					{choose === "weather" && <Weather center={center} />}
 				</div>
 			</div>

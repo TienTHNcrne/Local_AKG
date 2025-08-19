@@ -13,7 +13,10 @@ export default function Explore() {
 		try {
 			axios
 				.get(`${import.meta.env.VITE_BE_URL}/v1/api/gps/all`)
-				.then((res) => setData(res.data))
+				.then((res) => {
+					console.log(res.data);
+					setData(res.data);
+				})
 				.catch((err) => console.log(err.message));
 		} catch (err) {
 			console.log(err);
@@ -37,6 +40,8 @@ export default function Explore() {
 					address={getAddress(dataCard.name)}
 					general={dataCard.description}
 					images={dataCard.img}
+					lat={dataCard.lat}
+					lng={dataCard.lng}
 					setPopup={setPopup}
 				/>
 			)}

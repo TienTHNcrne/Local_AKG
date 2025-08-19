@@ -4,10 +4,9 @@ import RateModel from "../Models/Rate.model.js";
 
 import UserModel from "../Models/user.model.js";
 
-const Create = async ({ name, lat, lng, UserId, comment, rate }) => {
+const Create = async ({ lat, lng, UserId, comment, rate }) => {
 	try {
 		const result = await RateModel.create({
-			name: name,
 			lat: lat,
 			lng: lng,
 			comment: comment,
@@ -23,10 +22,9 @@ const Create = async ({ name, lat, lng, UserId, comment, rate }) => {
 	}
 };
 
-const GetAll = async ({ name, lat, lng }) => {
+const GetAll = async ({ lat, lng }) => {
 	try {
 		const result = await RateModel.find({
-			name: name,
 			lat: lat,
 			lng: lng,
 		}).populate("UserId");
