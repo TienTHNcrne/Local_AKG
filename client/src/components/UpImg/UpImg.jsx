@@ -7,81 +7,96 @@ import { useDropzone } from "react-dropzone";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useEffect } from "react";
 export default function UpImg({ setImages }) {
-	const [img, setImg] = useState([]);
-	const onDrop = useCallback((files) => {
-		let data = [];
-		files.forEach((value) => {
-			data.push({ File: value, URL: URL.createObjectURL(value) });
-		});
-		console.log(data);
-		setImg((pre) => [...data, ...pre]);
-	}, []);
-	console.log(img);
+    const [img, setImg] = useState([]);
+    const onDrop = useCallback((files) => {
+        let data = [];
+        files.forEach((value) => {
+            if (value.size > 10 * 1024 * 1024) {
+                alert(`${value.name} quá lớn! Vui lòng chọn ảnh dưới 10MB.`);
+                return;
+            }
+            data.push({ File: value, URL: URL.createObjectURL(value) });
+        });
+        setImg((pre) => [...data, ...pre]);
+    }, []);
 
-	useEffect(() => {
-		setImages(img);
-	}, [img]);
-	const { getRootProps, getInputProps, isDragActive } = useDropzone({
-		onDrop,
-	});
-	return (
-		<div className={styles.container}>
-			<div
-				className={styles.upload}
-				{...getRootProps()}
-				style={{
-					backgroundColor: isDragActive ? "#e6f7ff" : "#fafafa",
-				}}
-			>
-				<input
-					{...getInputProps()}
-					multiple
-					accept='image/*'
-					style={{ display: "none" }}
-					onChange={(e) => {
-						const res = Array.from(e.target.files);
-						const file = res.map((value) => ({
-							File: value,
-							URL: URL.createObjectURL(value),
-						}));
-						setImg((e) => [...e, ...file]);
-					}}
-				/>
-				{isDragActive ? (
-					<p>Drop the files here ...</p>
-				) : (
-					<>
-						<FiUpload />
-						<p>Upload or drop some files here!</p>
-					</>
-				)}{" "}
-			</div>
-			{/*HANDLE */}
-			{img && (
-				<div className={styles.img}>
-					{img.map((value, id) => (
-						<div className={styles.containerImg}>
-							<img src={value.URL} alt='' />
-							<button
-								type='button'
-								className={styles.delete}
-								onClick={() => {
-									const newImg = [];
-									img.forEach((value1, id1) => {
-										if (id1 !== id) {
-											newImg.push(value1);
-										}
-									});
-									console.log(newImg);
-									setImg(newImg);
-								}}
-							>
-								<RiDeleteBin6Fill />
-							</button>
-						</div>
-					))}
-				</div>
-			)}
-		</div>
-	);
+    useEffect(() => {
+        setImages(img);
+    }, [img]);
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+    });
+    return (
+        <div className={styles.container}>
+            <div
+                className={styles.upload}
+                {...getRootProps()}
+                style={{
+                    backgroundColor: isDragActive ? "#e6f7ff" : "#fafafa",
+                }}
+            >
+                <input
+                    {...getInputProps()}
+                    multiple
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                        const res = Array.from(e.target.files);
+                        const file = res
+                            .filter((f) => {
+                                if (f.size > 10 * 1024 * 1024) {
+                                    alert(
+                                        `${f.name} quá lớn! Vui lòng chọn ảnh dưới 10MB.`
+                                    );
+                                    return false;
+                                }
+                                return true;
+                            })
+                            .map((value) => ({
+                                File: value,
+                                URL: URL.createObjectURL(value),
+                            }));
+                        setImg((prev) => [...prev, ...file]);
+                    }}
+                />
+                {isDragActive ? (
+                    <p>Drop the files here ...</p>
+                ) : (
+                    <>
+                        <FiUpload />
+                        <p>
+                            Upload or drop some files here! Maximum size per
+                            image: 10MB
+                        </p>
+                    </>
+                )}{" "}
+            </div>
+            {/*HANDLE */}
+            {img && (
+                <div className={styles.img}>
+                    {img.map((value, id) => (
+                        <div className={styles.containerImg}>
+                            <img src={value.URL} alt="" />
+                            <button
+                                type="button"
+                                className={styles.delete}
+                                onClick={() => {
+                                    const newImg = [];
+                                    img.forEach((value1, id1) => {
+                                        if (id1 !== id) {
+                                            newImg.push(value1);
+                                        }
+                                    });
+                                    console.log(newImg);
+                                    setImg(newImg);
+                                }}
+                            >
+                                <RiDeleteBin6Fill />
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
 }

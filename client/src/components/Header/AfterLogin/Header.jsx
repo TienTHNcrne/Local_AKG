@@ -3,17 +3,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.scss";
-import { IoMenu, IoHome, IoShareSocial } from "react-icons/io5";
+import { IoHome, IoShareSocial } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogInOutline } from "react-icons/io5";
 import { AiFillProfile } from "react-icons/ai";
 import { useAuth } from "../../../Contexts/Auth/Auth";
+import { FaStar } from "react-icons/fa6";
+import TourAi from "../../../pages/Profile/components/Tours/components/TourAi/TourAi";
 export default function Header() {
     const { logout } = useAuth();
+    const [add, setAdd] = useState(false);
     const [show, setShow] = useState(false);
     return (
         <div className={styles.header}>
+            {add && <TourAi setHide={setAdd} />}
             <Link to="/" className={styles.logo}>
                 <h2>AKG</h2>
             </Link>
@@ -65,9 +69,9 @@ export default function Header() {
             </nav>
 
             <div className={styles.right}>
-                <Link to="/edit" className={styles.icon}>
-                    <IoShareSocial />
-                </Link>
+                <button className={styles.icon} onClick={() => setAdd(true)}>
+                    <FaStar />{" "}
+                </button>
                 <FaBell className={styles.icon} />
                 <div className={styles.account}>
                     <MdAccountCircle

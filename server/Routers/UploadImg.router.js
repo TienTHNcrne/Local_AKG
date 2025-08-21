@@ -10,39 +10,52 @@ const router = express.Router();
 const upload = multer();
 
 router.post("/upload", upload.array("images", 20), async (req, res) => {
-	try {
-		const uploadImages = req.files.map((file) => {
-			return new Promise((resolve, reject) => {
-				const stream = cloudinary.uploader.upload_stream(
-					{ folder: "gps-images" },
-					(error, result) => {
-						if (result) resolve(result.secure_url);
-						else reject(error);
-					}
-				);
-				streamifier.createReadStream(file.buffer).pipe(stream);
-			});
-		});
+    try {
+        // Kiểm tra req.body.lat, req.body.lng
+        const lat = Number(req.body.lat);
+        const lng = Number(req.body.lng);
 
-		const imageUrls = await Promise.all(uploadImages);
+        if (isNaN(lat) || isNaN(lng)) {
+            return res.status(400).json({ error: "Lat/Lng không hợp lệ" });
+        }
 
-		const gps = new Gps({
-			lat: req.body.lat,
-			lng: req.body.lng,
-			name: req.body.name,
-			category: req.body.category,
-			description: req.body.description,
-			time: req.body.time,
+        if (!req.files || req.files.length === 0) {
+            return res
+                .status(400)
+                .json({ error: "Không có file nào được upload" });
+        }
 
-			img: imageUrls,
-		});
+        const uploadImages = req.files.map((file) => {
+            return new Promise((resolve, reject) => {
+                const stream = cloudinary.uploader.upload_stream(
+                    { folder: "gps-images" },
+                    (error, result) => {
+                        if (result) resolve(result.secure_url);
+                        else reject(error);
+                    }
+                );
+                streamifier.createReadStream(file.buffer).pipe(stream);
+            });
+        });
 
-		await gps.save();
+        const imageUrls = await Promise.all(uploadImages);
 
-		res.status(201).json({ message: "Tạo điểm GPS thành công", gps });
-	} catch (err) {
-		res.status(500).json({ error: err.message });
-	}
+        const gps = new Gps({
+            lat,
+            lng,
+            name: req.body.name,
+            category: req.body.category,
+            description: req.body.description,
+            time: req.body.time,
+            img: imageUrls,
+        });
+
+        await gps.save();
+        res.status(201).json({ message: "Tạo điểm GPS thành công", gps });
+    } catch (err) {
+        console.error("UPLOAD ERROR:", err);
+        res.status(500).json({ error: err.message });
+    }
 });
 
 export default router;

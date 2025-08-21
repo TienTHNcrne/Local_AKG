@@ -12,91 +12,94 @@ import { useAuth } from "../../../../../../../Contexts/Auth/Auth";
 import { notification } from "antd";
 
 export default function General({ description, address, center, img }) {
-	const { userId } = useAuth();
-	const [lovePlace, setLovePlace] = useState(false);
-	console.log(img);
-	const aress = address ? address.split(",") : [];
-	let addres = "";
-	for (var i = 1; i < aress.length - 1; ++i) {
-		addres += aress[i].trim() + (i < aress.length - 2 ? "," : "");
-	}
+    const { userId } = useAuth();
+    const [lovePlace, setLovePlace] = useState(false);
+    console.log(img);
+    const aress = address ? address.split(",") : [];
+    let addres = "";
+    for (var i = 1; i < aress.length - 1; ++i) {
+        addres += aress[i].trim() + (i < aress.length - 2 ? "," : "");
+    }
 
-	useEffect(() => {
-		if (!center) return;
-		axios
-			.post(`${import.meta.env.VITE_BE_URL}/v1/api/place/FindPlace`, {
-				UserId: userId,
-				lat: center.lat,
-				lng: center.lng,
-				name: address,
-			})
-			.then((res) => {
-				if (res.data === "PlaceLove") {
-					setLovePlace(true);
-				}
-			})
-			.catch((err) => console.log(err.message));
-	}, [center]);
-	const GetPlace = () => {
-		if (lovePlace) {
-			axios
-				.post(`${import.meta.env.VITE_BE_URL}/v1/api/place/remove`, {
-					UserId: userId,
-					lat: center.lat,
-					lng: center.lng,
-					name: address,
-				})
-				.then(() => {
-					notification.success({ description: "da xoa" });
-					setLovePlace(false);
-				})
-				.catch((err) => console.log(err.message));
-		} else {
-			axios
-				.post(
-					`${import.meta.env.VITE_BE_URL}/v1/api/place/CreatePlace`,
-					{
-						img: img,
-						UserId: userId,
-						lat: center.lat,
-						lng: center.lng,
-						name: address,
-					}
-				)
-				.then(() => {
-					setLovePlace(true);
-					notification.success({ description: "ac" });
-				})
-				.catch((err) => console.log(err.message));
-		}
-	};
-	return (
-		<div className={styles.container}>
-			<div className={styles.option}>
-				<FaDirections />
-				<button
-					onClick={GetPlace}
-					style={{
-						background: "transparent",
-						border: "none",
-						cursor: "pointer",
-					}}
-				>
-					<FaHeart style={{ color: lovePlace ? "red" : "inherit" }} />
-				</button>
-				<MdGpsFixed />
-				<IoShareSocial />
-			</div>
-			<div className={styles.inFor}>
-				<div className={styles.address}>
-					<h3>Địa chỉ</h3>
-					<p>{addres}</p>
-				</div>
-				<div className={styles.description}>
-					<h3>Thông tin cơ bản</h3>
-					<p>{description}</p>
-				</div>{" "}
-			</div>
-		</div>
-	);
+    useEffect(() => {
+        if (!center) return;
+        axios
+            .post(`${import.meta.env.VITE_BE_URL}/v1/api/place/FindPlace`, {
+                UserId: userId,
+                lat: center.lat,
+                lng: center.lng,
+                name: address,
+            })
+            .then((res) => {
+                setLovePlace(false);
+                if (res.data === "PlaceLove") {
+                    setLovePlace(true);
+                }
+            })
+            .catch((err) => console.log(err.message));
+    }, [center]);
+    const GetPlace = () => {
+        if (lovePlace) {
+            axios
+                .post(`${import.meta.env.VITE_BE_URL}/v1/api/place/remove`, {
+                    UserId: userId,
+                    lat: center.lat,
+                    lng: center.lng,
+                    name: address,
+                })
+                .then(() => {
+                    notification.success({ description: "Đã xoá" });
+                    setLovePlace(false);
+                })
+                .catch((err) => console.log(err.message));
+        } else {
+            axios
+                .post(
+                    `${import.meta.env.VITE_BE_URL}/v1/api/place/CreatePlace`,
+                    {
+                        img: img,
+                        UserId: userId,
+                        lat: center.lat,
+                        lng: center.lng,
+                        name: address,
+                    }
+                )
+                .then(() => {
+                    setLovePlace(true);
+                    notification.success({
+                        description: "Đã thêm vào yêu thích",
+                    });
+                })
+                .catch((err) => console.log(err.message));
+        }
+    };
+    return (
+        <div className={styles.container}>
+            <div className={styles.option}>
+                <FaDirections />
+                <button
+                    onClick={GetPlace}
+                    style={{
+                        background: "transparent",
+                        border: "none",
+                        cursor: "pointer",
+                    }}
+                >
+                    <FaHeart style={{ color: lovePlace ? "red" : "inherit" }} />
+                </button>
+                <MdGpsFixed />
+                <IoShareSocial />
+            </div>
+            <div className={styles.inFor}>
+                <div className={styles.address}>
+                    <h3>Địa chỉ</h3>
+                    <p>{addres}</p>
+                </div>
+                <div className={styles.description}>
+                    <h3>Thông tin cơ bản</h3>
+                    <p>{description}</p>
+                </div>{" "}
+            </div>
+        </div>
+    );
 }

@@ -33,7 +33,6 @@ app.use("/v1/api", aiRoute);
 app.use("/v1/api", Tours);
 app.use("/v1/api", Plan);
 app.use("/v1/api", Rate);
-
 app.use("/v1/api", FindRouter);
 app.use("/v1/api", GpsRouter);
 app.use("/v2/api", UploadImg);
