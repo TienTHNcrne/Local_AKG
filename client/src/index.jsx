@@ -1,6 +1,7 @@
 /** @format */
 
 import React from "react";
+import Religion from "./pages/Home/religon/Religion";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router";
@@ -20,36 +21,37 @@ import "./index.css";
 import Auth from "./Contexts/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
 const router = createBrowserRouter([
-	{
-		path: "/",
-		element: <App />,
-		children: [
-			{
-				index: true,
-				element: <Home />,
-			},
-			{ path: "/Login", element: <Login /> },
-			{ path: "/Register", element: <Register /> },
-			{ path: "/profile", element: <Profile /> },
+    {
+        path: "/",
+        element: <App />,
+        children: [
+            {
+                index: true,
+                element: <Home />,
+            },
+            { path: "/Login", element: <Login /> },
+            { path: "/Register", element: <Register /> },
+            { path: "/profile", element: <Profile /> },
+            { path: "/Religion", element: <Religion /> },
 
-			{ path: "/Edit", element: <Rich_text /> },
-			{ path: "Climate", element: <Climate /> },
-			{ path: "Location", element: <Location /> },
-			{ path: "History", element: <History /> },
-			{ path: "CulSoc", element: <CulSoc /> },
+            { path: "/Edit", element: <Rich_text /> },
+            { path: "Climate", element: <Climate /> },
+            { path: "Location", element: <Location /> },
+            { path: "History", element: <History /> },
+            { path: "CulSoc", element: <CulSoc /> },
 
-			{ path: "Explore", element: <Explore /> },
-			{ path: "Explore/map", element: <Map /> },
-			{ path: "Explore/event", element: <Event /> },
-		],
-	},
+            { path: "Explore", element: <Explore /> },
+            { path: "Explore/map", element: <Map /> },
+            { path: "Explore/event", element: <Event /> },
+        ],
+    },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-	<React.StrictMode>
-		<Auth>
-			<RouterProvider router={router} />
-		</Auth>
-	</React.StrictMode>
+    <React.StrictMode>
+        <Auth>
+            <RouterProvider router={router} />
+        </Auth>
+    </React.StrictMode>
 );

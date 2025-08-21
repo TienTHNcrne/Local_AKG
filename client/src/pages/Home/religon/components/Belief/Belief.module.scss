@@ -1,0 +1,275 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: "Arial", sans-serif;
+    color: #333;
+}
+
+.heading {
+    text-align: start;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    position: relative;
+    padding-bottom: 0.5rem;
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100px;
+        height: 3px;
+        background: #e74c3c;
+    }
+}
+
+.intro {
+    text-align: start;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+.item {
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+}
+
+// Customize the MUI Accordion
+.summary {
+    background: linear-gradient(135deg, #f8fbf8 0%, #eef5ee 100%);
+    padding: 1rem 1.5rem;
+    min-height: 70px !important;
+
+    &:hover {
+        background: linear-gradient(135deg, #eef5ee 0%, #e4efe9 100%);
+    }
+
+    .MuiAccordionSummary-content {
+        margin: 0 !important;
+    }
+}
+
+.title {
+    font-size: 1.2rem;
+    color: #2c5530;
+    margin: 0;
+    position: relative;
+    padding-left: 1.8rem;
+
+    &::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #739e6e;
+        font-size: 1.8rem;
+        line-height: 1;
+    }
+}
+
+.content {
+    padding: 1em;
+    background: #fff;
+}
+
+.text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+// Image galleries
+.imageGallery1,
+.imageGallery2,
+.imageGallery3,
+.imageGallery4,
+.imageGallery5,
+.imageGallery6 {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+// For items with 2 images (1, 2, 4, 6)
+.imageGallery1,
+.imageGallery2,
+.imageGallery4,
+.imageGallery6 {
+    grid-template-columns: repeat(2, 1fr);
+
+    .imageContainer {
+        height: 250px;
+    }
+}
+
+// For item with 8 images (3)
+.imageGallery3 {
+    grid-template-columns: repeat(4, 1fr);
+
+    .imageContainer {
+        height: 180px;
+    }
+}
+
+// For item with 4 images (5)
+.imageGallery5 {
+    grid-template-columns: repeat(2, 1fr);
+
+    .imageContainer {
+        height: 200px;
+    }
+}
+
+.imageContainer {
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+
+        .image {
+            transform: scale(1.05);
+        }
+
+        &::after {
+            opacity: 1;
+        }
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.2) 0%,
+            rgba(0, 0, 0, 0) 40%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+// Responsive design
+@media (max-width: 900px) {
+    .imageGallery3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem 0.5rem;
+    }
+
+    .heading {
+        font-size: 2rem;
+    }
+
+    .intro {
+        font-size: 1rem;
+    }
+
+    .title {
+        font-size: 1.2rem;
+        padding-left: 1.5rem;
+    }
+
+    .imageGallery1,
+    .imageGallery2,
+    .imageGallery4,
+    .imageGallery6 {
+        grid-template-columns: 1fr;
+
+        .imageContainer {
+            height: 200px;
+        }
+    }
+
+    .imageGallery3 {
+        grid-template-columns: repeat(2, 1fr);
+
+        .imageContainer {
+            height: 160px;
+        }
+    }
+
+    .imageGallery5 {
+        grid-template-columns: 1fr;
+
+        .imageContainer {
+            height: 180px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .heading {
+        font-size: 1.8rem;
+    }
+
+    .summary {
+        padding: 0.8rem 1rem;
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 1.1rem;
+    }
+
+    .text {
+        font-size: 1rem;
+    }
+
+    .imageGallery3 {
+        grid-template-columns: 1fr;
+    }
+
+    .imageContainer {
+        height: 150px !important;
+    }
+}
+
+// MUI Accordion customization
+.MuiAccordion-root {
+    &::before {
+        display: none;
+    }
+
+    &.Mui-expanded {
+        margin: 0 !important;
+    }
+}
+
+.MuiAccordionDetails-root {
+    padding: 0 1.5rem 1.5rem !important;
+}
