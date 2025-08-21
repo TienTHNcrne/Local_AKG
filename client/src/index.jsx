@@ -13,9 +13,10 @@ import History from "./pages/Home/History/History";
 import CulSoc from "./pages/Home/CulSoc/CulSoc";
 import Explore from "./pages/Explore/Explore";
 import Map from "./pages/Explore/Map/Map";
-import Event from "./pages/Explore/Event/Event";
+import TinhHoa from "./pages/Explore/TinhHoa/TinhHoa";
 import "leaflet/dist/leaflet.css";
 import Register from "./pages/Register/Register";
+import Food from "./pages/Home/Food/Food";
 import Login from "./pages/Login/Login";
 import "./index.css";
 import Auth from "./Contexts/Auth/Auth";
@@ -30,6 +31,8 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             { path: "/Login", element: <Login /> },
+            { path: "/Food", element: <Food /> },
+
             { path: "/Register", element: <Register /> },
             { path: "/profile", element: <Profile /> },
             { path: "/Religion", element: <Religion /> },
@@ -40,9 +43,8 @@ const router = createBrowserRouter([
             { path: "History", element: <History /> },
             { path: "CulSoc", element: <CulSoc /> },
 
-            { path: "Explore", element: <Explore /> },
             { path: "Explore/map", element: <Map /> },
-            { path: "Explore/event", element: <Event /> },
+            { path: "Explore/TinhHoa", element: <TinhHoa /> },
         ],
     },
 ]);

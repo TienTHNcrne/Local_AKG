@@ -1,0 +1,104 @@
+/** @format */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 30px;
+}
+
+//
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.first {
+    justify-content: center;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+
+    button {
+        background: none;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 6px 16px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: rgba(0, 140, 255, 0.08);
+            border-color: rgba(0, 140, 255, 0.801);
+        }
+    }
+
+    h4 {
+        font-size: 1.05rem;
+    }
+}
+
+.second {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    input {
+        flex: 1;
+        height: 36px;
+        padding: 0 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+
+        &:active,
+        &:focus {
+            outline: none;
+            border: 2px solid rgba(0, 140, 255, 0.801);
+        }
+    }
+
+    .filter {
+        select {
+            padding: 6px 10px;
+            height: 36px;
+            font-size: 0.95rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+
+            &:active,
+            &:focus {
+                outline: none;
+                border: 2px solid rgba(0, 140, 255, 0.801);
+            }
+        }
+    }
+}
+.tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    justify-content: center;
+    button {
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid #ddd;
+        background: #f9f9f9;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 1.2rem;
+        &:hover {
+            background: #eee;
+        }
+    }
+
+    .active {
+        background: #1976d2;
+        color: white;
+        border-color: #1976d2;
+        font-weight: 500;
+    }
+}

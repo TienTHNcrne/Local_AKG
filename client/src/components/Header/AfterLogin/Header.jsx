@@ -41,24 +41,27 @@ export default function Header() {
                         <li>
                             <Link to="/CulSoc">Culture-Society</Link>
                         </li>
-                        =
+
                         <li>
                             <Link to="/Religion">Religion</Link>
+                        </li>
+                        <li>
+                            <Link to="/Food">Food and Place</Link>
                         </li>
                     </ul>
                 </div>
 
                 <div className={styles.dropdown}>
-                    <Link to="/Explore">
+                    <div>
                         <IoShareSocial />
                         <span>Khám phá</span>
-                    </Link>
+                    </div>
                     <ul className={styles.dropdownMenu}>
                         <li>
                             <Link to="/Explore/map">Map</Link>
                         </li>
                         <li>
-                            <Link to="/Explore/event">Event</Link>
+                            <Link to="/Explore/TinhHoa">Tinh hoa An Giang</Link>
                         </li>
                     </ul>
                 </div>

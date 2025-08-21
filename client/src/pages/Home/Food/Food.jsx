@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function s() {
+export default function Food() {
     return <div></div>;
 }

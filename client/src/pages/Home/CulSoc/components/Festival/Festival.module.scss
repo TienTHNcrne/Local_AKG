@@ -129,3 +129,30 @@
         color: #4b5563;
     }
 }
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.tab {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #e5e7eb;
+    color: #374151;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+
+    &:hover {
+        background: #d1d5db;
+    }
+}
+
+.active {
+    background: #197fd2;
+    color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
