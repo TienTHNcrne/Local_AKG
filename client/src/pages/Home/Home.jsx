@@ -88,7 +88,7 @@ export default function Home() {
                             Long Xuyên cùng những món ngon như mắm Châu Đốc, gỏi
                             sầu đâu, lẩu mắm.
                         </p>
-                        <Link to="/" className={styles.btn}>
+                        <Link to="/Explore/TinhHoa" className={styles.btn}>
                             Khám phá
                         </Link>
                     </div>

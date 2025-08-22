@@ -102,3 +102,86 @@
         font-weight: 500;
     }
 }
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+
+    button {
+        padding: 8px 18px;
+        border-radius: 20px;
+        border: 1px solid #ddd;
+        background: #f9f9f9;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: #eee;
+        }
+    }
+
+    .active {
+        background: #1976d2;
+        color: white;
+        border-color: #1976d2;
+        font-weight: 500;
+    }
+}
+
+/* Add Data button */
+.second {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    input {
+        flex: 1;
+        height: 30px;
+        padding: 0 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        transition: 0.2s ease;
+
+        &:focus {
+            outline: none;
+            border-color: #1976d2;
+            box-shadow: 0 0 4px rgba(25, 118, 210, 0.4);
+        }
+    }
+
+    .filter select {
+        height: 32px;
+        padding: 0 8px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 0.9rem;
+
+        &:focus {
+            outline: none;
+            border-color: #1976d2;
+            box-shadow: 0 0 4px rgba(25, 118, 210, 0.4);
+        }
+    }
+
+    button {
+        padding: 6px 14px;
+        border: none;
+        border-radius: 6px;
+        background: #1976d2;
+        color: #fff;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: #1259a6;
+        }
+
+        &:active {
+            transform: scale(0.96);
+        }
+    }
+}

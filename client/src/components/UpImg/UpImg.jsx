@@ -72,31 +72,6 @@ export default function UpImg({ setImages }) {
                 )}{" "}
             </div>
             {/*HANDLE */}
-            {img && (
-                <div className={styles.img}>
-                    {img.map((value, id) => (
-                        <div className={styles.containerImg}>
-                            <img src={value.URL} alt="" />
-                            <button
-                                type="button"
-                                className={styles.delete}
-                                onClick={() => {
-                                    const newImg = [];
-                                    img.forEach((value1, id1) => {
-                                        if (id1 !== id) {
-                                            newImg.push(value1);
-                                        }
-                                    });
-                                    console.log(newImg);
-                                    setImg(newImg);
-                                }}
-                            >
-                                <RiDeleteBin6Fill />
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            )}
         </div>
     );
 }

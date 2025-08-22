@@ -9,6 +9,7 @@ import { useAuth } from "../../../../../../Contexts/Auth/Auth";
 import GetPlace from "./Hooks/GetPlace";
 import GetHis from "./Hooks/GetHis";
 import Save from "./components/Save/Save";
+
 export default function TourAi({ setHide }) {
     const [date, setDate] = useState(null);
     const [money, setMoney] = useState(null);
@@ -19,6 +20,9 @@ export default function TourAi({ setHide }) {
     const [save, setSave] = GetHis();
     const [confirm, setConfirm] = useState(false);
     const [details, setDetails] = useState("");
+    const [loading, setLoading] = useState(false); // new
+    const contentRef = useRef(null);
+
     const address = (s) => {
         const a = s.split(",");
         let addr = "";
@@ -30,6 +34,8 @@ export default function TourAi({ setHide }) {
 
     const submit = (e) => {
         e.preventDefault();
+        setLoading(true); // bắt đầu loading
+
         let s = "";
         if (choose && choose.length > 0) {
             s = "Tôi muốn đi du lịch các địa điểm: ";
@@ -45,11 +51,7 @@ export default function TourAi({ setHide }) {
             .post(
                 `${import.meta.env.VITE_BE_URL}/v1/api/tour`,
                 { prompt: s },
-                {
-                    headers: {
-                        UserId: userId,
-                    },
-                }
+                { headers: { UserId: userId } }
             )
             .then((res) => {
                 const newResult = {
@@ -58,21 +60,24 @@ export default function TourAi({ setHide }) {
                     isNew: true,
                 };
                 setSave((prev) => [...prev, newResult]);
+                setLoading(false); // kết thúc loading
             })
-            .catch((err) => console.error(err.message));
+            .catch((err) => {
+                console.error(err.message);
+                setLoading(false); // kết thúc loading nếu lỗi
+            });
     };
-    const contentRef = useRef(null);
 
     useEffect(() => {
         if (contentRef.current) {
             contentRef.current.scrollTop = contentRef.current.scrollHeight;
         }
     }, [save]);
+
     return (
         <div className={styles.container}>
             {confirm && <Save details={details} setConfirm={setConfirm} />}
             <div className={styles.choose}>
-                {/* PLACES */}{" "}
                 <div className={styles.places}>
                     <h3>Your Places</h3>
                     <div className={styles.selectAll}>
@@ -125,13 +130,11 @@ export default function TourAi({ setHide }) {
                         </div>
                     ))}
                 </div>
-                {/* BUILD */}
+
                 <div className={styles.build}>
                     <button
                         className={styles.close}
-                        onClick={() => {
-                            setHide(false);
-                        }}
+                        onClick={() => setHide(false)}
                     >
                         &times;
                     </button>
@@ -149,13 +152,10 @@ export default function TourAi({ setHide }) {
                                     required={true}
                                     onChange={(e) => setDate(e.target.value)}
                                 />
-                            </div>{" "}
+                            </div>
                             <div className={styles.item}>
                                 <label htmlFor="money">
-                                    <h3>
-                                        Số tiền bạn muốn chi (đơn vị được tính
-                                        bằng triệu)
-                                    </h3>
+                                    <h3>Số tiền bạn muốn chi (triệu đồng)</h3>
                                 </label>
                                 <input
                                     type="number"
@@ -165,7 +165,7 @@ export default function TourAi({ setHide }) {
                                     required={true}
                                     onChange={(e) => setMoney(e.target.value)}
                                 />
-                            </div>{" "}
+                            </div>
                             <div className={styles.item}>
                                 <label htmlFor="place">
                                     <h3>Nơi bạn bắt đầu</h3>
@@ -190,6 +190,7 @@ export default function TourAi({ setHide }) {
                             Run
                         </button>
                     </form>
+
                     <div className={styles.content1} ref={contentRef}>
                         {save
                             .filter((v) => v.role === "assistant")
@@ -216,6 +217,12 @@ export default function TourAi({ setHide }) {
                                 </div>
                             ))}
                     </div>
+
+                    {loading && (
+                        <div className={styles.loadingOverlay}>
+                            <div className={styles.spinner}></div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

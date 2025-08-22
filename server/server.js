@@ -11,6 +11,7 @@ import connection from "./config/database.js";
 import axios from "axios";
 import openAI from "openai";
 dotenv.config();
+import Festival from "./Routers/Festival.router.js";
 import aiRoute from "./Routers/Ai.router.js";
 const app = express();
 const PORT = process.env.PORT || 8081;
@@ -36,17 +37,19 @@ app.use("/v1/api", Rate);
 app.use("/v1/api", FindRouter);
 app.use("/v1/api", GpsRouter);
 app.use("/v2/api", UploadImg);
+app.use("/v1/api", Festival);
+
 app.use("/v1/api", PlaceLove);
 app.get("/", (req, res) => {
-	res.send("Backend is running!");
+    res.send("Backend is running!");
 });
 (async () => {
-	try {
-		await connection();
-		app.listen(PORT, () => {
-			console.log(` Server is running at http://localhost:${PORT}`);
-		});
-	} catch (error) {
-		console.error("Failed to connect:", error);
-	}
+    try {
+        await connection();
+        app.listen(PORT, () => {
+            console.log(` Server is running at http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.error("Failed to connect:", error);
+    }
 })();

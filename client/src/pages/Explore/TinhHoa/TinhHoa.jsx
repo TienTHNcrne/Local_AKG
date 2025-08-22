@@ -3,40 +3,70 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./TinhHoa.module.scss";
 import Place from "./components/Place/Place";
+import Festival from "./components/Festival/Festival";
 
+import AddFes from "./components/Festival/components/addFes/AddFes";
 export default function TinhHoa() {
     const [keyword, setKeyword] = useState("");
     const [filter, setFilter] = useState("All");
-    const [data, setData] = useState([]);
     const [form, setForm] = useState("place"); // tab hiện tại
+    const [placeData, setPlaceData] = useState([]);
+    const [eventData, setEventData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [showAdd, setShowAdd] = useState(false);
+
+    const normalize = (str) =>
+        str
+            ?.toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "") || "";
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchPlace = async () => {
             try {
+                setLoading(true);
                 const res = await axios.get(
                     `${import.meta.env.VITE_BE_URL}/v1/api/gps/all`
                 );
-                setData(res.data);
+                setPlaceData(res.data);
             } catch (err) {
-                console.error("Lỗi khi fetch:", err.message);
+                console.error("Lỗi khi fetch place:", err.message);
+            } finally {
+                setLoading(false);
             }
         };
-        fetchData();
-    }, []);
 
-    // Lọc dữ liệu theo keyword + filter
-    const filteredData = data.filter((item) => {
-        const name = item.name?.toLowerCase() || "";
-        const category = item.category?.toLowerCase() || "";
-        const desc = item.description?.toLowerCase() || "";
-        const key = keyword.toLowerCase();
+        const fetchEvent = async () => {
+            try {
+                setLoading(true);
+                const res = await axios.get(
+                    `${import.meta.env.VITE_BE_URL}/v1/api/festival/GetAll`
+                );
+                setEventData(res.data);
+            } catch (err) {
+                console.error("Lỗi khi fetch event:", err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (form === "place" && placeData.length === 0) fetchPlace();
+        if (form === "event" && eventData.length === 0) fetchEvent();
+    }, [form]);
+
+    const currentData =
+        form === "place" ? placeData : form === "event" ? eventData : [];
+
+    const filteredData = currentData.filter((item) => {
+        const name = normalize(item.name);
+        const category = normalize(item.category);
+        const desc = normalize(item.description);
+        const key = normalize(keyword);
 
         const matchKeyword =
             name.includes(key) || category.includes(key) || desc.includes(key);
-
         const matchFilter =
-            filter === "All" ||
-            item.category?.toLowerCase() === filter.toLowerCase();
+            filter === "All" || normalize(item.category) === normalize(filter);
 
         return matchKeyword && matchFilter;
     });
@@ -61,7 +91,7 @@ export default function TinhHoa() {
                     className={form === "event" ? styles.active : ""}
                     onClick={() => setForm("event")}
                 >
-                    Sự kiện
+                    Lễ hội
                 </button>
             </div>
 
@@ -74,7 +104,7 @@ export default function TinhHoa() {
                         value={keyword}
                         onChange={(e) => setKeyword(e.target.value)}
                     />
-                    {form === "place" && (
+                    {form === "place" ? (
                         <div className={styles.filter}>
                             <select
                                 name="filter"
@@ -94,22 +124,27 @@ export default function TinhHoa() {
                                 <option value="Ẩm thực">Ẩm thực</option>
                             </select>
                         </div>
-                    )}
+                    ) : form === "event" || form === "food" ? (
+                        <button onClick={() => setShowAdd(true)}>
+                            Add Data
+                        </button>
+                    ) : null}
                 </div>
             </div>
 
-            {/* Render theo form */}
-            {form === "place" && (
-                <Place
-                    setKeyword={setKeyword}
-                    setFilter={setFilter}
-                    keyword={keyword}
-                    filter={filter}
-                    filteredData={filteredData}
-                />
-            )}
-            {form === "food" && <p>📌 Danh sách món ăn sẽ hiển thị ở đây.</p>}
-            {form === "event" && <p>📌 Danh sách sự kiện sẽ hiển thị ở đây.</p>}
+            {loading ? (
+                <p>Đang tải dữ liệu...</p>
+            ) : filteredData.length === 0 ? (
+                <p>Không có dữ liệu.</p>
+            ) : form === "place" ? (
+                <Place filteredData={filteredData} />
+            ) : form === "food" ? (
+                <p>📌 Danh sách món ăn sẽ hiển thị ở đây.</p>
+            ) : form === "event" ? (
+                <Festival filteredData={filteredData} />
+            ) : null}
+
+            {showAdd && form === "event" && <AddFes setShow={setShowAdd} />}
         </div>
     );
 }

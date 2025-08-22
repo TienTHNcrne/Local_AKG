@@ -1,6 +1,3 @@
-/** @format */
-
-/** @format */
 .add {
     position: absolute;
     top: 0;
@@ -15,6 +12,7 @@
     flex-direction: column;
     gap: 0.8rem;
     transition: transform 0.4s ease;
+    overflow-y: auto;
 
     label {
         font-weight: 600;
@@ -37,7 +35,7 @@
         resize: vertical;
     }
 
-    button {
+    button.submitBtn {
         margin-top: 0.5rem;
         padding: 0.6rem;
         border: none;
@@ -47,16 +45,41 @@
         border-radius: 6px;
         cursor: pointer;
         transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         &:hover {
             background: #0056b3;
         }
+
+        &:disabled {
+            background: #a0c4ff;
+            cursor: not-allowed;
+        }
     }
 
-    .Time {
-        textarea {
-            min-height: 80px;
+    // spinner animation
+    .spinner {
+        width: 18px;
+        height: 18px;
+        border: 3px solid #fff;
+        border-top: 3px solid #0056b3;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
         }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .Time textarea {
+        min-height: 80px;
     }
 
     .existWarning {
@@ -67,13 +90,14 @@
     }
 
     .suggests {
+        display: flex;
+        flex-direction: column;
         max-height: 150px;
         overflow-y: auto;
-        background: #f9f9f9;
+        background: #fff;
         border: 1px solid #ccc;
         border-radius: 6px;
-        margin-top: -0.2rem;
-        z-index: 10;
+        z-index: 2000;
 
         .suggest {
             padding: 0.5rem 0.7rem;
@@ -82,6 +106,57 @@
 
             &:hover {
                 background: #e6f7ff;
+            }
+        }
+    }
+
+    .img {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
+        gap: 10px;
+        padding-top: 20px;
+        overflow-y: auto;
+        flex-wrap: wrap;
+        overflow-x: hidden;
+        max-height: 200px;
+        .containerImg {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+
+            &:hover {
+                transform: scale(1.06);
+            }
+
+            img {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                border-radius: 5px;
+                display: block;
+            }
+
+            .delete {
+                position: absolute;
+                top: -8px;
+                right: 30px;
+                width: 32px;
+                height: 32px;
+                background-color: rgba(255, 0, 0, 0.85);
+                border: none;
+                color: white;
+                border-radius: 50%;
+                font-size: 18px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: transform 0.2s ease, background-color 0.3s ease;
+
+                &:hover,
+                &:focus {
+                    transform: scale(1.2);
+                }
             }
         }
     }
@@ -95,10 +170,11 @@
     }
 }
 
-/* Responsive mobile */
-@media (max-width: 400px) {
-    .add {
-        width: 100%;
-        padding: 0.8rem;
+.second {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .ro1 {
+        flex: 1;
     }
 }

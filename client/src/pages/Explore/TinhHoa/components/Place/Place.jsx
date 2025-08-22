@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import GetDesMain from "../../../Map/components/GetDesMain/GetDesMain";
 import styles from "./Place.module.scss";
 export default function Place({
-    setKeyword,
-    setFilter,
-    keyword,
-    filter,
+
     filteredData,
 }) {
     const [dataCard, setDataCard] = useState(null);
@@ -49,14 +46,18 @@ export default function Place({
                             setPopup(true);
                         }}
                     >
-                        <img
-                            src={
-                                value.img[
-                                    Math.floor(Math.random() * value.img.length)
-                                ]
-                            }
-                            alt=""
-                        />
+                        {value.img.length > 0 && (
+                            <img
+                                src={
+                                    value.img[
+                                        Math.floor(
+                                            Math.random() * value.img.length
+                                        )
+                                    ]
+                                }
+                                alt=""
+                            />
+                        )}
                         <h4>{value.name.split(",")[0]}</h4>
                         <h5>{value.category}</h5>
                         <p>{getAddress(value.name)}</p>
