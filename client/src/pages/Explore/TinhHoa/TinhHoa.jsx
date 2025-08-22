@@ -5,7 +5,7 @@ import styles from "./TinhHoa.module.scss";
 import Place from "./components/Place/Place.jsx";
 import Festival from "./components/Festival/Festival.jsx";
 
-import AddFes from "./components/Festival/components/addFes/AddFes.jsx";
+import AddFes from "./components/Festival/components/AddFes/AddFes.jsx";
 export default function TinhHoa() {
     const [keyword, setKeyword] = useState("");
     const [filter, setFilter] = useState("All");

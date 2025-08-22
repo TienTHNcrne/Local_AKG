@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import styles from "./AddFes.module.scss";
 import axios from "axios";
-import UpImg from "../../../../../../../components/UpImg/UpImg";
+import UpImg from "../../../../../../../components/UpImg/UpImg.jsx";
 import { RiDeleteBin2Fill, RiCloseLine, RiAddLine } from "react-icons/ri";
 
 export default function AddFes({ setShow }) {
