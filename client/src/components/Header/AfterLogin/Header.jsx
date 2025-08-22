@@ -75,7 +75,6 @@ export default function Header() {
                 <button className={styles.icon} onClick={() => setAdd(true)}>
                     <FaStar />{" "}
                 </button>
-                <FaBell className={styles.icon} />
                 <div className={styles.account}>
                     <MdAccountCircle
                         onClick={() => {

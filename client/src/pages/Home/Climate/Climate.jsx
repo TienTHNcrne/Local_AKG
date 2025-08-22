@@ -47,8 +47,8 @@ export default function Climate() {
                     <div className={styles.content}>
                         <p>
                             Nhiệt độ trung bình hằng năm dao động từ 26,4°C đến
-                            28°C, và nhiệt độ trung bình hằng tháng từ 27°C
-                            đếndddddddddddddddd 27,5°C.
+                            28°C, và nhiệt độ trung bình hằng tháng từ 27°C đến
+                            27,5°C.
                         </p>
                     </div>
                 </div>

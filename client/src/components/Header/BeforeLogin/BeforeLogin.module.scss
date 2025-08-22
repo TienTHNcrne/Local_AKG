@@ -1,117 +1,133 @@
 /** @format */
 
 .header {
-	background: #a4c8a3;
-	padding: 10px 20px;
-	border-bottom: 3px solid #ffffff;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+    background: linear-gradient(
+        90deg,
+        #2e7d32,
+        #43a047,
+        #66bb6a
+    ); // gradient xanh lá
+    padding: 10px 20px;
+    border-bottom: 3px solid #ffffff;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
-	font-size: 24px;
-	font-weight: bold;
-	color: white;
-	text-decoration: none;
-	align-self: flex-start;
-}
-
-.menuIcon {
-	font-size: 24px;
-	color: white;
-	cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    align-self: flex-start;
+    transition: transform 0.2s ease;
+    &:hover {
+        transform: scale(1.05);
+    }
 }
 
 .nav {
-	display: flex;
-	align-self: center;
-	gap: 50px;
-	z-index: 1000;
-	a {
-		color: black;
-		text-decoration: none;
-		font-weight: 500;
-		display: flex;
-		align-items: center;
-		font-size: 20px;
-		gap: 5px;
-		padding: 8px 0;
-	}
+    display: flex;
+    align-self: center;
+    gap: 50px;
+    z-index: 1000;
+
+    div,
+    a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        gap: 5px;
+        cursor: pointer;
+        padding: 8px 0;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #d0ffd0; // xanh lá nhạt khi hover
+        }
+    }
 }
 
 .dropdown {
-	position: relative;
+    position: relative;
 
-	&:hover .dropdownMenu {
-		display: block;
-	}
+    &:hover .dropdownMenu {
+        display: block;
+    }
 }
 
 .dropdownMenu {
-	display: none;
-	position: absolute;
-	top: 100%;
-	left: 0;
-	background: #f4f4f4;
-	padding: 10px 0;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-	border-radius: 4px;
-	z-index: 99;
-	min-width: 160px;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #f1f8f1; // nền xanh nhạt
+    padding: 10px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    z-index: 99;
+    min-width: 160px;
 
-	li {
-		list-style: none;
+    li {
+        list-style: none;
 
-		a {
-			display: block;
-			padding: 8px 20px;
-			color: black;
-			text-decoration: none;
+        a {
+            display: block;
+            padding: 10px 20px;
+            color: #2e7d32;
+            text-decoration: none;
+            transition: all 0.3s ease;
 
-			&:hover {
-				background: #d4f4f4;
-			}
-		}
-	}
+            &:hover {
+                background: #c8e6c9;
+                color: #1b5e20;
+                border-radius: 4px;
+            }
+        }
+    }
 }
 
 .right {
-	display: flex;
-	align-items: center;
-	gap: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 
-	a {
-		text-decoration: none;
+    a {
+        text-decoration: none;
 
-		button {
-			padding: 8px 16px;
-			font-size: 16px;
-			font-weight: 500;
-			border-radius: 6px;
-			cursor: pointer;
-			border: none;
-			transition: all 0.3s ease;
-		}
-	}
+        button {
+            padding: 8px 16px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+    }
 
-	/* Nút Sign Up */
-	a:first-child button {
-		background-color: #ffffff;
-		color: #4a7c4a;
+    /* Nút Sign Up */
+    a:first-child button {
+        background-color: #ffffff;
+        color: #2e7d32;
+        border: 2px solid #2e7d32;
 
-		&:hover {
-			background-color: #e6f5e6;
-		}
-	}
+        &:hover {
+            background-color: #e6f5e6;
+        }
+    }
 
-	/* Nút Sign In */
-	a:last-child button {
-		background-color: #4a7c4a;
-		color: #ffffff;
+    /* Nút Sign In */
+    a:last-child button {
+        background: linear-gradient(90deg, #388e3c, #2e7d32);
+        color: #ffffff;
 
-		&:hover {
-			background-color: #3b633b;
-		}
-	}
+        &:hover {
+            background: linear-gradient(90deg, #2e7d32, #1b5e20);
+        }
+    }
 }

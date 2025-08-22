@@ -1,7 +1,7 @@
 /** @format */
 
 .header {
-    background: #a4c8a3;
+    background: #388e3c; // xanh lá tươi
     padding: 10px 20px;
     border-bottom: 3px solid #ffffff;
     display: flex;
@@ -19,7 +19,7 @@
 }
 
 .menuIcon {
-    font-size: 24px;
+    font-size: 1.3rem;
     color: white;
     cursor: pointer;
 }
@@ -31,12 +31,12 @@
     z-index: 1000;
     div,
     a {
-        color: black;
+        color: white;
         text-decoration: none;
         font-weight: 500;
         display: flex;
         align-items: center;
-        font-size: 20px;
+        font-size: 1.3rem;
         gap: 5px;
         cursor: pointer;
         padding: 8px 0;
@@ -56,7 +56,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background: #f4f4f4;
+    background: #e8f5e9;
     padding: 10px 0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
@@ -96,7 +96,7 @@
 
 .icon {
     font-size: 22px;
-    color: #2984eb;
+    color: #4caf50;
     background: white;
     border-radius: 50%;
     padding: 8px;
@@ -132,7 +132,7 @@
             transition: all 0.3s ease;
             &:hover {
                 color: white;
-                background-color: #2984eb;
+                background-color: #4caf50;
             }
         }
     }

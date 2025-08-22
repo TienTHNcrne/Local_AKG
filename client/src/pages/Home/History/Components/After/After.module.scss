@@ -1,72 +1,82 @@
 /** @format */
 
 .container {
-	display: flex;
-	flex-direction: column;
-	gap: 30px;
-	font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 
-	h3 {
-		font-size: 1.5rem;
-		display: flex;
-		flex-direction: column;
-		&::after {
-			content: "";
-			width: 100%;
-			height: 2px;
-			background-color: #3498db;
-			margin-bottom: 20px;
-			margin-top: 10px;
-		}
-	}
-	h4 {
-		font-size: 1.3rem;
-	}
-	p {
-		font-size: 1.2rem;
-	}
+    h3 {
+        font-size: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        &::after {
+            content: "";
+            width: 100%;
+            height: 2.5px;
+            background-image: linear-gradient(to right, #3498db, #2ecc71);
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+    }
+    h4 {
+        font-size: 1.3rem;
+    }
+    p {
+        font-size: 1.2rem;
+    }
 }
 .basic {
-	line-height: 200%;
-	border-radius: 10px;
-	padding: 20px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	background-color: #f9f9f9;
+    line-height: 200%;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
 
-	strong {
-		color: red;
-	}
+    strong {
+        color: red;
+    }
 }
 .highlights {
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-	border-radius: 10px;
-	padding: 20px 30px;
-	line-height: 200%;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 10px;
+    padding: 20px 30px;
+    line-height: 200%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-	.cards {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 20px;
-		.card {
-			background: white;
-			border-radius: 8px;
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-			transition: transform 0.3s ease;
-			h4 {
-				font-size: 1.2rem;
-				padding: 0 1rem;
-				margin-top: 1rem;
-				border-bottom: none;
-			}
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            padding: 10px 20px;
+            img {
+                width: 100%;
+                border-radius: 10px;
+                height: 200px;
+                object-fit: cover;
+            }
+            h4 {
+                font-size: 1.2rem;
+                padding: 0 1rem;
+                margin-top: 1rem;
+                border-bottom: none;
+            }
 
-			p {
-				padding: 0 1rem 1.5rem;
-				font-size: 0.9rem;
-				color: #666;
-			}
-		}
-	}
+            p {
+                padding: 0 1rem 1.5rem;
+                font-size: 0.9rem;
+                color: #666;
+            }
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            }
+        }
+    }
 }

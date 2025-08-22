@@ -1,3 +1,4 @@
+/** @format */
 .container {
     margin: 0 9%;
     padding: 15px 20px;
@@ -10,12 +11,14 @@
         font-size: 2rem;
         font-weight: 700;
         margin-bottom: 1.5rem;
-        color: #1e293b;
+        color: #14532d; // xanh lá đậm
     }
 }
+
 .content {
     padding: 0 1rem;
 }
+
 .ethnic {
     margin-bottom: 3rem;
 
@@ -23,8 +26,8 @@
         font-size: 1.5rem;
         font-weight: 600;
         margin: 1rem 0;
-        color: #2563eb;
-        border-left: 4px solid #e53e3e;
+        color: #15803d; // xanh lá tươi
+        border-left: 4px solid #16a34a; // viền xanh lá sáng
         border-radius: 4px;
         padding-left: 0.5rem;
     }
@@ -38,33 +41,37 @@
 
 .card {
     background: #fff;
-    border-top: 5px solid #197fd2;
+    border-top: 5px solid #22c55e; // xanh lá primary
     border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+
     img {
         height: 220px;
         width: 100%;
         object-fit: cover;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-
         margin-bottom: 20px;
         transition: all 0.5s ease;
     }
+
     &:hover {
         transform: translateY(-4px);
-        border-top: 5px solid #e53e3e;
+        border-top: 5px solid #166534; // xanh lá đậm hơn
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+
         .cardContent h5 {
-            color: #e53e3e;
+            color: #166534; // xanh lá hover
         }
+
         .cardContent h5::after {
             width: 80%;
             height: 2px;
-            background-color: #e53e3e;
+            background-color: #166534;
         }
+
         img {
             transform: scale(1.04);
         }
@@ -80,17 +87,20 @@
 
 .cardContent {
     padding: 1.25rem;
+
     .header {
         display: flex;
         flex-direction: column;
+
         h5 {
             text-align: center;
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: #111827;
+            color: #14532d;
             position: relative;
             padding-bottom: 10px;
+
             &::after {
                 content: "";
                 position: absolute;
@@ -100,7 +110,7 @@
                 height: 3px;
                 width: 50%;
                 transition: all 0.5s ease;
-                background-color: rgb(67, 126, 255);
+                background-color: #22c55e; // line xanh lá
             }
         }
     }
@@ -108,15 +118,16 @@
 
 .mainContent {
     margin-bottom: 0.75rem;
+
     h6 {
         font-size: 1.1rem;
         font-weight: 600;
         margin-bottom: 0.25rem;
-        color: #197fd2;
+        color: #15803d;
 
         &::before {
             content: "•";
-            color: #e53e3e;
+            color: #16a34a;
             margin-right: 8px;
             font-size: 1.2rem;
         }
@@ -129,6 +140,7 @@
         color: #4b5563;
     }
 }
+
 .tabs {
     display: flex;
     justify-content: center;
@@ -152,7 +164,11 @@
 }
 
 .active {
-    background: #197fd2;
+    background: #22c55e; // xanh lá active
     color: white;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    &:hover {
+        background: #0d602c;
+    }
 }

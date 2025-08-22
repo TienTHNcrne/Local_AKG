@@ -1,44 +1,74 @@
 /** @format */
 
 .container {
-	display: flex;
-	flex-direction: column;
-	padding: 20px 30px;
-	gap: 20px;
-	.first {
-		display: flex;
-		justify-content: space-between;
-		.left {
-			flex: 0.1;
-			display: flex;
-			flex-direction: column;
-			gap: 20px;
-			min-height: 40vh;
-			border: 2px solid black;
-			padding: 15px 20px;
-			min-width: 15vw;
-			svg {
-				font-size: 100px;
-			}
-			.item {
-				display: flex;
-				gap: 5px;
-			}
-		}
-		//right
-		.right {
-			flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+    gap: 20px;
+    background: #f9fafb; // nền nhẹ để nổi khối
+    min-height: 100vh;
 
-			max-width: 74vw;
-			border: 2px solid black;
-			padding: 20px;
-		}
-	}
-	//second
-	.second {
-		display: flex;
-		overflow: auto;
-		border: 2px solid black;
-		min-height: 50vh;
-	}
+    .first {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+
+        .left {
+            flex: 0.25;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-height: 40vh;
+            padding: 20px;
+            min-width: 250px;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+            svg {
+                font-size: 80px;
+                color: #2e7d32;
+                align-self: center;
+            }
+
+            .item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.95rem;
+                color: #444;
+                padding: 6px 8px;
+                border-radius: 6px;
+                transition: background 0.2s ease;
+
+                &:hover {
+                    background: rgba(46, 125, 50, 0.08);
+                }
+            }
+        }
+
+        .right {
+            flex: 1;
+            max-width: 74vw;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+    }
+
+    .second {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        background: #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        min-height: 50vh;
+        padding: 20px;
+        overflow: auto;
+    }
 }
