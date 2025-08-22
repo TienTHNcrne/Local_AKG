@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./TinhHoa.module.scss";
-import Place from "./components/Place/Place";
-import Festival from "./components/Festival/Festival";
+import Place from "./components/Place/Place.jsx";
+import Festival from "./components/Festival/Festival.jsx";
 
-import AddFes from "./components/Festival/components/addFes/AddFes";
+import AddFes from "./components/Festival/components/addFes/AddFes.jsx";
 export default function TinhHoa() {
     const [keyword, setKeyword] = useState("");
     const [filter, setFilter] = useState("All");
