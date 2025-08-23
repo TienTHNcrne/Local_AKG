@@ -1,18 +1,23 @@
 /** @format */
 
+// Biến cho responsive breakpoints
+$mobile-breakpoint: 768px;
+$tablet-breakpoint: 1024px;
+
 .header {
-    background: linear-gradient(
-        90deg,
-        #2e7d32,
-        #43a047,
-        #66bb6a
-    ); // gradient xanh lá
+    background: linear-gradient(90deg, #2e7d32, #43a047, #66bb6a);
     padding: 10px 20px;
     border-bottom: 3px solid #ffffff;
     display: flex;
     position: relative;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+
+    @media (max-width: $mobile-breakpoint) {
+        padding: 10px 15px;
+        position: relative;
+    }
 }
 
 .logo {
@@ -22,8 +27,31 @@
     text-decoration: none;
     align-self: flex-start;
     transition: transform 0.2s ease;
+    z-index: 1001;
+
     &:hover {
         transform: scale(1.05);
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+        order: 2;
+        flex: 1;
+        text-align: center;
+        margin: 0 10px;
+    }
+}
+
+// Menu icon for mobile
+.menuIcon {
+    display: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+
+    @media (max-width: $mobile-breakpoint) {
+        display: block;
+        order: 1;
     }
 }
 
@@ -47,7 +75,36 @@
         transition: color 0.3s ease;
 
         &:hover {
-            color: #d0ffd0; // xanh lá nhạt khi hover
+            color: #d0ffd0;
+        }
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(90deg, #2e7d32, #43a047);
+        padding: 20px;
+        gap: 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        &.active {
+            display: flex;
+        }
+
+        > div,
+        > a {
+            width: 100%;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+            &:last-child {
+                border-bottom: none;
+            }
         }
     }
 }
@@ -57,15 +114,41 @@
 
     &:hover .dropdownMenu {
         display: block;
+
+        @media (max-width: $mobile-breakpoint) {
+            display: none;
+        }
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+        width: 100%;
     }
 }
 
+.dropdownToggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .arrow {
+        font-size: 12px;
+        display: none;
+
+        @media (max-width: $mobile-breakpoint) {
+            display: block;
+            margin-left: auto;
+        }
+    }
+}
+.show {
+    display: block !important;
+}
 .dropdownMenu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
-    background: #f1f8f1; // nền xanh nhạt
+    background: #f1f8f1;
     padding: 10px 0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     border-radius: 6px;
@@ -87,7 +170,26 @@
                 color: #1b5e20;
                 border-radius: 4px;
             }
+
+            @media (max-width: $mobile-breakpoint) {
+                color: white;
+                padding: 12px 0 12px 20px;
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    color: #d0ffd0;
+                }
+            }
         }
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        margin-top: 5px;
     }
 }
 
@@ -95,6 +197,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    z-index: 1001;
 
     a {
         text-decoration: none;
@@ -128,6 +231,28 @@
 
         &:hover {
             background: linear-gradient(90deg, #2e7d32, #1b5e20);
+        }
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+        order: 3;
+
+        a button {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        flex-direction: column;
+        gap: 8px;
+
+        a {
+            width: 100%;
+
+            button {
+                width: 100%;
+            }
         }
     }
 }

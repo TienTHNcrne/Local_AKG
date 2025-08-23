@@ -184,3 +184,84 @@
     font-size: 1.1rem;
     opacity: 0.9;
 }
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column; // ảnh & text xếp dọc
+        gap: 20px;
+    }
+
+    .heroContent {
+        padding: 20px;
+        h2 {
+            font-size: 1.8rem;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+    }
+
+    .heroImage {
+        order: -1; // ảnh lên trước nội dung nếu muốn
+        img {
+            height: auto;
+            max-height: 250px;
+            object-fit: cover;
+        }
+    }
+
+    .sectionTitle {
+        font-size: 1.8rem;
+    }
+
+    .featuresGrid {
+        grid-template-columns: 1fr; // 1 cột trên mobile
+        gap: 20px;
+    }
+
+    .featureContent h3 {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    .highlight {
+        padding: 25px 15px;
+        h2 {
+            font-size: 1.8rem;
+        }
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .statNumber {
+        font-size: 2rem;
+    }
+
+    .statLabel {
+        font-size: 1rem;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .heroContent h2 {
+        font-size: 1.5rem;
+    }
+    .heroContent p {
+        font-size: 0.95rem;
+    }
+    .sectionTitle {
+        font-size: 1.5rem;
+    }
+}

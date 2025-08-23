@@ -1,186 +1,291 @@
+// Belief.module.scss
 .container {
+    padding: 2.5rem 3rem;
     max-width: 1200px;
     margin: 0 auto;
-    font-family: "Arial", sans-serif;
-    color: #333;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2.5rem;
 }
 
 .heading {
-    text-align: start;
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
-    color: #2c3e50;
+    font-size: 2.4rem;
+    color: #2c5530;
+    margin-bottom: 1.2rem;
     position: relative;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.8rem;
+    font-weight: 700;
 
     &::after {
         content: "";
         position: absolute;
         bottom: 0;
-        left: 0;
-        width: 100px;
-        height: 3px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 5px;
         background: linear-gradient(90deg, #56ab2f, #a8e063);
+        border-radius: 3px;
     }
 }
 
 .intro {
-    text-align: start;
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
-    color: #7f8c8d;
+    font-size: 1.3rem;
+    color: #5a5a5a;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
     font-style: italic;
 }
 
-.item {
-    margin-bottom: 1.5rem;
-    border-radius: 10px;
+.accordionContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.accordion {
+    border-radius: 14px !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
     overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    border: 1px solid #eaeaea;
+
+    &::before {
+        display: none;
+    }
 
     &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+        transform: translateY(-2px);
     }
 }
 
-// Customize the MUI Accordion
 .summary {
-    background: linear-gradient(135deg, #f8fbf8 0%, #eef5ee 100%);
-    padding: 1rem 1.5rem;
-    min-height: 70px !important;
+    background: linear-gradient(to right, #f8faf8, #f0f7f0);
+    padding: 1.5rem 2rem;
+    min-height: 75px !important;
+    transition: background-color 0.2s ease;
 
     &:hover {
-        background: linear-gradient(135deg, #eef5ee 0%, #e4efe9 100%);
-    }
-
-    .MuiAccordionSummary-content {
-        margin: 0 !important;
+        background: linear-gradient(to right, #eef4ee, #e6f1e6);
     }
 }
 
 .title {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: #2c5530;
     margin: 0;
-    position: relative;
-    padding-left: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
 
-    &::before {
-        content: "•";
-        position: absolute;
-        left: 0;
-        color: #739e6e;
-        font-size: 1.8rem;
-        line-height: 1;
-    }
+.expandIcon {
+    color: #56ab2f;
+    font-size: 2rem !important;
 }
 
 .content {
-    padding: 1em;
-    background: #fff;
+    padding: 2.2rem;
+    background-color: #fff;
 }
 
 .text {
-    font-size: 1rem;
+    font-size: 1.15rem;
     line-height: 1.7;
-    color: #555;
-    margin-bottom: 1.5rem;
+    color: #444;
+    margin-bottom: 2.2rem;
+    text-align: justify;
+    padding: 0 1rem;
 }
 
-// Image galleries
-.imageGallery1,
-.imageGallery2,
-.imageGallery3,
-.imageGallery4,
-.imageGallery5,
-.imageGallery6 {
+.imageGallery {
     display: grid;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-// For items with 2 images (1, 2, 4, 6)
-.imageGallery1,
-.imageGallery2,
-.imageGallery4,
-.imageGallery6 {
-    grid-template-columns: repeat(2, 1fr);
-
-    .imageContainer {
-        height: 250px;
-    }
-}
-
-// For item with 8 images (3)
-.imageGallery3 {
-    grid-template-columns: repeat(4, 1fr);
-
-    .imageContainer {
-        height: 180px;
-    }
-}
-
-// For item with 4 images (5)
-.imageGallery5 {
-    grid-template-columns: repeat(2, 1fr);
-
-    .imageContainer {
-        height: 200px;
-    }
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.8rem;
+    margin-top: 1.8rem;
+    justify-items: center;
 }
 
 .imageContainer {
+    position: relative;
+    border-radius: 14px;
     overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
     transition: all 0.3s ease;
+    cursor: pointer;
+    max-width: 380px;
+    width: 100%;
 
     &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
 
-        .image {
-            transform: scale(1.05);
-        }
-
-        &::after {
+        .imageOverlay {
             opacity: 1;
         }
-    }
-
-    &::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, #56ab2f, #a8e063);
-        opacity: 0;
-        transition: opacity 0.3s ease;
     }
 }
 
 .image {
     width: 100%;
-    height: 100%;
+    height: 240px;
     object-fit: cover;
     display: block;
-    transition: transform 0.5s ease;
+    transition: transform 0.4s ease;
 }
 
-// Responsive design
-@media (max-width: 900px) {
-    .imageGallery3 {
-        grid-template-columns: repeat(3, 1fr);
+.imageOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.zoomIcon {
+    font-size: 2.8rem;
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+// Lightbox styles
+.lightboxModal {
+    .MuiDialog-paper {
+        border-radius: 14px;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.9);
+        max-width: 90vw;
     }
 }
 
-@media (max-width: 768px) {
+.lightboxContent {
+    position: relative;
+    padding: 0 !important;
+    background: transparent !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 75vh;
+}
+
+.closeButton {
+    position: absolute !important;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    color: white !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    padding: 10px !important;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .MuiSvgIcon-root {
+        font-size: 2rem;
+    }
+}
+
+.lightboxImageContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 85vw;
+    max-height: 75vh;
+    padding: 2rem;
+}
+
+.lightboxImage {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.navButton {
+    position: absolute !important;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    color: white !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    padding: 12px !important;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .MuiSvgIcon-root {
+        font-size: 2.2rem;
+    }
+}
+
+.imageCounter {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 18px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+// Responsive styles for laptop (1024px)
+@media (max-width: 1200px) {
     .container {
-        padding: 1rem 0.5rem;
+        padding: 2rem 2.5rem;
+        max-width: 1000px;
+    }
+
+    .heading {
+        font-size: 2.2rem;
+    }
+
+    .intro {
+        font-size: 1.2rem;
+    }
+
+    .summary {
+        padding: 1.3rem 1.8rem;
+    }
+
+    .title {
+        font-size: 1.3rem;
+    }
+
+    .content {
+        padding: 2rem;
+    }
+
+    .imageGallery {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.6rem;
+    }
+
+    .image {
+        height: 220px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        padding: 1.8rem 2rem;
     }
 
     .heading {
@@ -188,83 +293,95 @@
     }
 
     .intro {
-        font-size: 1rem;
+        font-size: 1.15rem;
+    }
+
+    .accordionContainer {
+        gap: 1.3rem;
+    }
+
+    .summary {
+        padding: 1.2rem 1.6rem;
+        min-height: 70px !important;
     }
 
     .title {
-        font-size: 1.2rem;
-        padding-left: 1.5rem;
+        font-size: 1.25rem;
     }
 
-    .imageGallery1,
-    .imageGallery2,
-    .imageGallery4,
-    .imageGallery6 {
-        grid-template-columns: 1fr;
-
-        .imageContainer {
-            height: 200px;
-        }
+    .content {
+        padding: 1.8rem;
     }
 
-    .imageGallery3 {
-        grid-template-columns: repeat(2, 1fr);
-
-        .imageContainer {
-            height: 160px;
-        }
+    .text {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
     }
 
-    .imageGallery5 {
-        grid-template-columns: 1fr;
+    .imageGallery {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
 
-        .imageContainer {
-            height: 180px;
+    .image {
+        height: 200px;
+    }
+
+    .lightboxImageContainer {
+        max-width: 90vw;
+        padding: 1.5rem;
+    }
+
+    .closeButton,
+    .navButton {
+        padding: 9px !important;
+
+        .MuiSvgIcon-root {
+            font-size: 1.8rem;
         }
     }
 }
 
+// Tablet styles
+@media (max-width: 900px) {
+    .imageGallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    .imageGallery {
+        grid-template-columns: 1fr;
+    }
+
+    .imageContainer {
+        max-width: 100%;
+    }
+}
+
+// Mobile styles
 @media (max-width: 480px) {
+    .container {
+        padding: 1.2rem;
+    }
+
     .heading {
         font-size: 1.8rem;
     }
 
     .summary {
-        padding: 0.8rem 1rem;
+        padding: 1rem 1.2rem;
     }
 
     .content {
-        padding: 1rem;
+        padding: 1.5rem;
     }
 
-    .title {
-        font-size: 1.1rem;
+    .image {
+        height: 180px;
     }
-
-    .text {
-        font-size: 1rem;
-    }
-
-    .imageGallery3 {
-        grid-template-columns: 1fr;
-    }
-
-    .imageContainer {
-        height: 150px !important;
-    }
-}
-
-// MUI Accordion customization
-.MuiAccordion-root {
-    &::before {
-        display: none;
-    }
-
-    &.Mui-expanded {
-        margin: 0 !important;
-    }
-}
-
-.MuiAccordionDetails-root {
-    padding: 0 1.5rem 1.5rem !important;
 }

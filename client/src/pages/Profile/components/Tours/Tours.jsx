@@ -71,7 +71,7 @@ export default function Tours({ className }) {
             )}
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h3>Travel Plans</h3>
+                    <h3>Hành trình của bạn</h3>
                     <div className={styles.actions}>
                         <button
                             onClick={() => setHide(true)}

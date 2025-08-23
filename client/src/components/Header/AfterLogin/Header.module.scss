@@ -1,13 +1,23 @@
 /** @format */
 
+// Biến cho responsive breakpoints
+$mobile-breakpoint: 768px;
+$tablet-breakpoint: 1024px;
+
 .header {
-    background: #388e3c; // xanh lá tươi
+    background: linear-gradient(90deg, #2e7d32, #43a047, #66bb6a);
     padding: 10px 20px;
     border-bottom: 3px solid #ffffff;
     display: flex;
     position: relative;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+
+    @media (max-width: $mobile-breakpoint) {
+        padding: 10px 15px;
+        position: relative;
+    }
 }
 
 .logo {
@@ -16,12 +26,33 @@
     color: white;
     text-decoration: none;
     align-self: flex-start;
+    transition: transform 0.2s ease;
+    z-index: 100;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+        order: 2;
+        flex: 1;
+        text-align: center;
+        margin: 0 10px;
+    }
 }
 
+// Menu icon for mobile
 .menuIcon {
-    font-size: 1.3rem;
+    display: none;
+    font-size: 24px;
     color: white;
     cursor: pointer;
+    z-index: 1001;
+
+    @media (max-width: $mobile-breakpoint) {
+        display: block;
+        order: 1;
+    }
 }
 
 .nav {
@@ -29,6 +60,7 @@
     align-self: center;
     gap: 50px;
     z-index: 1000;
+
     div,
     a {
         color: white;
@@ -36,10 +68,44 @@
         font-weight: 500;
         display: flex;
         align-items: center;
-        font-size: 1.3rem;
+        font-size: 18px;
         gap: 5px;
         cursor: pointer;
         padding: 8px 0;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #d0ffd0;
+        }
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(90deg, #2e7d32, #43a047);
+        padding: 20px;
+        gap: 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        &.active {
+            display: flex;
+        }
+
+        > div,
+        > a {
+            width: 100%;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
     }
 }
 
@@ -48,46 +114,125 @@
 
     &:hover .dropdownMenu {
         display: block;
+
+        @media (max-width: $mobile-breakpoint) {
+            display: none;
+        }
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+        width: 100%;
     }
 }
 
+.dropdownToggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .arrow {
+        font-size: 12px;
+        display: none;
+
+        @media (max-width: $mobile-breakpoint) {
+            display: block;
+            margin-left: auto;
+        }
+    }
+}
+.show {
+    display: block !important;
+}
 .dropdownMenu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
-    background: #e8f5e9;
+    background: #f1f8f1;
     padding: 10px 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
     z-index: 99;
     min-width: 160px;
-    div {
-        display: block;
-        padding: 8px 20px;
-        color: black;
-        text-decoration: none;
 
-        &:hover {
-            background: #d4f4f4;
-        }
-    }
     li {
         list-style: none;
 
         a {
             display: block;
-            padding: 8px 20px;
-            color: black;
+            padding: 10px 20px;
+            color: #2e7d32;
             text-decoration: none;
+            transition: all 0.3s ease;
 
             &:hover {
-                background: #d4f4f4;
+                background: #c8e6c9;
+                color: #1b5e20;
+                border-radius: 4px;
+            }
+
+            @media (max-width: $mobile-breakpoint) {
+                color: white;
+                padding: 12px 0 12px 20px;
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    color: #d0ffd0;
+                }
+            }
+        }
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        margin-top: 5px;
+    }
+}
+
+.right {
+    gap: 15px;
+    z-index: 100;
+    a {
+        text-decoration: none;
+
+        button {
+            padding: 8px 16px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+    }
+
+    /* Nút Sign Up */
+
+    @media (max-width: $mobile-breakpoint) {
+        order: 3;
+
+        a button {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        gap: 8px;
+
+        a {
+            width: 100%;
+
+            button {
+                width: 100%;
             }
         }
     }
 }
-
 .right {
     display: flex;
     align-items: center;

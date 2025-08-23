@@ -4,6 +4,7 @@
     border: 2px solid #15492a;
     border-radius: 10px;
     overflow: hidden;
+    z-index: 1;
 }
 ul {
     padding: 20px;
@@ -42,7 +43,9 @@ ul {
             flex-direction: column;
         }
         .area {
-            position: relative top;
+            display: flex;
+            flex-direction: column;
+            position: relative;
             width: 650px;
             margin-left: calc(100% - 650px);
             h3 {
@@ -61,6 +64,47 @@ ul {
             h3 {
                 box-shadow: -10px 10px #15492a;
                 margin-left: calc(100% - 200px);
+            }
+        }
+    }
+}
+@media (max-width: 480px) {
+    .map {
+        height: 250px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .content {
+        gap: 20px;
+
+        h3 {
+            font-size: 18px;
+            width: 100%; /* full width */
+            padding: 8px;
+            box-shadow: none; /* bỏ shadow */
+            margin: 0; /* bỏ margin-left */
+            border-radius: 6px;
+        }
+
+        .baby {
+            width: 100%;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 5px; /* cách h3 một chút */
+        }
+
+        .area,
+        .population,
+        .topography {
+            width: 100% !important;
+            margin-left: 0 !important;
+            bottom: 0 !important;
+            h3 {
+                margin-left: 0 !important;
             }
         }
     }

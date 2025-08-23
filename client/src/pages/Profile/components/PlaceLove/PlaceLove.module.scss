@@ -89,3 +89,17 @@
         }
     }
 }
+@media (max-width: 768px) {
+    .places {
+        height: auto;
+        gap: 15px;
+        padding: 5px;
+    }
+    .place {
+        flex-direction: column;
+        img {
+            width: 100% !important;
+            height: 180px;
+        }
+    }
+}

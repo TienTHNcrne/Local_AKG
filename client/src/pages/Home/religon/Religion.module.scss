@@ -23,4 +23,8 @@
     flex-direction: column;
     gap: 20px;
     padding: 0 4rem;
+    @media (max-width: 768px) {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 }

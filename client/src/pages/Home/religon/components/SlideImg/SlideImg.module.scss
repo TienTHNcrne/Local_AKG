@@ -317,3 +317,171 @@
     color: #404546;
     font-style: italic;
 }
+@media (max-width: 768px) {
+    .container {
+        padding: 0.5rem;
+    }
+
+    .sliderContainer {
+        max-width: 95vw;
+        padding: 0.5rem 0;
+
+        .arrow {
+            display: none; // Ẩn mũi tên trên mobile
+        }
+
+        .slick-dots {
+            bottom: -25px;
+
+            li button:before {
+                font-size: 8px;
+            }
+        }
+    }
+
+    .header {
+        margin-bottom: 1rem;
+    }
+
+    .heading {
+        font-size: 1.3rem;
+    }
+
+    .intro {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .item {
+        padding: 10px;
+
+        h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    }
+
+    // Điều chỉnh kích thước ảnh cho mobile
+    .phatImgs {
+        gap: 5px;
+
+        img {
+            max-height: 100px;
+        }
+
+        .PhatRow1,
+        .PhatRow2,
+        .PhatRow3 {
+            gap: 5px;
+        }
+    }
+
+    .HoiCol11 {
+        height: 120px;
+    }
+
+    .HoiCol12 img {
+        height: 56px;
+    }
+
+    .HoiRow2 img {
+        height: 100px;
+    }
+
+    .gridCd {
+        .cdRow1 {
+            height: 120px;
+        }
+
+        .cdRow2 {
+            height: 120px;
+        }
+    }
+
+    .gridTc {
+        .col1 {
+            height: 150px;
+        }
+
+        .col2 {
+            .row1 {
+                height: 100px;
+            }
+
+            .row2 img {
+                height: 100px;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .heading {
+        font-size: 1.2rem;
+    }
+
+    .intro {
+        font-size: 0.85rem;
+    }
+
+    .item h3 {
+        font-size: 16px;
+    }
+
+    // Đơn giản hóa layout cho màn hình rất nhỏ
+    .phatImgs {
+        .PhatRow1,
+        .PhatRow2,
+        .PhatRow3 {
+            grid-template-columns: 1fr;
+
+            img {
+                max-height: 120px;
+            }
+        }
+
+        .ColPhat11,
+        .ColPhat23 {
+            grid-column: span 1;
+        }
+    }
+
+    .HoiRow1 {
+        grid-template-columns: 1fr;
+
+        .HoiCol12 {
+            flex-direction: row;
+
+            img {
+                height: 80px;
+            }
+        }
+    }
+
+    .gridCd .cdRow2 {
+        grid-template-columns: 1fr;
+        height: auto;
+
+        .cdCol2 {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto;
+        }
+    }
+
+    .gridhh {
+        grid-template-columns: 1fr;
+    }
+
+    .gridTc .col2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+// Ẩn mũi tên khi slider không đủ rộng
+@media (max-width: 1024px) {
+    .sliderContainer .arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+}

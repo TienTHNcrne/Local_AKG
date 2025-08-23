@@ -60,6 +60,7 @@ export default function Map() {
                 setPopup={setPopup}
             />
             <CreateForm
+                setShow={setAdd}
                 add={add}
                 center={center}
                 setCenter={setCenter}

@@ -7,7 +7,7 @@
     background: #fff;
     padding: 1rem 1.2rem;
     box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
+    z-index: 10000;
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
@@ -169,12 +169,34 @@
         transform: translateX(-100%);
     }
 }
-
+.closeee {
+    position: absolute;
+    right: 20px;
+    width: fit-content;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    @media (max-width: 768px) {
+        right: 50px;
+    }
+    &:hover {
+        color: #444;
+        transform: rotate(90deg);
+    }
+}
 .second {
     display: flex;
     flex-direction: column;
     gap: 20px;
     .ro1 {
         flex: 1;
+    }
+}
+@media (max-width: 768px) {
+    .add {
+        width: 100%;
+        border-radius: 0;
     }
 }

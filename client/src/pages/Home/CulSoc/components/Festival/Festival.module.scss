@@ -1,12 +1,20 @@
 /** @format */
 .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin: 0 9%;
     padding: 15px 20px;
     background: #f9fafb;
     color: #333;
     max-width: 100%;
-
+    @media (max-width: 768px) {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
     h3 {
+        align-self: start;
         text-align: start;
         font-size: 2rem;
         font-weight: 700;
@@ -17,11 +25,18 @@
 
 .content {
     padding: 0 1rem;
+    @media (max-width: 768px) {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 }
 
 .ethnic {
     margin-bottom: 3rem;
-
+    @media (max-width: 768px) {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
     h4 {
         font-size: 1.5rem;
         font-weight: 600;
@@ -37,6 +52,9 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1.3rem;
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(1, 350px);
+    }
 }
 
 .card {
@@ -146,6 +164,9 @@
     justify-content: center;
     gap: 12px;
     margin-bottom: 24px;
+    @media (max-width: 768px) {
+        padding: 0 !important;
+    }
 }
 
 .tab {

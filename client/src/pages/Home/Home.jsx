@@ -22,9 +22,6 @@ export default function Home() {
                         còn lưu giữ nhiều giá trị văn hóa, lịch sử đặc sắc của
                         vùng đồng bằng sông Cửu Long.
                     </p>
-                    <Link to="/History" className={styles.btn}>
-                        Khám phá ngay
-                    </Link>
                 </div>
                 <div className={styles.heroImage}>
                     <img

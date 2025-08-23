@@ -1,5 +1,4 @@
 /** @format */
-
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./TourAi.module.scss";
 import axios from "axios";
@@ -20,8 +19,22 @@ export default function TourAi({ setHide }) {
     const [save, setSave] = GetHis();
     const [confirm, setConfirm] = useState(false);
     const [details, setDetails] = useState("");
-    const [loading, setLoading] = useState(false); // new
+    const [loading, setLoading] = useState(false);
+    const [isMobileView, setIsMobileView] = useState(false);
+    const [showPlaces, setShowPlaces] = useState(false);
     const contentRef = useRef(null);
+
+    // Check screen size on mount and resize
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsMobileView(window.innerWidth <= 768);
+        };
+
+        checkScreenSize();
+        window.addEventListener("resize", checkScreenSize);
+
+        return () => window.removeEventListener("resize", checkScreenSize);
+    }, []);
 
     const address = (s) => {
         const a = s.split(",");
@@ -34,7 +47,7 @@ export default function TourAi({ setHide }) {
 
     const submit = (e) => {
         e.preventDefault();
-        setLoading(true); // bắt đầu loading
+        setLoading(true);
 
         let s = "";
         if (choose && choose.length > 0) {
@@ -60,11 +73,13 @@ export default function TourAi({ setHide }) {
                     isNew: true,
                 };
                 setSave((prev) => [...prev, newResult]);
-                setLoading(false); // kết thúc loading
+                setLoading(false);
+                // On mobile, switch to results view after submission
+                if (isMobileView) setShowPlaces(false);
             })
             .catch((err) => {
                 console.error(err.message);
-                setLoading(false); // kết thúc loading nếu lỗi
+                setLoading(false);
             });
     };
 
@@ -77,9 +92,44 @@ export default function TourAi({ setHide }) {
     return (
         <div className={styles.container}>
             {confirm && <Save details={details} setConfirm={setConfirm} />}
-            <div className={styles.choose}>
-                <div className={styles.places}>
-                    <h3>Your Places</h3>
+
+            {/* Mobile toggle button */}
+            {isMobileView && (
+                <div className={styles.mobileToggle}>
+                    <button
+                        className={`${styles.toggleBtn} ${
+                            showPlaces ? styles.active : ""
+                        }`}
+                        onClick={() => setShowPlaces(true)}
+                    >
+                        Địa điểm yêu thích
+                    </button>
+                    <button
+                        className={`${styles.toggleBtn} ${
+                            !showPlaces ? styles.active : ""
+                        }`}
+                        onClick={() => setShowPlaces(false)}
+                    >
+                        Dựng hành trình
+                    </button>
+                </div>
+            )}
+
+            <div
+                className={`${styles.choose} ${
+                    isMobileView ? styles.mobile : ""
+                } ${showPlaces ? styles.showPlaces : ""}`}
+            >
+                <button className={styles.close} onClick={() => setHide(false)}>
+                    &times;
+                </button>
+                <div
+                    className={`${styles.places} ${
+                        isMobileView && !showPlaces ? styles.hidden : ""
+                    }`}
+                >
+                    {" "}
+                    <h3>Địa điểm yêu thích</h3>
                     <div className={styles.selectAll}>
                         <label>
                             <input
@@ -98,46 +148,48 @@ export default function TourAi({ setHide }) {
                             Tích tất cả
                         </label>
                     </div>
-                    {lovePlaces.map((value, id) => (
-                        <div className={styles.place} key={id}>
-                            <input
-                                type="checkbox"
-                                value={id}
-                                checked={choose.includes(id)}
-                                onChange={(e) => {
-                                    const valueOrigin = Number(e.target.value);
-                                    if (e.target.checked) {
-                                        setChoose((pre) => [
-                                            ...pre,
-                                            valueOrigin,
-                                        ]);
-                                    } else {
-                                        setChoose((prev) =>
-                                            prev.filter(
-                                                (v) => v !== valueOrigin
-                                            )
+                    <div className={styles.placesList}>
+                        {lovePlaces.map((value, id) => (
+                            <div className={styles.place} key={id}>
+                                <input
+                                    type="checkbox"
+                                    value={id}
+                                    checked={choose.includes(id)}
+                                    onChange={(e) => {
+                                        const valueOrigin = Number(
+                                            e.target.value
                                         );
-                                    }
-                                }}
-                            />
-                            <img src={value.img} alt="khong co" />
-                            <div className={styles.content}>
-                                <div className={styles.address}>
-                                    <h4>{value.name.split(",")[0]}</h4>
-                                    <p>{address(value.name)}</p>
+                                        if (e.target.checked) {
+                                            setChoose((pre) => [
+                                                ...pre,
+                                                valueOrigin,
+                                            ]);
+                                        } else {
+                                            setChoose((prev) =>
+                                                prev.filter(
+                                                    (v) => v !== valueOrigin
+                                                )
+                                            );
+                                        }
+                                    }}
+                                />
+                                <img src={value.img} alt="khong co" />
+                                <div className={styles.content}>
+                                    <div className={styles.address}>
+                                        <h4>{value.name.split(",")[0]}</h4>
+                                        <p>{address(value.name)}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
 
-                <div className={styles.build}>
-                    <button
-                        className={styles.close}
-                        onClick={() => setHide(false)}
-                    >
-                        &times;
-                    </button>
+                <div
+                    className={`${styles.build} ${
+                        isMobileView && showPlaces ? styles.hidden : ""
+                    }`}
+                >
                     <form className={styles.head}>
                         <div className={styles.top}>
                             <div className={styles.item}>

@@ -54,3 +54,12 @@
         }
     }
 }
+@media (max-width: 768px) {
+    .container {
+        padding: 0;
+    }
+    .cards {
+        display: flex;
+        flex-direction: column;
+    }
+}

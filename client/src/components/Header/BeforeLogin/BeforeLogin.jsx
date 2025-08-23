@@ -1,54 +1,103 @@
-/** @format */
-
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./BeforeLogin.module.scss";
 import { IoHome, IoShareSocial } from "react-icons/io5";
+import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 
 export default function BeforeLogin() {
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [openDropdown, setOpenDropdown] = useState(null); // quản lý dropdown
+
+    const toggleDropdown = (name) => {
+        setOpenDropdown(openDropdown === name ? null : name);
+    };
+    const handleLinkClick = () => {
+        setMenuOpen(false);
+        setOpenDropdown(null);
+    };
     return (
         <div className={styles.header}>
+            {/* Mobile Menu Icon */}
+            <div
+                className={styles.menuIcon}
+                onClick={() => setMenuOpen(!menuOpen)}
+            >
+                {menuOpen ? <RiCloseLine /> : <RiMenu3Line />}
+            </div>
+
             <Link to="/" className={styles.logo}>
                 <h2>AKG</h2>
             </Link>
 
-            <nav className={styles.nav}>
-                <div className={styles.dropdown}>
-                    <Link to="/">
+            <nav className={`${styles.nav} ${menuOpen ? styles.active : ""}`}>
+                {/* Trang chủ */}
+                <div
+                    className={styles.dropdown}
+                    onClick={() => toggleDropdown("home")}
+                >
+                    <div>
                         <IoHome />
                         <span>Trang chủ</span>
-                    </Link>
-                    <ul className={styles.dropdownMenu}>
+                    </div>
+                    <ul
+                        className={`${styles.dropdownMenu} ${
+                            openDropdown === "home" ? styles.show : ""
+                        }`}
+                    >
                         <li>
-                            <Link to="/Location">Tổng quan</Link>
+                            <Link to="/Location" onClick={handleLinkClick}>
+                                Tổng quan
+                            </Link>
                         </li>
                         <li>
-                            <Link to="/Climate">Khí hậu</Link>
+                            <Link to="/Climate" onClick={handleLinkClick}>
+                                Khí hậu
+                            </Link>
                         </li>
                         <li>
-                            <Link to="/History">Lịch sử</Link>
+                            <Link to="/History" onClick={handleLinkClick}>
+                                Lịch sử
+                            </Link>
                         </li>
                         <li>
-                            <Link to="/CulSoc">Dân tộc - Lễ hội</Link>
+                            <Link to="/CulSoc" onClick={handleLinkClick}>
+                                Dân tộc - Lễ hội
+                            </Link>
                         </li>
-
                         <li>
-                            <Link to="/Religion">Tôn giáo - Tín ngưỡng</Link>
+                            <Link to="/Religion" onClick={handleLinkClick}>
+                                Tôn giáo - Tín ngưỡng
+                            </Link>
                         </li>
                     </ul>
                 </div>
 
-                <div className={styles.dropdown}>
+                {/* Khám phá */}
+                <div
+                    className={styles.dropdown}
+                    onClick={() => toggleDropdown("explore")}
+                >
                     <div>
                         <IoShareSocial />
                         <span>Khám phá</span>
                     </div>
-                    <ul className={styles.dropdownMenu}>
+                    <ul
+                        className={`${styles.dropdownMenu} ${
+                            openDropdown === "explore" ? styles.show : ""
+                        }`}
+                    >
                         <li>
-                            <Link to="/Explore/map">Bản đồ</Link>
+                            <Link to="/Explore/map" onClick={handleLinkClick}>
+                                Bản đồ
+                            </Link>
                         </li>
                         <li>
-                            <Link to="/Explore/TinhHoa">Tinh hoa An Giang</Link>
+                            <Link
+                                to="/Explore/TinhHoa"
+                                onClick={handleLinkClick}
+                            >
+                                Tinh hoa An Giang
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -61,10 +110,10 @@ export default function BeforeLogin() {
             <div className={styles.right}>
                 <Link to="/register">
                     <button>Sign Up</button>
-                </Link>{" "}
+                </Link>
                 <Link to="/Login">
                     <button>Sign In</button>
-                </Link>{" "}
+                </Link>
             </div>
         </div>
     );

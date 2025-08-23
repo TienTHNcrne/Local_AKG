@@ -1,13 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Belief.module.scss";
-import { FaCaretRight } from "react-icons/fa";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import AccordionDetails from "@mui/material/AccordionDetails";
-
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Dialog, DialogContent, IconButton } from "@mui/material";
+import { Close, NavigateBefore, NavigateNext } from "@mui/icons-material";
+
 export default function Belief() {
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [currentGallery, setCurrentGallery] = useState([]);
+
+    const openLightbox = (images, index) => {
+        setCurrentGallery(images);
+        setCurrentImageIndex(index);
+        setLightboxOpen(true);
+    };
+
+    const closeLightbox = () => {
+        setLightboxOpen(false);
+    };
+
+    const goToPrevious = () => {
+        setCurrentImageIndex((prevIndex) =>
+            prevIndex === 0 ? currentGallery.length - 1 : prevIndex - 1
+        );
+    };
+
+    const goToNext = () => {
+        setCurrentImageIndex((prevIndex) =>
+            prevIndex === currentGallery.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+
     const items = [
         {
             title: "Tín ngưỡng thờ Mẫu và Thánh Mẫu vùng Thất Sơn",
@@ -57,50 +84,116 @@ export default function Belief() {
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.heading}>Tín Ngưỡng </h2>
-            <p className={styles.intro}>
-                Khám phá các tín ngưỡng, tâm linh đặc sắc tại vùng đất An Giang
-            </p>
+            <div className={styles.header}>
+                <h2 className={styles.heading}>Tín Ngưỡng</h2>
+                <p className={styles.intro}>
+                    Khám phá các tín ngưỡng, tâm linh đặc sắc tại vùng đất An
+                    Giang
+                </p>
+            </div>
 
-            {items.map((item, idx) => (
-                <div key={idx} className={styles.item}>
-                    <Accordion>
+            <div className={styles.accordionContainer}>
+                {items.map((item, idx) => (
+                    <Accordion
+                        key={idx}
+                        className={styles.accordion}
+                        defaultExpanded={idx === 0}
+                    >
                         <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1-content"
-                            id="panel1-header"
+                            expandIcon={
+                                <ExpandMoreIcon className={styles.expandIcon} />
+                            }
+                            aria-controls={`panel${idx + 1}-content`}
+                            id={`panel${idx + 1}-header`}
                             className={styles.summary}
                         >
-                            {" "}
-                            <Typography>
-                                <h3 className={styles.title}>{item.title}</h3>{" "}
-                            </Typography>{" "}
+                            <Typography className={styles.title}>
+                                <h3>{item.title}</h3>{" "}
+                            </Typography>
                         </AccordionSummary>
 
                         <AccordionDetails className={styles.content}>
                             <Typography>
                                 <p className={styles.text}>{item.text}</p>
-                                <div
-                                    className={styles[`imageGallery${idx + 1}`]}
-                                >
+                                <div className={styles.imageGallery}>
                                     {item.imgs.map((src, i) => (
                                         <div
                                             key={i}
                                             className={styles.imageContainer}
+                                            onClick={() =>
+                                                openLightbox(item.imgs, i)
+                                            }
                                         >
                                             <img
                                                 src={src}
-                                                alt=""
+                                                alt={`Hình ảnh tín ngưỡng ${
+                                                    idx + 1
+                                                }-${i + 1}`}
                                                 className={styles.image}
                                             />
+                                            <div
+                                                className={styles.imageOverlay}
+                                            >
+                                                <span
+                                                    className={styles.zoomIcon}
+                                                >
+                                                    🔍
+                                                </span>
+                                            </div>
                                         </div>
                                     ))}
-                                </div>{" "}
+                                </div>
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
-                </div>
-            ))}
+                ))}
+            </div>
+
+            {/* Lightbox Modal */}
+            <Dialog
+                open={lightboxOpen}
+                onClose={closeLightbox}
+                maxWidth="lg"
+                fullWidth
+                className={styles.lightboxModal}
+            >
+                <DialogContent className={styles.lightboxContent}>
+                    <IconButton
+                        className={styles.closeButton}
+                        onClick={closeLightbox}
+                    >
+                        <Close />
+                    </IconButton>
+
+                    <div className={styles.lightboxImageContainer}>
+                        <IconButton
+                            className={styles.navButton}
+                            onClick={goToPrevious}
+                            style={{ left: "10px" }}
+                        >
+                            <NavigateBefore />
+                        </IconButton>
+
+                        <img
+                            src={currentGallery[currentImageIndex]}
+                            alt=""
+                            className={styles.lightboxImage}
+                        />
+
+                        <IconButton
+                            className={styles.navButton}
+                            onClick={goToNext}
+                            style={{ right: "10px" }}
+                        >
+                            <NavigateNext />
+                        </IconButton>
+                    </div>
+
+                    <div className={styles.imageCounter}>
+                        {currentImageIndex + 1} / {currentGallery.length}
+                    </div>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }

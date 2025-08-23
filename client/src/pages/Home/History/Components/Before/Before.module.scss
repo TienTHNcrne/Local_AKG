@@ -1,32 +1,36 @@
 /** @format */
+/* File: Before.module.scss */
 
 .container {
-    padding: 0;
+    padding: 2rem 3rem;
     display: flex;
     flex-direction: column;
     gap: 50px;
-    padding: 2rem 3rem;
 
     h2 {
         font-size: 1.6rem;
         padding: 20px 0;
-        border-bottom: 2px solid #16a34a; // xanh lá
+        border-bottom: 2px solid #16a34a;
         color: #14532d;
     }
+
     h3 {
         font-size: 1.4rem;
         padding: 0 20px;
-        border-left: 5px solid #16a34a; // xanh lá
+        border-left: 5px solid #16a34a;
         color: #14532d;
         font-weight: 700;
     }
+
     h4 {
         font-size: 1.3rem;
         color: #15803d;
     }
+
     p {
         font-size: 1.2rem;
         color: #374151;
+        line-height: 1.7;
     }
 }
 
@@ -36,7 +40,7 @@
     bottom: 38px;
     border: none;
     padding: 12px 24px;
-    background: linear-gradient(135deg, #22c55e, #15803d); // gradient xanh
+    background: linear-gradient(135deg, #22c55e, #15803d);
     color: white;
     width: 200px;
     border-radius: 30px;
@@ -72,27 +76,28 @@
         gap: 20px;
         align-items: center;
         padding: 20px;
-        padding: 10px 20px;
         border-radius: 10px;
+        background-color: #f9fafb;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
+
         &:hover {
             transform: translateY(-5px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
-        background-color: #f9fafb;
 
         .MainContent,
         .MainContent1 {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            line-height: 190%;
+
             h4 {
                 text-align: center;
                 color: #15803d;
             }
         }
+
         .MainContent1 {
             margin-bottom: 80px;
         }
@@ -110,6 +115,7 @@
             border-radius: 8px;
         }
     }
+
     .col2 {
         flex: 0.5;
         display: flex;
@@ -119,22 +125,50 @@
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
+
         &:hover {
             transform: translateY(-5px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
+
         img {
-            align-content: flex-end;
+            align-self: flex-end;
             border-radius: 8px;
         }
     }
 }
 
-// KG riêng
+/* Riêng Kiên Giang */
 .contentKG {
     h3 {
         align-self: flex-end;
         border: none;
-        border-right: 5px solid #16a34a; // xanh lá
+        border-right: 5px solid #16a34a;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contentAG img,
+    .contentKG img {
+        width: 100%;
+        height: auto;
+    }
+    .container {
+        padding: 0;
+    }
+    .item1,
+    .item2,
+    .item3 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .GoToPlace {
+        right: 20px;
+        bottom: 20px;
+        width: auto;
+        padding: 10px 18px;
+        font-size: 0.9rem;
     }
 }

@@ -1,122 +1,124 @@
 /** @format */
 
 .container {
-	position: fixed;
-	background-color: rgba(0, 0, 0, 0.508);
-	height: 100vh;
-	width: 100vw;
-	top: 0;
-	left: 0;
-	display: flex;
-	z-index: 1000;
-	align-items: center;
-	justify-content: center;
-	backdrop-filter: blur(3px);
-	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.508);
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 100000;
 
-	.star {
-		justify-content: center;
-		display: flex;
-		gap: 15px;
-		font-size: 50px;
+    .star {
+        justify-content: center;
+        display: flex;
+        gap: 15px;
+        font-size: 50px;
 
-		span {
-			transition: all 0.2s ease;
-			cursor: pointer;
+        span {
+            transition: all 0.2s ease;
+            cursor: pointer;
 
-			&:hover {
-				transform: scale(1.1);
-			}
-		}
-	}
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
 
-	.inFor {
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
+    .inFor {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
 
-		.text {
-			box-sizing: border-box;
-			width: 100%;
-			padding: 12px 16px;
-			border: 1px solid #ddd;
-			border-radius: 4px;
-			font-size: 16px;
-			resize: none;
-			overflow-y: hidden;
-			min-height: 50px;
-			line-height: 1.5;
-			word-spacing: 1px;
-			letter-spacing: 0.3px;
-			transition: all 0.3s ease;
+        .text {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            resize: none;
+            overflow-y: hidden;
+            min-height: 50px;
+            line-height: 1.5;
+            word-spacing: 1px;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
 
-			&:focus {
-				outline: none;
-				border-color: #4285f4;
-				box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
-			}
+            &:focus {
+                outline: none;
+                border-color: #4285f4;
+                box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+            }
 
-			&::placeholder {
-				padding-left: 2px;
-				color: #aaa;
-			}
-		}
-	}
+            &::placeholder {
+                padding-left: 2px;
+                color: #aaa;
+            }
+        }
+    }
 }
 //confirm
 .confirm {
-	display: flex;
-	gap: 15px;
-	align-self: flex-end;
+    display: flex;
+    gap: 15px;
+    align-self: flex-end;
 }
 .submit,
 .cancel {
-	padding: 10px 24px;
-	background-color: #4285f4;
-	color: white;
-	border: none;
-	border-radius: 4px;
-	font-size: 16px;
-	cursor: pointer;
-	transition: all 0.3s ease;
-	margin-top: 10px;
+    padding: 10px 24px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
 
-	&:hover {
-		background-color: #3367d6;
-		transform: translateY(-1px);
-	}
+    &:hover {
+        background-color: #3367d6;
+        transform: translateY(-1px);
+    }
 
-	&:active {
-		transform: translateY(0);
-	}
+    &:active {
+        transform: translateY(0);
+    }
 
-	&:disabled {
-		background-color: #cccccc;
-		cursor: not-allowed;
-	}
+    &:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+    }
 }
 
 .cancel {
-	background: none;
-	border: 2px solid #3367d6;
-	color: #3367d6;
+    background: none;
+    border: 2px solid #3367d6;
+    color: #3367d6;
 }
 
 .content {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	background: #ffffff;
-	border-radius: 12px;
-	padding: 20px;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-	transition: transform 0.2s, box-shadow 0.2s;
-	font-size: 16px;
-	height: 35%;
-	overflow: auto;
-	word-wrap: break-word;
-	&:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-	}
+    z-index: 10000;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-size: 16px;
+    height: 35%;
+    overflow: auto;
+    word-wrap: break-word;
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
 }

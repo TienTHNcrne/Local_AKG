@@ -15,6 +15,7 @@ export default function CreateForm({
     setSearch,
     search,
     AddNewLocal,
+    setShow,
 }) {
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
@@ -66,6 +67,14 @@ export default function CreateForm({
 
     return (
         <div className={`${styles.add} ${add ? styles.open : styles.close}`}>
+            <button
+                className={styles.closeee}
+                onClick={() => {
+                    setShow(false);
+                }}
+            >
+                &times;
+            </button>
             <label htmlFor="name">Tên địa điểm</label>
             <input
                 type="text"
