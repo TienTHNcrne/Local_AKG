@@ -32,8 +32,7 @@ export default function Footer() {
                 ))}
             </div>
             <div className={styles.footerNote}>
-                © 2025 - Dự án Du lịch An Giang. Hình ảnh sử dụng từ các nguồn
-                công khai, có trích dẫn tại từng mục.
+                © 2025 - Dự án Du lịch An Giang.
             </div>
         </footer>
     );

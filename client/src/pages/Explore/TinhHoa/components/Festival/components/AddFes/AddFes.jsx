@@ -3,36 +3,55 @@ import React, { useState } from "react";
 import styles from "./AddFes.module.scss";
 import axios from "axios";
 import UpImg from "../../../../../../../components/UpImg/UpImg.jsx";
-import { RiDeleteBin2Fill, RiCloseLine, RiAddLine } from "react-icons/ri";
+import {
+    RiDeleteBin2Fill,
+    RiCloseLine,
+    RiAddLine,
+    RiCalendarEventLine,
+    RiMapPinLine,
+    RiImageLine,
+} from "react-icons/ri";
 
 export default function AddFes({ setShow }) {
     const [name, setName] = useState("");
-    const [time, setTime] = useState("");
     const [description, setDescription] = useState("");
     const [places, setPlaces] = useState([""]);
+    const [times, setTimes] = useState([""]);
     const [images, setImages] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // --- Places ---
     const handlePlaceChange = (index, value) => {
         const newPlaces = [...places];
         newPlaces[index] = value;
         setPlaces(newPlaces);
     };
-
     const addPlace = () => setPlaces([...places, ""]);
     const removePlace = (index) =>
         setPlaces(places.filter((_, i) => i !== index));
+
+    // --- Times ---
+    const handleTimeChange = (index, value) => {
+        const newTimes = [...times];
+        newTimes[index] = value;
+        setTimes(newTimes);
+    };
+    const addTime = () => setTimes([...times, ""]);
+    const removeTime = (index) => setTimes(times.filter((_, i) => i !== index));
 
     const submit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Basic validation
+        // Filter out empty values
+        const filteredPlaces = places.filter((p) => p.trim() !== "");
+        const filteredTimes = times.filter((t) => t.trim() !== "");
+
         if (
             !name.trim() ||
-            !time.trim() ||
             !description.trim() ||
-            places.some((p) => !p.trim())
+            filteredPlaces.length === 0 ||
+            filteredTimes.length === 0
         ) {
             alert("Vui lòng điền đầy đủ thông tin");
             setIsSubmitting(false);
@@ -43,17 +62,33 @@ export default function AddFes({ setShow }) {
             const formData = new FormData();
             formData.append("name", name);
             formData.append("description", description);
-            formData.append("time", time);
-            formData.append("place", JSON.stringify(places));
 
+            // Append arrays properly
+            filteredPlaces.forEach((place, index) => {
+                formData.append(`places[${index}]`, place);
+            });
+
+            filteredTimes.forEach((time, index) => {
+                formData.append(`times[${index}]`, time);
+            });
+
+            // Append images
             images.forEach((img) => {
-                formData.append("images", img.File);
+                if (img instanceof File) {
+                    formData.append("images", img);
+                } else if (img.File) {
+                    formData.append("images", img.File);
+                }
             });
 
             const res = await axios.post(
                 `${import.meta.env.VITE_BE_URL}/v1/api/festival/create`,
                 formData,
-                { headers: { "Content-Type": "multipart/form-data" } }
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
             );
 
             console.log("Thêm thành công:", res.data);
@@ -61,7 +96,10 @@ export default function AddFes({ setShow }) {
             setShow(false);
         } catch (err) {
             console.error("Lỗi:", err.response?.data || err.message);
-            alert("Có lỗi xảy ra khi thêm lễ hội");
+            alert(
+                "Có lỗi xảy ra khi thêm lễ hội: " +
+                    (err.response?.data?.message || err.message)
+            );
         } finally {
             setIsSubmitting(false);
         }
@@ -81,31 +119,36 @@ export default function AddFes({ setShow }) {
                 </div>
 
                 <form onSubmit={submit} className={styles.form}>
+                    {/* Tên lễ hội */}
                     <div className={styles.formGroup}>
                         <label>Tên lễ hội *</label>
                         <input
                             type="text"
-                            value={name}
                             placeholder="Nhập tên lễ hội"
+                            value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
                         />
                     </div>
 
+                    {/* Mô tả */}
                     <div className={styles.formGroup}>
-                        <label>Thời gian *</label>
-                        <input
-                            type="text"
-                            value={time}
-                            placeholder="Ví dụ: 10-15/3 âm lịch hàng năm"
-                            onChange={(e) => setTime(e.target.value)}
+                        <label>Mô tả *</label>
+                        <textarea
+                            placeholder="Mô tả chi tiết về lễ hội..."
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            rows="4"
                             required
                         />
                     </div>
 
-                    {/* Mảng địa điểm */}
+                    {/* Địa điểm */}
                     <div className={styles.formGroup}>
-                        <label>Địa điểm tổ chức *</label>
+                        <label className={styles.sectionLabel}>
+                            <RiMapPinLine className={styles.icon} />
+                            Địa điểm tổ chức *
+                        </label>
                         <div className={styles.places}>
                             {places.map((p, idx) => (
                                 <div className={styles.placeItem} key={idx}>
@@ -119,14 +162,12 @@ export default function AddFes({ setShow }) {
                                                 e.target.value
                                             )
                                         }
-                                        required
                                     />
                                     {places.length > 1 && (
                                         <button
                                             type="button"
                                             className={styles.removeBtn}
                                             onClick={() => removePlace(idx)}
-                                            title="Xóa địa điểm"
                                         >
                                             <RiCloseLine />
                                         </button>
@@ -135,7 +176,7 @@ export default function AddFes({ setShow }) {
                             ))}
                             <button
                                 type="button"
-                                className={styles.addPlaceBtn}
+                                className={styles.addBtn}
                                 onClick={addPlace}
                             >
                                 <RiAddLine /> Thêm địa điểm
@@ -143,25 +184,58 @@ export default function AddFes({ setShow }) {
                         </div>
                     </div>
 
+                    {/* Thời gian */}
                     <div className={styles.formGroup}>
-                        <label>Mô tả *</label>
-                        <textarea
-                            placeholder="Mô tả chi tiết về lễ hội..."
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            rows="4"
-                            required
-                        />
+                        <label className={styles.sectionLabel}>
+                            <RiCalendarEventLine className={styles.icon} />
+                            Thời gian tổ chức *
+                        </label>
+                        <div className={styles.times}>
+                            {times.map((t, idx) => (
+                                <div className={styles.timeItem} key={idx}>
+                                    <input
+                                        type="text"
+                                        placeholder={`Thời gian ${idx + 1}`}
+                                        value={t}
+                                        onChange={(e) =>
+                                            handleTimeChange(
+                                                idx,
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    {times.length > 1 && (
+                                        <button
+                                            type="button"
+                                            className={styles.removeBtn}
+                                            onClick={() => removeTime(idx)}
+                                        >
+                                            <RiCloseLine />
+                                        </button>
+                                    )}
+                                </div>
+                            ))}
+                            <button
+                                type="button"
+                                className={styles.addBtn}
+                                onClick={addTime}
+                            >
+                                <RiAddLine /> Thêm thời gian
+                            </button>
+                        </div>
                     </div>
 
+                    {/* Hình ảnh */}
                     <div className={styles.formGroup}>
-                        <label>Hình ảnh</label>
+                        <label className={styles.sectionLabel}>
+                            <RiImageLine className={styles.icon} />
+                            Hình ảnh
+                        </label>
                         <div className={styles.imageSection}>
                             <UpImg
                                 setImages={setImages}
                                 className={styles.uploader}
                             />
-
                             {images.length > 0 && (
                                 <div className={styles.imagePreview}>
                                     <p className={styles.previewLabel}>
@@ -174,7 +248,12 @@ export default function AddFes({ setShow }) {
                                                 key={id}
                                             >
                                                 <img
-                                                    src={value.URL}
+                                                    src={
+                                                        value.URL ||
+                                                        URL.createObjectURL(
+                                                            value
+                                                        )
+                                                    }
                                                     alt={`Preview ${id + 1}`}
                                                 />
                                                 <button
@@ -190,7 +269,6 @@ export default function AddFes({ setShow }) {
                                                             )
                                                         )
                                                     }
-                                                    title="Xóa ảnh"
                                                 >
                                                     <RiDeleteBin2Fill />
                                                 </button>
@@ -202,6 +280,7 @@ export default function AddFes({ setShow }) {
                         </div>
                     </div>
 
+                    {/* Actions */}
                     <div className={styles.formActions}>
                         <button
                             type="button"

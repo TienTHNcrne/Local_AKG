@@ -1,5 +1,4 @@
 /** @format */
-
 .container {
     display: flex;
     flex-direction: column;
@@ -7,7 +6,7 @@
     padding: 20px 30px;
 }
 
-//
+/* Header: search + filter */
 .header {
     display: flex;
     flex-direction: column;
@@ -29,8 +28,8 @@
         transition: all 0.2s ease;
 
         &:hover {
-            background: rgba(0, 140, 255, 0.08);
-            border-color: rgba(0, 140, 255, 0.801);
+            background: rgba(34, 197, 94, 0.08); /* xanh lá nhạt */
+            border-color: rgba(34, 197, 94, 0.8);
         }
     }
 
@@ -39,98 +38,6 @@
     }
 }
 
-.second {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-
-    input {
-        flex: 1;
-        height: 36px;
-        padding: 0 12px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        transition: all 0.2s ease;
-
-        &:active,
-        &:focus {
-            outline: none;
-            border: 2px solid rgba(0, 140, 255, 0.801);
-        }
-    }
-
-    .filter {
-        select {
-            padding: 6px 10px;
-            height: 36px;
-            font-size: 0.95rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-
-            &:active,
-            &:focus {
-                outline: none;
-                border: 2px solid rgba(0, 140, 255, 0.801);
-            }
-        }
-    }
-}
-.tabs {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    justify-content: center;
-    button {
-        padding: 8px 16px;
-        border-radius: 20px;
-        border: 1px solid #ddd;
-        background: #f9f9f9;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-size: 1.2rem;
-        &:hover {
-            background: #eee;
-        }
-    }
-
-    .active {
-        background: #1976d2;
-        color: white;
-        border-color: #1976d2;
-        font-weight: 500;
-    }
-}
-/* Tabs */
-.tabs {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 20px;
-
-    button {
-        padding: 8px 18px;
-        border-radius: 20px;
-        border: 1px solid #ddd;
-        background: #f9f9f9;
-        font-size: 0.95rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-
-        &:hover {
-            background: #eee;
-        }
-    }
-
-    .active {
-        background: #1976d2;
-        color: white;
-        border-color: #1976d2;
-        font-weight: 500;
-    }
-}
-
-/* Add Data button */
 .second {
     display: flex;
     align-items: center;
@@ -147,8 +54,8 @@
 
         &:focus {
             outline: none;
-            border-color: #1976d2;
-            box-shadow: 0 0 4px rgba(25, 118, 210, 0.4);
+            border-color: #22c55e;
+            box-shadow: 0 0 4px rgba(34, 197, 94, 0.4);
         }
     }
 
@@ -161,8 +68,8 @@
 
         &:focus {
             outline: none;
-            border-color: #1976d2;
-            box-shadow: 0 0 4px rgba(25, 118, 210, 0.4);
+            border-color: #22c55e;
+            box-shadow: 0 0 4px rgba(34, 197, 94, 0.4);
         }
     }
 
@@ -170,18 +77,69 @@
         padding: 6px 14px;
         border: none;
         border-radius: 6px;
-        background: #1976d2;
+        background: #22c55e; /* xanh lá */
         color: #fff;
         font-size: 0.9rem;
         cursor: pointer;
         transition: all 0.2s ease;
 
         &:hover {
-            background: #1259a6;
+            background: #16a34a;
         }
 
         &:active {
             transform: scale(0.96);
         }
+    }
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    button {
+        width: 120px;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 8px;
+        background: #e5e7eb;
+        color: #374151;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+        font-size: 1.1rem;
+
+        &:hover {
+            background: #d1d5db;
+        }
+    }
+
+    .active {
+        background: #22c55e; /* xanh lá */
+        color: white;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+        &:hover {
+            background: #16a34a; /* xanh lá đậm khi hover */
+        }
+    }
+}
+
+/* Tab button */
+.tab {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #e5e7eb;
+    color: #374151;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+
+    &:hover {
+        background: #d1d5db;
     }
 }

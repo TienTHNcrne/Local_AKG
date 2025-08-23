@@ -1,37 +1,37 @@
-import { CreateFestival, GetAll } from "../services/Festival.service.js";
+import { GetAll, CreateFood } from "../services/Food.service.js";
 import { Cloudinary } from "../utils/Cloudinary.js";
 
-export const createFestivalController = async (req, res) => {
+export const CreateFoodController = async (req, res) => {
     try {
-        const { name, description } = req.body;
+        const { name, general, smell, place, price } = req.body;
         let imageUrls = [];
-        const time = req.body.times;
-        const place = req.body.places;
-
+        console.log(req.body);
         if (req.files && req.files.length > 0) {
             imageUrls = await Cloudinary(req.files);
         }
-        const result = await CreateFestival({
-            name,
-            time,
-            description,
-            place,
+        console.log(req.files);
+        const result = await CreateFood({
+            name: name,
+            general: general,
+            price: price,
+            smell: smell,
+            place: place,
             imgs: imageUrls,
         });
 
         return res.status(result.status).json(result.data);
     } catch (err) {
-        console.error("CREATE FESTIVAL ERROR:", err);
+        console.error("CREATE FoodERROR:", err);
         return res.status(500).json({ error: err.message });
     }
 };
 
-export const getAllFestivalsController = async (req, res) => {
+export const getAllFoodController = async (req, res) => {
     try {
         const result = await GetAll();
         return res.status(result.status).json(result.data);
     } catch (err) {
-        console.error("GET FESTIVALS ERROR:", err);
+        console.error("GET Food ERROR:", err);
         return res.status(500).json({ error: err.message });
     }
 };

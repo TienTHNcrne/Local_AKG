@@ -4,15 +4,19 @@ import axios from "axios";
 import styles from "./TinhHoa.module.scss";
 import Place from "./components/Place/Place.jsx";
 import Festival from "./components/Festival/Festival.jsx";
-
 import AddFes from "./components/Festival/components/AddFes/AddFes.jsx";
+import AddFood from "./components/Food/components/AddFood/AddFood.jsx";
+import Food from "./components/Food/Food.jsx";
 export default function TinhHoa() {
     const [keyword, setKeyword] = useState("");
     const [filter, setFilter] = useState("All");
     const [form, setForm] = useState("place"); // tab hiện tại
     const [placeData, setPlaceData] = useState([]);
     const [eventData, setEventData] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [foodData, setFoodData] = useState([]);
+    const [loadingPlace, setLoadingPlace] = useState(false);
+    const [loadingEvent, setLoadingEvent] = useState(false);
+    const [loadingFood, setLoadingFood] = useState(false);
     const [showAdd, setShowAdd] = useState(false);
 
     const normalize = (str) =>
@@ -24,7 +28,7 @@ export default function TinhHoa() {
     useEffect(() => {
         const fetchPlace = async () => {
             try {
-                setLoading(true);
+                setLoadingPlace(true);
                 const res = await axios.get(
                     `${import.meta.env.VITE_BE_URL}/v1/api/gps/all`
                 );
@@ -32,13 +36,13 @@ export default function TinhHoa() {
             } catch (err) {
                 console.error("Lỗi khi fetch place:", err.message);
             } finally {
-                setLoading(false);
+                setLoadingPlace(false);
             }
         };
 
         const fetchEvent = async () => {
             try {
-                setLoading(true);
+                setLoadingEvent(true);
                 const res = await axios.get(
                     `${import.meta.env.VITE_BE_URL}/v1/api/festival/GetAll`
                 );
@@ -46,16 +50,37 @@ export default function TinhHoa() {
             } catch (err) {
                 console.error("Lỗi khi fetch event:", err.message);
             } finally {
-                setLoading(false);
+                setLoadingEvent(false);
+            }
+        };
+
+        const fetchFood = async () => {
+            try {
+                setLoadingFood(true);
+                const res = await axios.get(
+                    `${import.meta.env.VITE_BE_URL}/v1/api/food/GetAll`
+                );
+                setFoodData(res.data);
+            } catch (err) {
+                console.error("Lỗi khi fetch food:", err.message);
+            } finally {
+                setLoadingFood(false);
             }
         };
 
         if (form === "place" && placeData.length === 0) fetchPlace();
         if (form === "event" && eventData.length === 0) fetchEvent();
+        if (form === "food" && foodData.length === 0) fetchFood();
     }, [form]);
 
     const currentData =
-        form === "place" ? placeData : form === "event" ? eventData : [];
+        form === "place"
+            ? placeData
+            : form === "event"
+            ? eventData
+            : form === "food"
+            ? foodData
+            : [];
 
     const filteredData = currentData.filter((item) => {
         const name = normalize(item.name);
@@ -71,6 +96,15 @@ export default function TinhHoa() {
         return matchKeyword && matchFilter;
     });
 
+    const loading =
+        form === "place"
+            ? loadingPlace
+            : form === "event"
+            ? loadingEvent
+            : form === "food"
+            ? loadingFood
+            : false;
+    console.log(filteredData);
     return (
         <div className={styles.container}>
             {/* Tabs chọn form */}
@@ -94,7 +128,6 @@ export default function TinhHoa() {
                     Lễ hội
                 </button>
             </div>
-
             {/* Search + Filter */}
             <div className={styles.header}>
                 <div className={styles.second}>
@@ -121,7 +154,6 @@ export default function TinhHoa() {
                                 <option value="Danh lam thắng cảnh">
                                     Danh lam thắng cảnh
                                 </option>
-                                <option value="Ẩm thực">Ẩm thực</option>
                             </select>
                         </div>
                     ) : form === "event" || form === "food" ? (
@@ -139,12 +171,13 @@ export default function TinhHoa() {
             ) : form === "place" ? (
                 <Place filteredData={filteredData} />
             ) : form === "food" ? (
-                <p>📌 Danh sách món ăn sẽ hiển thị ở đây.</p>
+                <Food filteredData={filteredData} />
             ) : form === "event" ? (
                 <Festival filteredData={filteredData} />
             ) : null}
 
             {showAdd && form === "event" && <AddFes setShow={setShowAdd} />}
+            {showAdd && form === "food" && <AddFood setShow={setShowAdd} />}
         </div>
     );
 }

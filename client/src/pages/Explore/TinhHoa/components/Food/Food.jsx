@@ -1,21 +1,21 @@
 /** @format */
 import React, { useState } from "react";
-import styles from "./Festival.module.scss";
-import Infor from "./components/Infor/Infor";
+import styles from "./Food.module.scss";
+import Infor from "./components/Infor/Infor.jsx";
 export default function Festival({ filteredData }) {
     const [show, setShow] = useState(false);
     const [dataCard, setDataCard] = useState(null);
     return (
         <div className={styles.cards}>
-            {" "}
             {show && (
                 <Infor
-                    setPopup={setShow}
                     name={dataCard.name}
-                    description={dataCard.description}
-                    images={dataCard.imgs}
-                    time={dataCard.time}
                     place={dataCard.place}
+                    price={dataCard.price}
+                    smell={dataCard.smell}
+                    general={dataCard.general}
+                    images={dataCard.imgs}
+                    setPopup={setShow}
                 />
             )}
             {filteredData.map((value, id) => (
@@ -38,11 +38,9 @@ export default function Festival({ filteredData }) {
                             }
                         />
                     )}
-                    <div className={styles.ok}>
-                        <h4>{value.name}</h4>
-                        <div className={styles.item}>
-                            <p>{value.place}</p>
-                        </div>
+                    <h4>{value.name}</h4>
+                    <div className={styles.item}>
+                        <p>{value.place}</p>
                     </div>
                 </div>
             ))}

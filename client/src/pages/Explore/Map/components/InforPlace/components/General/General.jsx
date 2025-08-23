@@ -14,7 +14,6 @@ import { notification } from "antd";
 export default function General({ description, address, center, img }) {
     const { userId } = useAuth();
     const [lovePlace, setLovePlace] = useState(false);
-    console.log(img);
     const aress = address ? address.split(",") : [];
     let addres = "";
     for (var i = 1; i < aress.length - 1; ++i) {

@@ -2,10 +2,7 @@ import React, { useState } from "react";
 
 import GetDesMain from "../../../Map/components/GetDesMain/GetDesMain";
 import styles from "./Place.module.scss";
-export default function Place({
-
-    filteredData,
-}) {
+export default function Place({ filteredData }) {
     const [dataCard, setDataCard] = useState(null);
     const [popup, setPopup] = useState(false);
     const getAddress = (s) => {

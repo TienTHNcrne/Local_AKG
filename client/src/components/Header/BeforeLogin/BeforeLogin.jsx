@@ -20,23 +20,20 @@ export default function BeforeLogin() {
                     </Link>
                     <ul className={styles.dropdownMenu}>
                         <li>
-                            <Link to="/Location">Location</Link>
+                            <Link to="/Location">Tổng quan</Link>
                         </li>
                         <li>
-                            <Link to="/Climate">Climate</Link>
+                            <Link to="/Climate">Khí hậu</Link>
                         </li>
                         <li>
-                            <Link to="/History">History</Link>
+                            <Link to="/History">Lịch sử</Link>
                         </li>
                         <li>
-                            <Link to="/CulSoc">Culture-Society</Link>
+                            <Link to="/CulSoc">Dân tộc - Lễ hội</Link>
                         </li>
 
                         <li>
-                            <Link to="/Religion">Religion</Link>
-                        </li>
-                        <li>
-                            <Link to="/Food">Food and Place</Link>
+                            <Link to="/Religion">Tôn giáo - Tín ngưỡng</Link>
                         </li>
                     </ul>
                 </div>
@@ -48,7 +45,7 @@ export default function BeforeLogin() {
                     </div>
                     <ul className={styles.dropdownMenu}>
                         <li>
-                            <Link to="/Explore/map">Map</Link>
+                            <Link to="/Explore/map">Bản đồ</Link>
                         </li>
                         <li>
                             <Link to="/Explore/TinhHoa">Tinh hoa An Giang</Link>

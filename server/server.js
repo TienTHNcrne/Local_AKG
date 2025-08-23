@@ -16,6 +16,7 @@ import aiRoute from "./Routers/Ai.router.js";
 const app = express();
 const PORT = process.env.PORT || 8081;
 import userRouter from "./Routers/user.router.js";
+import Food from "./Routers/Food.router.js";
 import { EventEmitter } from "events";
 import GpsRouter from "./Routers/Gps.router.js";
 import UploadImg from "./Routers/UploadImg.router.js";
@@ -30,6 +31,7 @@ app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 app.use("/v2/api", weather);
 app.use("/v1/api", userRouter);
+app.use("/v1/api", Food);
 app.use("/v1/api", aiRoute);
 app.use("/v1/api", Tours);
 app.use("/v1/api", Plan);
@@ -38,7 +40,6 @@ app.use("/v1/api", FindRouter);
 app.use("/v1/api", GpsRouter);
 app.use("/v2/api", UploadImg);
 app.use("/v1/api", Festival);
-
 app.use("/v1/api", PlaceLove);
 app.get("/", (req, res) => {
     res.send("Backend is running!");

@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-const festival = new Schema({
-    time: {
-        type: [String],
+const food = new Schema({
+    general: {
+        type: String,
         required: true,
     },
     name: {
@@ -9,10 +9,14 @@ const festival = new Schema({
         required: true,
     },
     place: {
-        type: [String],
+        type: String,
         required: true,
     },
-    description: {
+    smell: {
+        type: String,
+        required: true,
+    },
+    price: {
         type: String,
         required: true,
     },
@@ -20,4 +24,4 @@ const festival = new Schema({
         type: [String],
     },
 });
-export default mongoose.model("festival", festival);
+export default mongoose.model("food", food);
