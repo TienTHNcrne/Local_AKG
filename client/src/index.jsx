@@ -19,6 +19,7 @@ import Register from "./pages/Register/Register";
 import Food from "./pages/Home/Food/Food";
 import Login from "./pages/Login/Login";
 import "./index.css";
+import About from "./pages/About/About";
 import Auth from "./Contexts/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
 const router = createBrowserRouter([
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
             { path: "Location", element: <Location /> },
             { path: "History", element: <History /> },
             { path: "CulSoc", element: <CulSoc /> },
+            { path: "About", element: <About /> },
 
             { path: "Explore/map", element: <Map /> },
             { path: "Explore/TinhHoa", element: <TinhHoa /> },
