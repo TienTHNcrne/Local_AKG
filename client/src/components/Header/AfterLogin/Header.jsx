@@ -121,7 +121,7 @@ export default function Header() {
             </nav>
 
             <div className={styles.right}>
-                <button className={styles.icon} onClick={() => setAdd(true)}>
+                <button className={styles.icon1} onClick={() => setAdd(true)}>
                     <FaStar />
                 </button>
                 <div className={styles.account}>

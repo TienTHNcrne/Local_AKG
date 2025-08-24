@@ -136,7 +136,7 @@ export default function About() {
                     <h2>05. Đội Ngũ Phát Triển</h2>
                     <div className={styles.team}>
                         <div className={styles.memberHD}>
-                            <h4>Giáo viên hướng dẫn: Nguyễn Văn A</h4>
+                            <h4>Giáo viên hướng dẫn: Cô Khuyên</h4>
                             <p>
                                 “Mình là giáo viên hướng dẫn, hỗ trợ định hướng
                                 dự án, góp ý kỹ thuật và đảm bảo dự án hoàn
