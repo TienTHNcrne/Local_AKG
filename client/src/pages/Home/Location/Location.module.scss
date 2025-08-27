@@ -25,6 +25,9 @@ ul {
     flex-direction: column;
     gap: 20px;
     padding: 20px 30px;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
     .content {
         display: flex;
         flex-direction: column;
@@ -75,6 +78,7 @@ ul {
 
     .container {
         padding: 10px;
+        margin: 20px;
     }
 
     .content {
@@ -90,11 +94,9 @@ ul {
         }
 
         .baby {
-            width: 100%;
             font-size: 16px;
-            padding: 10px;
+
             border-radius: 6px;
-            margin-top: 5px; /* cách h3 một chút */
         }
 
         .area,

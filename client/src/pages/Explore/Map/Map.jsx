@@ -13,6 +13,10 @@ import L from "leaflet";
 import ReactDOMServer from "react-dom/server";
 import { FaMapMarker } from "react-icons/fa";
 import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+
+import MarkerClusterGroup from "react-leaflet-markercluster";
 import CreateForm from "./components/CreateForm/CreateForm";
 import axios from "axios";
 import "@ant-design/v5-patch-for-react-19";
@@ -29,12 +33,12 @@ export default function Map() {
     const [popup, setPopup] = useState(false);
     const [inFor, setInFor] = useState({});
 
-    // Tải GeoJSON
+    // Load GeoJSON
     useEffect(() => {
         axios.get("/data.geojson").then((res) => setTerritory(res.data));
     }, []);
 
-    // Tải tọa độ GPS
+    // Load tọa độ GPS
     useEffect(() => {
         axios
             .get(`${import.meta.env.VITE_BE_URL}/v1/api/gps/all`)
@@ -86,6 +90,7 @@ export default function Map() {
                     url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                     attribution="Tiles &copy; Esri"
                 />
+
                 {territory && (
                     <GeoJSON
                         data={territory}
@@ -95,24 +100,29 @@ export default function Map() {
                         })}
                     />
                 )}
-                {coordinates?.length > 0 &&
-                    coordinates.map((value, index) =>
-                        typeof value.lat === "number" &&
-                        typeof value.lng === "number" ? (
-                            <Marker
-                                key={index}
-                                position={[value.lat, value.lng]}
-                                icon={customIcon}
-                                eventHandlers={{
-                                    click: () => {
-                                        setInFor(value);
-                                        setPopup(true);
-                                        setAdd(false);
-                                    },
-                                }}
-                            />
-                        ) : null
-                    )}
+
+                {coordinates?.length > 0 && (
+                    <MarkerClusterGroup chunkedLoading>
+                        {coordinates.map((value, index) =>
+                            typeof value.lat === "number" &&
+                            typeof value.lng === "number" ? (
+                                <Marker
+                                    key={index}
+                                    position={[value.lat, value.lng]}
+                                    icon={customIcon}
+                                    eventHandlers={{
+                                        click: () => {
+                                            setInFor(value);
+                                            setPopup(true);
+                                            setAdd(false);
+                                        },
+                                    }}
+                                />
+                            ) : null
+                        )}
+                    </MarkerClusterGroup>
+                )}
+
                 {center.lat && center.lng && (
                     <>
                         <Marker
@@ -123,6 +133,7 @@ export default function Map() {
                     </>
                 )}
             </MapContainer>
+
             <button
                 className={styles.but}
                 onClick={() => {

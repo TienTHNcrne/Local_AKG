@@ -153,10 +153,6 @@
         align-items: stretch;
         gap: 10px;
 
-        input {
-            width: 100%;
-        }
-
         .filter select {
             width: 100%;
         }
@@ -184,12 +180,6 @@
 
     .second {
         gap: 8px;
-
-        input {
-            font-size: 0.85rem;
-            width: 100% !important;
-            height: 32px !important;
-        }
 
         .filter select {
             height: 32px;
