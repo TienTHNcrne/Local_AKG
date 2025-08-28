@@ -22,7 +22,7 @@ router.post("/upload", upload.array("images", 20), async (req, res) => {
         if (req.files && req.files.length > 0) {
             imageUrls = await Cloudinary(req.files);
         }
-
+        console.log("category", req);
         const gps = new Gps({
             lat,
             lng,
@@ -30,10 +30,10 @@ router.post("/upload", upload.array("images", 20), async (req, res) => {
             category: req.body.category,
             description: req.body.description,
             time: req.body.time,
-            img: imageUrls, // có thể rỗng []
+            img: imageUrls,
         });
+        console.log("checkL", await gps.save());
 
-        await gps.save();
         res.status(201).json({ message: "Tạo điểm GPS thành công", gps });
     } catch (err) {
         console.error("UPLOAD ERROR:", err);

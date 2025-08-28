@@ -19,11 +19,16 @@ export default function TinhHoa() {
     const [loadingFood, setLoadingFood] = useState(false);
     const [showAdd, setShowAdd] = useState(false);
 
-    const normalize = (str) =>
-        str
-            ?.toLowerCase()
+    const normalize = (str) => {
+        if (typeof str !== "string") {
+            console.log("oke", str);
+            return "";
+        }
+        return str
+            .toLowerCase()
             .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "") || "";
+            .replace(/[\u0300-\u036f]/g, "");
+    };
 
     useEffect(() => {
         const fetchPlace = async () => {
@@ -81,17 +86,22 @@ export default function TinhHoa() {
             : form === "food"
             ? foodData
             : [];
-
     const filteredData = currentData.filter((item) => {
         const name = normalize(item.name);
-        const category = normalize(item.category);
         const desc = normalize(item.description);
+        const categories = Array.isArray(item.category)
+            ? item.category.map(normalize)
+            : [normalize(item.category)];
         const key = normalize(keyword);
 
         const matchKeyword =
-            name.includes(key) || category.includes(key) || desc.includes(key);
+            name.includes(key) ||
+            desc.includes(key) ||
+            categories.some((cat) => cat.includes(key));
+
         const matchFilter =
-            filter === "All" || normalize(item.category) === normalize(filter);
+            filter === "All" ||
+            categories.some((cat) => cat === normalize(filter));
 
         return matchKeyword && matchFilter;
     });
@@ -104,7 +114,6 @@ export default function TinhHoa() {
             : form === "food"
             ? loadingFood
             : false;
-    console.log(filteredData);
     return (
         <div className={styles.container}>
             {/* Tabs chọn form */}
