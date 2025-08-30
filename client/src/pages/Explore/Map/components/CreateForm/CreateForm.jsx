@@ -25,9 +25,14 @@ export default function CreateForm({
     const [loading, setLoading] = useState(false);
     const choose = [
         "Biển đảo",
+        "Du lịch tâm linh",
         "Danh lam thắng cảnh",
         "Di tích lịch sử",
         "Lễ hội",
+        "Sở thú",
+        "Khu vui chơi - giải trí",
+        "Khu đô thị",
+        "Chợ",
     ];
     const [check, setCheck] = useState([]);
     const suggest = useSuggest(search);

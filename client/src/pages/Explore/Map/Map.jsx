@@ -55,18 +55,26 @@ export default function Map() {
         iconSize: [24, 24],
     });
     const categories = [
+        "All",
         "Danh lam thắng cảnh",
         "Du lịch tâm linh",
         "Di tích lịch sử",
         "Biển đảo",
+        "Lễ hội",
         "Chợ",
         "Sở thú",
         "Khu đô thị ",
         "Khu vui chơi - giải trí",
     ];
+    const [cate, setCate] = useState("All");
+    console.log(cate);
     return (
         <div className={styles.container}>
-            <div className={styles.func}>
+            <div
+                className={`${styles.func} ${
+                    show || add || popup ? styles.open : styles.closes
+                }`}
+            >
                 <button className={styles.icon}>
                     <FaDirections
                         onClick={() => {
@@ -80,7 +88,13 @@ export default function Map() {
                 <div className={styles.categories}>
                     {categories.map((value, id) => (
                         <div className={styles.category}>
-                            <p key={id}>{value}</p>
+                            <p
+                                onClick={() => setCate(value)}
+                                key={id}
+                                className={cate === value ? styles.cate : ""}
+                            >
+                                {value}
+                            </p>
                         </div>
                     ))}
                 </div>
@@ -162,25 +176,30 @@ export default function Map() {
                 {/* Các Marker GPS */}
                 {coordinates?.length > 0 && (
                     <MarkerClusterGroup chunkedLoading>
-                        {coordinates.map((value, index) =>
-                            typeof value.lat === "number" &&
-                            typeof value.lng === "number" ? (
-                                <Marker
-                                    key={index}
-                                    position={[value.lat, value.lng]}
-                                    icon={customIcon}
-                                    eventHandlers={{
-                                        click: () => {
-                                            setInFor(value);
-                                            setPopup(true);
-                                            setShow(false);
+                        {coordinates.map((value, index) => {
+                            const show =
+                                cate === "All" || value.category.includes(cate);
+                            if (!show) return null;
+                            return (
+                                typeof value.lat === "number" &&
+                                typeof value.lng === "number" && (
+                                    <Marker
+                                        key={index}
+                                        position={[value.lat, value.lng]}
+                                        icon={customIcon}
+                                        eventHandlers={{
+                                            click: () => {
+                                                setInFor(value);
+                                                setPopup(true);
+                                                setShow(false);
 
-                                            setAdd(false);
-                                        },
-                                    }}
-                                />
-                            ) : null
-                        )}
+                                                setAdd(false);
+                                            },
+                                        }}
+                                    />
+                                )
+                            );
+                        })}
                     </MarkerClusterGroup>
                 )}
 

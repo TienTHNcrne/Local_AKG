@@ -163,6 +163,14 @@ export default function TinhHoa() {
                                 <option value="Danh lam thắng cảnh">
                                     Danh lam thắng cảnh
                                 </option>
+                                <option value="Biển đảo">Biển đảo</option>
+                                <option value="Lễ hội"> Lễ hội</option>
+                                <option value="Sở thú">Sở thú</option>
+                                <option value="Khu vui chơi - giải trí">
+                                    Khu vui chơi - giải trí
+                                </option>
+                                <option value="Khu đô thị">Khu đô thị</option>{" "}
+                                <option value="Chợ">Chợ</option>
                             </select>
                         </div>
                     ) : form === "event" || form === "food" ? (
