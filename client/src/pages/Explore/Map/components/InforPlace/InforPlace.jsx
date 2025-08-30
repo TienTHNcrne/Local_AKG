@@ -9,7 +9,7 @@ export default function InForPlace({ center, popup, setPopup, inFor }) {
     const MainName = inFor?.name?.split(",")[0];
     const images = Array.isArray(inFor?.img) ? inFor.img : [];
     const [choose, setChoose] = useState("general");
-
+    console.log(inFor);
     return (
         <div
             className={`${styles.container} ${
@@ -29,7 +29,14 @@ export default function InForPlace({ center, popup, setPopup, inFor }) {
                             ))}
                     </div>
                     <h1>{MainName}</h1>
-                    <p>{inFor.category}</p>
+                    <div className={styles.category}>
+                        {inFor.category &&
+                            inFor.category.map((value, id) => (
+                                <p className={styles.tag} key={id}>
+                                    {value}
+                                </p>
+                            ))}
+                    </div>
                     <div className={styles.option}>
                         <div className={styles.general}>
                             <h4

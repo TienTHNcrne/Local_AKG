@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import styles from "./Home.module.scss";
 import { Link } from "react-router-dom";
+
 export default function Home() {
     return (
         <div className={styles.container}>

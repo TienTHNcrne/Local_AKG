@@ -81,7 +81,7 @@ export default function CreateForm({
                         setShow(false);
                     }}
                 >
-                    <FiX />
+                    &times;
                 </button>
             </div>
 
