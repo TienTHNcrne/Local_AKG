@@ -10,8 +10,17 @@ import { FaDirections } from "react-icons/fa";
 import axios from "axios";
 import { useAuth } from "../../../../../../../Contexts/Auth/Auth";
 import { notification } from "antd";
-
-export default function General({ description, address, center, img }) {
+import GetPlace from "../../../GetPlace/GetPlace";
+import { useMapContext } from "../../../contexts/useMapContext";
+export default function General({
+    description,
+    address,
+    center,
+    img,
+    setShows,
+    setPopup,
+}) {
+    const { setInFor } = useMapContext();
     const { userId } = useAuth();
     const [lovePlace, setLovePlace] = useState(false);
     const aress = address ? address.split(",") : [];
@@ -75,7 +84,17 @@ export default function General({ description, address, center, img }) {
     return (
         <div className={styles.container}>
             <div className={styles.option}>
-                <FaDirections />
+                <FaDirections
+                    onClick={() => {
+                        setInFor({
+                            name: address,
+                            lng: center.lng,
+                            lat: center.lat,
+                        });
+                        setShows(true);
+                        setPopup(false);
+                    }}
+                />
                 <button
                     onClick={GetPlace}
                     style={{
@@ -86,8 +105,6 @@ export default function General({ description, address, center, img }) {
                 >
                     <FaHeart style={{ color: lovePlace ? "red" : "inherit" }} />
                 </button>
-                <MdGpsFixed />
-                <IoShareSocial />
             </div>
             <div className={styles.inFor}>
                 <div className={styles.address}>

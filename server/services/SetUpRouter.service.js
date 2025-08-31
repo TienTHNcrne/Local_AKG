@@ -1,10 +1,10 @@
 import axios from "axios";
-export const SetUpRouter = async ({ data }) => {
+export const SetUpRouter = async ({ data, profile }) => {
     try {
         let key = [];
         for (let i = 1; i <= 1; ++i) {
             const res = await axios.post(
-                `https://api.openrouteservice.org/v2/directions/driving-car/geojson`,
+                `https://api.openrouteservice.org/v2/directions/${profile}/geojson`,
                 {
                     coordinates: data,
                 },

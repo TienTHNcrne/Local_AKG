@@ -1,4 +1,3 @@
-/** @format */
 import React, { useEffect, useState } from "react";
 import styles from "./Map.module.scss";
 import {
@@ -8,34 +7,45 @@ import {
     Marker,
     ZoomControl,
     LayersControl,
-    Polyline, // thêm vào
 } from "react-leaflet";
 import L from "leaflet";
 import ReactDOMServer from "react-dom/server";
-import { FaMapMarker } from "react-icons/fa";
+import { FaMapMarker, FaDirections } from "react-icons/fa";
+import { IoIosAddCircle } from "react-icons/io";
+import {
+    MapProvider,
+    useMapContext,
+} from "./components/contexts/useMapContext.jsx";
+
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-import GetPlace from "./components/GetPlace/GetPlace";
+
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import CreateForm from "./components/CreateForm/CreateForm";
 import axios from "axios";
-import "@ant-design/v5-patch-for-react-19";
-import { IoIosAddCircle } from "react-icons/io";
+
+import GetPlace from "./components/GetPlace/GetPlace";
+import CreateForm from "./components/CreateForm/CreateForm";
 import FlyToPlace from "./components/FlyToPlace/FlyToPlace.jsx";
 import InforPlace from "./components/InforPlace/InforPlace.jsx";
 import RouteLayer from "./components/RouteLayer/RouteLayer.jsx";
-import { FaDirections } from "react-icons/fa";
-export default function Map() {
+export function MapContent() {
+    const { durDis } = useMapContext();
+
     const [add, setAdd] = useState(false);
+    const [show, setShow] = useState(false);
+    const [popup, setPopup] = useState(false);
+
     const [center, setCenter] = useState({ lat: null, lng: null });
     const [search, setSearch] = useState("");
+
     const [territory, setTerritory] = useState(null);
     const [coordinates, setCoordinates] = useState([]);
-    const [popup, setPopup] = useState(false);
-    const [inFor, setInFor] = useState({});
     const [draw, setDraw] = useState(null);
-    const [show, setShow] = useState(false);
+    const [inFor, setInFor] = useState({});
+    const [cate, setCate] = useState("All");
+    const [unit, setUnit] = useState({ time: "h", distance: "km" });
+    const [newData, setNewData] = useState({ distance: 0, duration: 0 });
     useEffect(() => {
         axios.get("/data.geojson").then((res) => setTerritory(res.data));
     }, []);
@@ -66,38 +76,170 @@ export default function Map() {
         "Khu đô thị ",
         "Khu vui chơi - giải trí",
     ];
-    const [cate, setCate] = useState("All");
-    console.log(cate);
+
+    useEffect(() => {
+        if (!durDis) return;
+
+        let distance = durDis.distance;
+        let duration = durDis.duration;
+
+        switch (unit.distance) {
+            case "km":
+                distance = (distance / 1000).toFixed(2);
+                break;
+            case "mi":
+                distance = (distance / 1609.34).toFixed(2);
+                break;
+            case "m":
+            default:
+                distance = distance.toFixed(0);
+                break;
+        }
+
+        switch (unit.time) {
+            case "min":
+                duration = (duration / 60).toFixed(0);
+                break;
+            case "h":
+                duration = (duration / 3600).toFixed(1);
+                break;
+            case "s":
+            default:
+                duration = duration.toFixed(0);
+                break;
+        }
+
+        setNewData({ distance, duration });
+    }, [unit, durDis]);
+
     return (
         <div className={styles.container}>
             <div
-                className={`${styles.func} ${
+                className={`${styles.roq} ${
                     show || add || popup ? styles.open : styles.closes
                 }`}
             >
-                <button className={styles.icon}>
-                    <FaDirections
-                        onClick={() => {
-                            setAdd(false);
-                            setPopup(false);
-                            setShow(true);
-                        }}
-                    />{" "}
-                </button>
+                <div className={styles.func}>
+                    <button className={styles.icon}>
+                        <FaDirections
+                            onClick={() => {
+                                setAdd(false);
+                                setPopup(false);
+                                setShow(true);
+                            }}
+                        />{" "}
+                    </button>
 
-                <div className={styles.categories}>
-                    {categories.map((value, id) => (
-                        <div className={styles.category}>
-                            <p
-                                onClick={() => setCate(value)}
-                                key={id}
-                                className={cate === value ? styles.cate : ""}
+                    <div className={styles.categories}>
+                        {categories.map((value, id) => (
+                            <div className={styles.category}>
+                                <p
+                                    onClick={() => setCate(value)}
+                                    key={id}
+                                    className={
+                                        cate === value ? styles.cate : ""
+                                    }
+                                >
+                                    {value}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div
+                    className={`${styles.miniBox} ${
+                        durDis?.distance && durDis?.duration
+                            ? styles.open1
+                            : styles.close1
+                    }`}
+                >
+                    <div className={styles.step1}>
+                        <div className={styles.distance}>
+                            <button
+                                className={
+                                    unit.distance === "m" && styles.acStep
+                                }
+                                onClick={() =>
+                                    setUnit({ time: unit.time, distance: "m" })
+                                }
                             >
-                                {value}
+                                mét (m)
+                            </button>
+                            <button
+                                className={
+                                    unit.distance === "km" && styles.acStep
+                                }
+                                onClick={() =>
+                                    setUnit({ time: unit.time, distance: "km" })
+                                }
+                            >
+                                km (km)
+                            </button>
+                            <button
+                                className={
+                                    unit.distance === "mi" && styles.acStep
+                                }
+                                onClick={() =>
+                                    setUnit({ time: unit.time, distance: "mi" })
+                                }
+                            >
+                                dặm (mi)
+                            </button>
+                        </div>
+                        <div className={styles.duration}>
+                            <button
+                                className={unit.time === "s" && styles.acStep}
+                                onClick={() =>
+                                    setUnit({
+                                        time: "s",
+                                        distance: unit.distance,
+                                    })
+                                }
+                            >
+                                giây (s)
+                            </button>
+                            <button
+                                className={unit.time === "min" && styles.acStep}
+                                onClick={() =>
+                                    setUnit({
+                                        time: "min",
+                                        distance: unit.distance,
+                                    })
+                                }
+                            >
+                                phút (min)
+                            </button>
+                            <button
+                                className={unit.time === "h" && styles.acStep}
+                                onClick={() =>
+                                    setUnit({
+                                        time: "h",
+                                        distance: unit.distance,
+                                    })
+                                }
+                            >
+                                Giờ (h)
+                            </button>
+                        </div>
+                    </div>
+                    <div className={styles.step2}>
+                        <div className={styles.content1}>
+                            <div className={styles.main}>
+                                <h3>Khoảng cách</h3>{" "}
+                                <p>
+                                    {newData?.distance} ({unit.distance})
+                                </p>
+                            </div>
+                        </div>
+                        <div className={styles.content}>
+                            {" "}
+                            <h3>Thời gian trung bình</h3>{" "}
+                            <p>
+                                {newData?.duration} ({unit.time})
                             </p>
                         </div>
-                    ))}
-                </div>
+                    </div>
+                </div>{" "}
             </div>
             <GetPlace setDraw={setDraw} setShows={setShow} shows={show} />
 
@@ -106,6 +248,9 @@ export default function Map() {
                 popup={popup}
                 inFor={inFor}
                 setPopup={setPopup}
+                setDraw={setDraw}
+                setShows={setShow}
+                shows={show}
             />
             <CreateForm
                 setShow={setAdd}
@@ -228,5 +373,12 @@ export default function Map() {
                 <IoIosAddCircle />
             </button>
         </div>
+    );
+}
+export default function Map() {
+    return (
+        <MapProvider>
+            <MapContent />
+        </MapProvider>
     );
 }

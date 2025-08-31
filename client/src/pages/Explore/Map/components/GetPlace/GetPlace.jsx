@@ -1,62 +1,101 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Suggests from "./components/Suggest/Suggests";
 import styles from "./GetPlace.module.scss";
-import { FaMagnifyingGlass } from "react-icons/fa6";
+import { FaMagnifyingGlass, FaCar } from "react-icons/fa6";
 import { IoAddCircle } from "react-icons/io5";
-import { FaCar } from "react-icons/fa";
 import { TbBikeFilled } from "react-icons/tb";
 import { RiWalkFill } from "react-icons/ri";
-import axios from "axios";
+import { useMapContext } from "../contexts/useMapContext";
+
 export default function GetPlace({ setDraw, setShows, shows }) {
+    const { inFor, setDurDis, setShowD } = useMapContext();
     const [focus, setFocus] = useState(null);
     const [data, setData] = useState({ value: "", id: null });
     const [coordinates, setCoordinates] = useState(["", ""]);
     const [results, setResults] = useState([]);
     const [show, setShow] = useState(false);
-    const [vehicle, setVehicle] = useState("car");
+    const [vehicle, setVehicle] = useState("driving-car");
+    const [preVe, setPreVe] = useState("driving-car");
+
+    // Update coordinates when inFor changes
+    useEffect(() => {
+        if (!inFor || Object.keys(inFor).length === 0) return;
+
+        setCoordinates((prev) => {
+            const newCoords = [...prev];
+            newCoords[1] = inFor.name;
+            return newCoords;
+        });
+
+        setResults((prev) => {
+            const newRes = [...prev];
+            newRes[1] = [Number(inFor.lng), Number(inFor.lat)];
+            return newRes;
+        });
+    }, [inFor?.lat, inFor?.lng, inFor?.name]);
+
     const handleChange = (value, id) => {
-        const newCoords = [...coordinates];
-        newCoords[id] = value;
-        setCoordinates(newCoords);
+        setCoordinates((prev) => {
+            const newCoords = [...prev];
+            newCoords[id] = value;
+            return newCoords;
+        });
         setData({ value, id });
     };
 
     const handleChoose = (place, id) => {
-        const newCoords = [...coordinates];
-        newCoords[id] = place.name;
-        setCoordinates(newCoords);
+        setCoordinates((prev) => {
+            const newCoords = [...prev];
+            newCoords[id] = place.name;
+            return newCoords;
+        });
 
-        const newResults = [...results];
-        newResults[id] = [Number(place.lng), Number(place.lat)];
-        setResults(newResults);
+        setResults((prev) => {
+            const newRes = [...prev];
+            newRes[id] = [Number(place.lng), Number(place.lat)];
+            return newRes;
+        });
     };
 
-    console.log("Coordinates:", coordinates);
-    console.log("Results:", results);
+    const fetchRoute = async (coords) => {
+        try {
+            const res = await axios.post(
+                `${import.meta.env.VITE_BE_URL}/v2/api/router`,
+                {
+                    coordinates: coords,
+                    profile: vehicle,
+                }
+            );
+
+            setDraw(res.data);
+            setPreVe(vehicle);
+
+            let distance = 0,
+                duration = 0;
+            res.data.features.forEach((value) => {
+                distance += value.properties.summary.distance;
+                duration += value.properties.summary.duration;
+            });
+            setDurDis({ distance, duration });
+            setShowD(true);
+        } catch (err) {
+            window.alert("Phương tiện không khả thi");
+            console.log(err.message);
+        }
+    };
+
     const onSubmit = (e) => {
         e.preventDefault();
-        try {
-            axios
-                .post(`${import.meta.env.VITE_BE_URL}/v2/api/router`, {
-                    coordinates: results,
-                })
-                .then((res) => setDraw(res.data));
-        } catch (err) {
-            console.log(err.message);
-        }
+        if (results.length === coordinates.length) fetchRoute(results);
     };
+
+    // Update route when vehicle changes
     useEffect(() => {
         if (coordinates.length !== results.length) return;
-        try {
-            axios
-                .post(`${import.meta.env.VITE_BE_URL}/v2/api/router`, {
-                    coordinates: results,
-                })
-                .then((res) => setDraw(res.data));
-        } catch (err) {
-            console.log(err.message);
-        }
+        fetchRoute(results).catch(() => setVehicle(preVe));
     }, [vehicle]);
+
     return (
         <div
             className={`${styles.container} ${
@@ -66,24 +105,27 @@ export default function GetPlace({ setDraw, setShows, shows }) {
             <button className={styles.close} onClick={() => setShows(false)}>
                 &times;
             </button>
+
             <div className={styles.traffics}>
                 <button
-                    className={vehicle === "car" ? styles.active : ""}
-                    onClick={() => setVehicle("car")}
+                    className={vehicle === "driving-car" ? styles.active : ""}
+                    onClick={() => setVehicle("driving-car")}
                 >
                     <FaCar />
                     <span>Ô tô</span>
-                </button>{" "}
+                </button>
                 <button
-                    className={vehicle === "walk" ? styles.active : ""}
-                    onClick={() => setVehicle("walk")}
+                    className={vehicle === "foot-walking" ? styles.active : ""}
+                    onClick={() => setVehicle("foot-walking")}
                 >
                     <RiWalkFill />
                     <span>Đi bộ</span>
                 </button>
                 <button
-                    className={vehicle === "bike" ? styles.active : ""}
-                    onClick={() => setVehicle("bike")}
+                    className={
+                        vehicle === "cycling-regular" ? styles.active : ""
+                    }
+                    onClick={() => setVehicle("cycling-regular")}
                 >
                     <TbBikeFilled />
                     <span>Xe đạp</span>
@@ -96,13 +138,13 @@ export default function GetPlace({ setDraw, setShows, shows }) {
                         <input
                             required
                             type="text"
+                            value={v}
                             onFocus={() => {
                                 setFocus(id);
                                 setData({ value: v, id });
                                 setShow(true);
                             }}
                             onBlur={() => setFocus(null)}
-                            value={v}
                             onChange={(e) => handleChange(e.target.value, id)}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
@@ -118,28 +160,31 @@ export default function GetPlace({ setDraw, setShows, shows }) {
                         )}
                     </div>
                 ))}
+
                 {results.every((e) => e !== null) &&
                     results.length === coordinates.length && (
-                        <button className={styles.add}>
-                            <IoAddCircle
-                                onClick={() => {
-                                    setCoordinates((e) => [...e, ""]);
-                                }}
-                            />
+                        <button
+                            className={styles.add}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setCoordinates((prev) => [...prev, ""]);
+                            }}
+                        >
+                            <IoAddCircle />
                             <span>Thêm điểm đến</span>
                         </button>
                     )}
+
                 <button
                     type="submit"
                     className={styles.submit}
                     disabled={results.length !== coordinates.length}
-                    onClick={(e) => onSubmit(e)}
+                    onClick={onSubmit}
                 >
                     Tìm kiếm tuyến đường
                 </button>
             </form>
 
-            {/* Suggest list */}
             {show && (
                 <Suggests
                     value={data.value}

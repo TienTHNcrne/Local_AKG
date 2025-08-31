@@ -5,7 +5,15 @@ import General from "./components/General/General";
 import Comments from "./components/Comments/Comments";
 import Weather from "./components/Weather/Weather";
 import { FaCaretLeft } from "react-icons/fa";
-export default function InForPlace({ center, popup, setPopup, inFor }) {
+export default function InForPlace({
+    center,
+    popup,
+    setPopup,
+    inFor,
+    setDraw,
+    setShows,
+    shows,
+}) {
     const MainName = inFor?.name?.split(",")[0];
     const images = Array.isArray(inFor?.img) ? inFor.img : [];
     const [choose, setChoose] = useState("general");
@@ -87,6 +95,9 @@ export default function InForPlace({ center, popup, setPopup, inFor }) {
                             address={inFor.name}
                             center={center}
                             img={images.length > 0 && images[0]}
+                            setDraw={setDraw}
+                            setShows={setShows}
+                            setPopup={setPopup}
                         />
                     )}
                     {choose === "rate" && (

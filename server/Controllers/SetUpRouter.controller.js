@@ -3,7 +3,11 @@ const Create = async (req, res) => {
     try {
         console.log(req.body);
         const coordinates = req.body.coordinates;
-        const result = await SetUpRouter({ data: coordinates });
+        const result = await SetUpRouter({
+            data: coordinates,
+            profile: req.body.profile,
+        });
+        console.log(result);
         return res.status(result.status).json(result.data);
     } catch (err) {
         console.log(err);
