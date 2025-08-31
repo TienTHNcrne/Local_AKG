@@ -17,6 +17,7 @@ export default function Place({ filteredData }) {
         }
         return address;
     };
+    console.log(filteredData);
     return (
         <div>
             {popup && (
@@ -56,7 +57,11 @@ export default function Place({ filteredData }) {
                             />
                         )}
                         <h4>{value.name.split(",")[0]}</h4>
-                        <h5>{value.category}</h5>
+                        <div className={styles.categories}>
+                            {value.category?.map((v, id) => (
+                                <h5>{v}</h5>
+                            ))}
+                        </div>
                         <p>{getAddress(value.name)}</p>
                     </div>
                 ))}

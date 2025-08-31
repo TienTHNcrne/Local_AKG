@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Suggests from "./components/Suggest/Suggests";
 import styles from "./GetPlace.module.scss";
-import { FaMagnifyingGlass, FaCar } from "react-icons/fa6";
+import { FaCar } from "react-icons/fa6";
 import { IoAddCircle } from "react-icons/io5";
 import { TbBikeFilled } from "react-icons/tb";
 import { RiWalkFill } from "react-icons/ri";
 import { useMapContext } from "../contexts/useMapContext";
-
+import { RiDeleteBin2Fill } from "react-icons/ri";
 export default function GetPlace({ setDraw, setShows, shows }) {
     const { inFor, setDurDis, setShowD } = useMapContext();
-    const [focus, setFocus] = useState(null);
     const [data, setData] = useState({ value: "", id: null });
     const [coordinates, setCoordinates] = useState(["", ""]);
     const [results, setResults] = useState([]);
@@ -96,6 +95,14 @@ export default function GetPlace({ setDraw, setShows, shows }) {
         fetchRoute(results).catch(() => setVehicle(preVe));
     }, [vehicle]);
 
+    const check = () => {
+        let check = 0;
+        results.forEach((value) => {
+            ++check;
+        });
+        console.log(check);
+        return check === results.length;
+    };
     return (
         <div
             className={`${styles.container} ${
@@ -140,11 +147,9 @@ export default function GetPlace({ setDraw, setShows, shows }) {
                             type="text"
                             value={v}
                             onFocus={() => {
-                                setFocus(id);
                                 setData({ value: v, id });
                                 setShow(true);
                             }}
-                            onBlur={() => setFocus(null)}
                             onChange={(e) => handleChange(e.target.value, id)}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
@@ -153,32 +158,42 @@ export default function GetPlace({ setDraw, setShows, shows }) {
                                 }
                             }}
                         />
-                        {focus === id && (
-                            <FaMagnifyingGlass
-                                onClick={() => setData({ value: v, id })}
-                            />
+                        {coordinates.length > 2 && (
+                            <button
+                                className={styles.remove}
+                                onClick={() => {
+                                    setCoordinates((prev) =>
+                                        prev.filter((_, i) => i !== id)
+                                    );
+                                    setResults((prev) =>
+                                        prev.filter((_, i) => i !== id)
+                                    );
+                                }}
+                            >
+                                {" "}
+                                <RiDeleteBin2Fill />
+                            </button>
                         )}
                     </div>
                 ))}
 
-                {results.every((e) => e !== null) &&
-                    results.length === coordinates.length && (
-                        <button
-                            className={styles.add}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setCoordinates((prev) => [...prev, ""]);
-                            }}
-                        >
-                            <IoAddCircle />
-                            <span>Thêm điểm đến</span>
-                        </button>
-                    )}
+                {check() && results.length === coordinates.length && (
+                    <button
+                        className={styles.add}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setCoordinates((prev) => [...prev, ""]);
+                        }}
+                    >
+                        <IoAddCircle />
+                        <span>Thêm điểm đến</span>
+                    </button>
+                )}
 
                 <button
                     type="submit"
                     className={styles.submit}
-                    disabled={results.length !== coordinates.length}
+                    disabled={!check() || results.length !== coordinates.length}
                     onClick={onSubmit}
                 >
                     Tìm kiếm tuyến đường

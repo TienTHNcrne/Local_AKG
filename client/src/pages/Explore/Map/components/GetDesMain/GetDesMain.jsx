@@ -102,7 +102,11 @@ export default function GetDesMain({
                     <div className={styles.main}>
                         <div className={styles.mainContent}>
                             <h2>{name}</h2>
-                            <p>{category}</p>
+                            <div className={styles.categories}>
+                                {category?.map((v, id) => (
+                                    <p>{v}</p>
+                                ))}
+                            </div>{" "}
                         </div>
 
                         <div className={styles.mainContent}>

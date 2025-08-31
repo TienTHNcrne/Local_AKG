@@ -130,3 +130,23 @@
         transform: rotate(90deg);
     }
 }
+.remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #666;
+    transition: color 0.2s, transform 0.15s;
+
+    &:hover {
+        color: #e74c3c; // đỏ khi hover
+        transform: scale(1.1);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
