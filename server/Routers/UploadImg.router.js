@@ -2,7 +2,6 @@
 
 import express from "express";
 import multer from "multer";
-import streamifier from "streamifier";
 import Gps from "../Models/Gps.model.js";
 import { Cloudinary } from "../utils/Cloudinary.js";
 const router = express.Router();

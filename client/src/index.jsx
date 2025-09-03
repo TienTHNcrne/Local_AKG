@@ -11,7 +11,6 @@ import Climate from "./pages/Home/Climate/Climate";
 import Location from "./pages/Home/Location/Location";
 import History from "./pages/Home/History/History";
 import CulSoc from "./pages/Home/CulSoc/CulSoc";
-import Explore from "./pages/Explore/Explore";
 import Map from "./pages/Explore/Map/Map";
 import TinhHoa from "./pages/Explore/TinhHoa/TinhHoa";
 import "leaflet/dist/leaflet.css";
