@@ -16,7 +16,6 @@ const weatherSum = async (req, res) => {
     try {
         const lat = req.query.lat;
         const lng = req.query.lng;
-        console.log(req.query);
         const result = await SumCache(lat, lng);
         return res.json(result);
     } catch (err) {

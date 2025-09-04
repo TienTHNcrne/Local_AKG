@@ -4,7 +4,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 30%;
+    width: max(400px, 30%);
     z-index: 999;
     height: 100vh;
     transition: transform 0.5s ease;
@@ -103,7 +103,6 @@
     color: #333;
     font-size: 1rem;
     line-height: 1.6;
-
     &::-webkit-scrollbar {
         width: 8px;
     }
@@ -116,42 +115,44 @@
     }
 }
 .container {
-    h4 {
-        font-size: 19px;
-        position: relative;
-        cursor: pointer;
-        color: #888;
-        padding-bottom: 6px;
-        transition: color 0.3s ease;
-        &::after {
-            content: "";
-            color: #007bff;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 2px;
-            background: #007bff;
-            border-radius: 2px;
-            transition: width 0.3s ease, left 0.3s ease;
-        }
-        &:hover {
-            color: #0056b3;
+    .option {
+        h4 {
+            font-size: 19px;
+            position: relative;
+            cursor: pointer;
+            color: #888;
+            padding-bottom: 6px;
+            transition: color 0.3s ease;
             &::after {
-                width: 50%;
+                content: "";
+                color: #007bff;
+                position: absolute;
                 left: 0;
-            }
-        }
-        &.processing {
-            color: #007bff;
-            &::after {
-                width: 100%;
+                bottom: 0;
+                width: 0;
+                height: 2px;
+                background: #007bff;
+                border-radius: 2px;
+                transition: width 0.3s ease, left 0.3s ease;
             }
             &:hover {
                 color: #0056b3;
                 &::after {
                     width: 50%;
-                    left: 25%;
+                    left: 0;
+                }
+            }
+            &.processing {
+                color: #007bff;
+                &::after {
+                    width: 100%;
+                }
+                &:hover {
+                    color: #0056b3;
+                    &::after {
+                        width: 50%;
+                        left: 25%;
+                    }
                 }
             }
         }

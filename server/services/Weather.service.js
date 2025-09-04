@@ -21,6 +21,7 @@ const CurrentCall = async (lat, lng) => {
                     days: 1,
                     aqi: "no",
                     alerts: "no",
+                    lang: "vi",
                 },
             }
         );
