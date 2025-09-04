@@ -150,3 +150,54 @@
         transform: scale(0.95);
     }
 }
+@media (max-width: 480px) {
+    .container {
+        width: 80% !important;
+        padding: 10px 15px;
+        box-shadow: none;
+    }
+
+    .items {
+        gap: 8px;
+    }
+
+    .item input {
+        font-size: 14px;
+        padding: 3px 4px;
+    }
+
+    .traffics {
+        gap: 10px;
+
+        button {
+            width: 50px;
+            padding: 6px 8px;
+            font-size: 0.9rem;
+
+            svg {
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    .submit {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+
+    .add {
+        font-size: 14px;
+
+        svg {
+            font-size: 1.3rem;
+        }
+    }
+
+    .close {
+        font-size: 1.5rem;
+    }
+
+    .remove {
+        font-size: 18px;
+    }
+}

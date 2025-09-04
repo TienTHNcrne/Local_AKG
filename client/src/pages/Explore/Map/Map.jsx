@@ -146,103 +146,96 @@ export function MapContent() {
                         ))}
                     </div>
                 </div>
-                <div
-                    className={`${styles.miniBox} ${
-                        durDis?.distance && durDis?.duration
-                            ? styles.open1
-                            : styles.close1
-                    }`}
-                >
-                    <div className={styles.step1}>
-                        <div className={styles.distance}>
-                            <button
-                                className={
-                                    unit.distance === "m" && styles.acStep
-                                }
-                                onClick={() =>
-                                    setUnit({ time: unit.time, distance: "m" })
-                                }
-                            >
-                                mét (m)
-                            </button>
-                            <button
-                                className={
-                                    unit.distance === "km" && styles.acStep
-                                }
-                                onClick={() =>
-                                    setUnit({ time: unit.time, distance: "km" })
-                                }
-                            >
-                                km (km)
-                            </button>
-                            <button
-                                className={
-                                    unit.distance === "mi" && styles.acStep
-                                }
-                                onClick={() =>
-                                    setUnit({ time: unit.time, distance: "mi" })
-                                }
-                            >
-                                dặm (mi)
-                            </button>
-                        </div>
-                        <div className={styles.duration}>
-                            <button
-                                className={unit.time === "s" && styles.acStep}
-                                onClick={() =>
-                                    setUnit({
-                                        time: "s",
-                                        distance: unit.distance,
-                                    })
-                                }
-                            >
-                                giây (s)
-                            </button>
-                            <button
-                                className={unit.time === "min" && styles.acStep}
-                                onClick={() =>
-                                    setUnit({
-                                        time: "min",
-                                        distance: unit.distance,
-                                    })
-                                }
-                            >
-                                phút (min)
-                            </button>
-                            <button
-                                className={unit.time === "h" && styles.acStep}
-                                onClick={() =>
-                                    setUnit({
-                                        time: "h",
-                                        distance: unit.distance,
-                                    })
-                                }
-                            >
-                                Giờ (h)
-                            </button>
-                        </div>
+            </div>
+            <div
+                className={`${styles.miniBox} ${
+                    durDis?.distance && durDis?.duration
+                        ? styles.open1
+                        : styles.close1
+                }`}
+            >
+                <div className={styles.step1}>
+                    <div className={styles.distance}>
+                        <button
+                            className={unit.distance === "m" && styles.acStep}
+                            onClick={() =>
+                                setUnit({ time: unit.time, distance: "m" })
+                            }
+                        >
+                            mét (m)
+                        </button>
+                        <button
+                            className={unit.distance === "km" && styles.acStep}
+                            onClick={() =>
+                                setUnit({ time: unit.time, distance: "km" })
+                            }
+                        >
+                            km (km)
+                        </button>
+                        <button
+                            className={unit.distance === "mi" && styles.acStep}
+                            onClick={() =>
+                                setUnit({ time: unit.time, distance: "mi" })
+                            }
+                        >
+                            dặm (mi)
+                        </button>
                     </div>
-                    <div className={styles.step2}>
-                        <div className={styles.content1}>
-                            <div className={styles.main}>
-                                <h3>Khoảng cách</h3>{" "}
-                                <p>
-                                    {newData?.distance} ({unit.distance})
-                                </p>
-                            </div>
-                        </div>
-                        <div className={styles.content}>
-                            {" "}
-                            <h3>Thời gian trung bình</h3>{" "}
+                    <div className={styles.duration}>
+                        <button
+                            className={unit.time === "s" && styles.acStep}
+                            onClick={() =>
+                                setUnit({
+                                    time: "s",
+                                    distance: unit.distance,
+                                })
+                            }
+                        >
+                            giây (s)
+                        </button>
+                        <button
+                            className={unit.time === "min" && styles.acStep}
+                            onClick={() =>
+                                setUnit({
+                                    time: "min",
+                                    distance: unit.distance,
+                                })
+                            }
+                        >
+                            phút (min)
+                        </button>
+                        <button
+                            className={unit.time === "h" && styles.acStep}
+                            onClick={() =>
+                                setUnit({
+                                    time: "h",
+                                    distance: unit.distance,
+                                })
+                            }
+                        >
+                            Giờ (h)
+                        </button>
+                    </div>
+                </div>
+                <div className={styles.step2}>
+                    <div className={styles.content1}>
+                        <div className={styles.main}>
+                            <h3>Khoảng cách</h3>{" "}
                             <p>
-                                {newData?.duration} ({unit.time})
+                                {newData?.distance} ({unit.distance})
                             </p>
                         </div>
                     </div>
-                </div>{" "}
+                    <div className={styles.content}>
+                        {" "}
+                        <h3>Thời gian trung bình</h3>{" "}
+                        <p>
+                            {newData?.duration} ({unit.time})
+                        </p>
+                    </div>
+                </div>
             </div>
             <GetPlace setDraw={setDraw} setShows={setShow} shows={show} />
-
             <InforPlace
                 center={{ lat: inFor.lat, lng: inFor.lng }}
                 popup={popup}
