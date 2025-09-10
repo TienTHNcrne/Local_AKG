@@ -14,7 +14,6 @@ const Find = async (place) => {
                 headers: { "User-Agent": "MyApp/1.0 (your@email.com)" },
             }
         );
-        const bruh = [];
 
         return {
             status: 200,

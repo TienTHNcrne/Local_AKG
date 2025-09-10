@@ -6,8 +6,9 @@ import useSuggest from "../../Hooks/useSuggest";
 import useCheckExist from "../../Hooks/useCheckExist";
 import UpImg from "../../../../../components/UpImg/UpImg";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { FiX, FiMapPin, FiCalendar, FiTag, FiImage } from "react-icons/fi";
-
+import { FiMapPin, FiCalendar, FiTag, FiImage } from "react-icons/fi";
+import { MdMyLocation } from "react-icons/md";
+import GetGps from "../../../../../Hooks/GetGps/GetGps";
 export default function CreateForm({
     add,
     center,
@@ -17,12 +18,20 @@ export default function CreateForm({
     AddNewLocal,
     setShow,
 }) {
+    const [address, setAddress] = useState("");
     const [description, setDescription] = useState("");
-    const [category, setCategory] = useState([]);
     const [images, setImages] = useState([]);
     const [showSuggest, setShowSuggest] = useState(false);
     const [time, setTime] = useState("");
+    const [check, setCheck] = useState([]);
+    const suggest = useSuggest(search);
+    let e = useCheckExist(center, search);
+    const [exist, setExist] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [cor, setCor] = useState(false);
+    useEffect(() => {
+        setExist(e);
+    }, [e]);
     const choose = [
         "Biển đảo",
         "Du lịch tâm linh",
@@ -34,36 +43,34 @@ export default function CreateForm({
         "Khu đô thị",
         "Chợ",
     ];
-    const [check, setCheck] = useState([]);
-    const suggest = useSuggest(search);
-    const exist = useCheckExist(center, search);
 
     useEffect(() => {
+        if (center && search) return;
         setShowSuggest(true);
     }, [search]);
-
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (!e.target.closest(`.${styles.add}`)) setShowSuggest(false);
-        };
-        document.addEventListener("click", handleClickOutside);
-        return () => document.removeEventListener("click", handleClickOutside);
-    }, []);
 
     const handleSelect = (e) => {
         setSearch(e.name);
         setCenter({ lat: e.lat, lng: e.lng });
         setShowSuggest(false);
     };
+    console.log(showSuggest);
 
     const handleSubmit = async () => {
         if (check.length > 0 && description && search) {
             setLoading(true);
+
             try {
+                if (cor) {
+                    let s = search;
+                    s += `, ${address}`;
+                    console.log(s);
+                    setSearch(s);
+                }
                 const categories = check.map((value) => choose[value]);
                 await Create({
                     center,
-                    search,
+                    search: `${search} , ${address}`,
                     description,
                     category: categories,
                     AddNewLocal,
@@ -76,6 +83,24 @@ export default function CreateForm({
         }
     };
 
+    useEffect(() => {
+        setAddress("");
+        setExist(false);
+        setSearch("");
+        setDescription("");
+        setTime("");
+        setCheck("");
+        setImages([]);
+        setCenter({ lat: null, lng: null });
+        let loc = null;
+        const fec = async () => {
+            if (cor) {
+                loc = await GetGps();
+                setCenter({ lat: loc.lat, lng: loc.lng });
+            }
+        };
+        fec();
+    }, [cor]);
     return (
         <div className={`${styles.add} ${add ? styles.open : styles.close}`}>
             <div className={styles.header}>
@@ -92,6 +117,12 @@ export default function CreateForm({
 
             <div className={styles.formSection}>
                 <div className={styles.inputGroup}>
+                    <MdMyLocation
+                        onClick={() => {
+                            setCor(!cor);
+                        }}
+                        className={`${styles.cor} ${cor && styles.activeCor}`}
+                    />
                     <label htmlFor="name">
                         <FiMapPin />
                         Tên địa điểm
@@ -108,8 +139,7 @@ export default function CreateForm({
                             Địa danh đã tồn tại!
                         </div>
                     )}
-
-                    {showSuggest && suggest.length > 0 && (
+                    {cor === false && showSuggest && suggest.length > 0 && (
                         <div className={styles.suggests}>
                             {suggest.map((e, id) => (
                                 <div
@@ -120,6 +150,18 @@ export default function CreateForm({
                                     {e.name}
                                 </div>
                             ))}
+                        </div>
+                    )}{" "}
+                    {cor && (
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="name">Địa chỉ </label>{" "}
+                            <input
+                                type="text"
+                                name="name"
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                                placeholder="Nhập địa chỉ"
+                            />{" "}
                         </div>
                     )}
                 </div>
@@ -219,7 +261,8 @@ export default function CreateForm({
                     exist ||
                     !search ||
                     !description ||
-                    check.length === 0
+                    check.length === 0 ||
+                    (cor && !address)
                 }
             >
                 {loading ? (

@@ -69,6 +69,22 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    .cor {
+        font-weight: 600;
+        align-self: flex-end;
+        font-size: 1.3rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        &:hover {
+            transform: scale(1.3);
+            color: #1b1e24;
+        }
+        &.activeCor {
+            color: #3b82f6;
+            font-size: 1.5rem;
+        }
+    }
 
     label {
         font-weight: 600;

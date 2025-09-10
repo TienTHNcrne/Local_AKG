@@ -47,6 +47,10 @@ export default function General({
             .catch((err) => console.log(err.message));
     }, [center]);
     const GetPlace = () => {
+        if (!userId) {
+            alert("Bạn chưa đăng nhập, Hãy đăng nhập để dùng chức năng này!");
+            return;
+        }
         if (lovePlace) {
             axios
                 .post(`${import.meta.env.VITE_BE_URL}/v1/api/place/remove`, {

@@ -36,6 +36,7 @@ export default async function Create({
             })
             .then(() => {
                 console.log("oke");
+                window.alert("Tạo thành công! ");
                 notification.success({
                     message: "Tạo địa điểm thành công",
                     description: "Địa điểm mới đã được thêm vào bản đồ.",

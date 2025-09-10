@@ -5,10 +5,10 @@ export default function useSuggest(search) {
     const [suggest, setSuggest] = useState([]);
     useEffect(() => {
         if (!search) return;
-
         const time = setTimeout(() => {
             const offer = async () => {
                 try {
+                    console.log(search);
                     const res = await axios.get(
                         `${
                             import.meta.env.VITE_BE_URL
@@ -16,11 +16,12 @@ export default function useSuggest(search) {
                     );
                     setSuggest(res.data);
                 } catch (err) {
+                    console.log(search);
                     console.error("Gợi ý thất bại:", err.message);
                 }
             };
             offer();
-        }, 300);
+        }, 600);
 
         return () => clearTimeout(time);
     }, [search]);

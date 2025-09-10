@@ -17,7 +17,6 @@ export default function InForPlace({
     const MainName = inFor?.name?.split(",")[0];
     const images = Array.isArray(inFor?.img) ? inFor.img : [];
     const [choose, setChoose] = useState("general");
-    console.log(inFor);
     return (
         <div
             className={`${styles.container} ${
