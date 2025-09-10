@@ -33,7 +33,10 @@ export default function BeforeLogin() {
                 {/* Trang chủ */}
                 <div
                     className={styles.dropdown}
-                    onClick={() => toggleDropdown("home")}
+                    onClick={() => {
+                        if (openDropdown === "home") setOpenDropdown(null);
+                        toggleDropdown("home");
+                    }}
                 >
                     <div>
                         <IoHome />
@@ -75,7 +78,10 @@ export default function BeforeLogin() {
                 {/* Khám phá */}
                 <div
                     className={styles.dropdown}
-                    onClick={() => toggleDropdown("explore")}
+                    onClick={() => {
+                        if (openDropdown === "explore") setOpenDropdown(null);
+                        toggleDropdown("explore");
+                    }}
                 >
                     <div>
                         <IoShareSocial />

@@ -120,14 +120,15 @@ export function MapContent() {
                 }`}
             >
                 <div className={styles.func}>
-                    <button className={styles.icon}>
-                        <FaDirections
-                            onClick={() => {
-                                setAdd(false);
-                                setPopup(false);
-                                setShow(true);
-                            }}
-                        />{" "}
+                    <button
+                        className={styles.icon}
+                        onClick={() => {
+                            setAdd(false);
+                            setPopup(false);
+                            setShow(!show);
+                        }}
+                    >
+                        <FaDirections />{" "}
                     </button>
 
                     <div className={styles.categories}>

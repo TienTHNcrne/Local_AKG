@@ -13,11 +13,18 @@
 
 .heroContent {
     flex: 1;
+    display: flex;
+    flex-direction: column;
     min-width: 300px;
     background: white;
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    .btn {
+        text-align: center;
+        width: max-content;
+        transform: translateX(40%);
+    }
     .miniDescribe {
         color: #4a5568;
         font-style: italic;

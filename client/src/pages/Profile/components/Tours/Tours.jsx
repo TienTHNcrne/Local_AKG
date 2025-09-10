@@ -79,7 +79,7 @@ export default function Tours({ className }) {
                             aria-label="Add new plan"
                         >
                             <IoAddCircleSharp />
-                            <span>New Plan</span>
+                            <span>Thêm chuyến du lịch mới </span>
                         </button>
                     </div>
                 </div>

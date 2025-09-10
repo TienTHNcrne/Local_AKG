@@ -1,38 +1,101 @@
+// Footer.jsx
 import React from "react";
 import styles from "./Footer.module.scss";
-
-const footerSections = [
-    {
-        title: "Thông tin",
-        links: ["Về chúng tôi", "Liên hệ"],
-    },
-    {
-        title: "Nguồn tài nguyên",
-        links: ["Hình ảnh An Giang", "Bản đồ du lịch"],
-    },
-    {
-        title: "Chính sách",
-        links: ["Điều khoản", "Chính sách bảo mật"],
-    },
-];
+import {
+    FaFacebookF,
+    FaTwitter,
+    FaInstagram,
+    FaYoutube,
+    FaMapMarkerAlt,
+    FaPhone,
+    FaEnvelope,
+    FaAngleRight,
+} from "react-icons/fa";
+import { MdEditNote } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
     return (
         <footer className={styles.footer}>
-            <div className={styles.container}>
-                {footerSections.map((section, index) => (
-                    <div key={index} className={styles.section}>
-                        <h4>{section.title}</h4>
-                        <ul>
-                            {section.links.map((link, i) => (
-                                <li key={i}>{link}</li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
+            <div className={styles.footerContent}>
+                {/* Section 1 */}
+                <div className={styles.footerSection}>
+                    <h3>Tài nguyên văn hoá</h3>
+                    <ul className={styles.footerLinks}>
+                        <li>
+                            <Link to="/Explore/TinhHoa">
+                                <FaAngleRight /> Tinh Hoa An Giang
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/CulSoc">
+                                <FaAngleRight />
+                                Dân tộc và lễ hội
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/Religion">
+                                <FaAngleRight />
+                                Tôn Giáo và tính ngưỡng
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Section 2 */}
+                <div className={styles.footerSection}>
+                    <h3>Liên kết nhanh</h3>
+                    <ul className={styles.footerLinks}>
+                        <li>
+                            <Link to="/">
+                                <FaAngleRight /> Trang chủ
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/Explore/map">
+                                <FaAngleRight /> Bản đồ
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link to="/About">
+                                <FaAngleRight /> Giới thiệu
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Section 3 */}
+                {/* Section 3 */}
+                <div className={styles.footerSection}>
+                    <h3>Thông tin liên hệ</h3>
+                    <ul className={styles.footerLinks}>
+                        <li>
+                            <a href="tel:+84ABC">
+                                <FaPhone /> +84 ABC
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:ABC@gmail.com">
+                                <FaEnvelope /> ABC@gmail.com
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://forms.gle/94YbZbFJaR13tUXx5"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <MdEditNote style={{ fontSize: "22px" }} /> Gửi
+                                góp ý / hỗ trợ
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div className={styles.footerNote}>
-                © 2025 - Dự án Du lịch An Giang.
+
+            <div className={styles.copyright}>
+                <p>© 2025 - Dự án Du lịch An Giang.</p>
             </div>
         </footer>
     );

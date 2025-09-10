@@ -46,7 +46,10 @@ export default function Header() {
                 {/* Trang chủ */}
                 <div
                     className={styles.dropdown}
-                    onClick={() => toggleDropdown("home")}
+                    onClick={() => {
+                        if (openDropdown === "home") setOpenDropdown(null);
+                        toggleDropdown("home");
+                    }}
                 >
                     <div>
                         <IoHome />
@@ -88,7 +91,10 @@ export default function Header() {
                 {/* Khám phá */}
                 <div
                     className={styles.dropdown}
-                    onClick={() => toggleDropdown("explore")}
+                    onClick={() => {
+                        if (openDropdown === "explore") setOpenDropdown(null);
+                        toggleDropdown("explore");
+                    }}
                 >
                     <div>
                         <IoShareSocial />
@@ -119,7 +125,6 @@ export default function Header() {
                     <Link to="/About">Về chúng tôi</Link>
                 </div>
             </nav>
-
             <div className={styles.right}>
                 <button className={styles.icon1} onClick={() => setAdd(true)}>
                     <FaStar />

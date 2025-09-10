@@ -1,9 +1,25 @@
 /** @format */
 import React, { useEffect } from "react";
 import styles from "./Home.module.scss";
-import { Link } from "react-router-dom";
+import "@ant-design/v5-patch-for-react-19";
+import { Link, useNavigate } from "react-router-dom";
+import { notification } from "antd";
+import { FaRoute } from "react-icons/fa";
 
 export default function Home() {
+    const navigate = useNavigate();
+
+    const goToNextPage = () => {
+        if (localStorage.getItem("userid")) {
+            navigate("/profile");
+        } else {
+            console.log("oke");
+            notification.info({
+                message: "Thông báo",
+                description: "Bạn cần đăng nhập để dùng chức năng này ",
+            });
+        }
+    };
     return (
         <div className={styles.container}>
             {/* Hero */}
@@ -23,6 +39,9 @@ export default function Home() {
                         còn lưu giữ nhiều giá trị văn hóa, lịch sử đặc sắc của
                         vùng đồng bằng sông Cửu Long.
                     </p>
+                    <div className={styles.btn} onClick={goToNextPage}>
+                        <FaRoute /> Dựng chuyến du lịch An Giang
+                    </div>
                 </div>
                 <div className={styles.heroImage}>
                     <img
