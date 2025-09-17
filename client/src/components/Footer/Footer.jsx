@@ -1,16 +1,7 @@
 // Footer.jsx
 import React from "react";
 import styles from "./Footer.module.scss";
-import {
-    FaFacebookF,
-    FaTwitter,
-    FaInstagram,
-    FaYoutube,
-    FaMapMarkerAlt,
-    FaPhone,
-    FaEnvelope,
-    FaAngleRight,
-} from "react-icons/fa";
+import { FaPhone, FaEnvelope, FaAngleRight } from "react-icons/fa";
 import { MdEditNote } from "react-icons/md";
 import { Link } from "react-router-dom";
 
@@ -36,7 +27,7 @@ export default function Footer() {
                         <li>
                             <Link to="/Religion">
                                 <FaAngleRight />
-                                Tôn Giáo và tính ngưỡng
+                                Tôn Giáo và Tín ngưỡng
                             </Link>
                         </li>
                     </ul>
