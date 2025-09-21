@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 import { IoHome, IoShareSocial } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
@@ -12,6 +12,7 @@ import { useAuth } from "../../../Contexts/Auth/Auth";
 import { FaStar } from "react-icons/fa6";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri"; // icons for mobile
 import TourAi from "../../../pages/Profile/components/Tours/components/TourAi/TourAi";
+import { RiGuideFill } from "react-icons/ri";
 
 export default function Header() {
     const { logout } = useAuth();
@@ -27,6 +28,8 @@ export default function Header() {
         setMenuOpen(false);
         setOpenDropdown(null);
     };
+    const navigate = useNavigate();
+
     return (
         <div className={styles.header}>
             {add && <TourAi setHide={setAdd} />}
@@ -128,6 +131,12 @@ export default function Header() {
             <div className={styles.right}>
                 <button className={styles.icon1} onClick={() => setAdd(true)}>
                     <FaStar />
+                </button>
+                <button
+                    className={styles.icon1}
+                    onClick={() => navigate("/guide")}
+                >
+                    <RiGuideFill />
                 </button>
                 <div className={styles.account}>
                     <MdAccountCircle

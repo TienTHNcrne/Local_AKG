@@ -10,7 +10,51 @@
     margin-bottom: 40px;
     flex-wrap: wrap;
 }
+.guide {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    top: 100px; // vị trí trên màn hình
+    left: 50px;
+    border-radius: 50%;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    cursor: pointer;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    animation: pulse 2s infinite;
+    &:hover {
+        transform: scale(1.1);
+        background-color: #3367d6;
+    }
+
+    // responsive mobile
+    @media (max-width: 768px) {
+        top: 80px;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+    }
+}
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(66, 133, 244, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0);
+    }
+}
 .heroContent {
     flex: 1;
     display: flex;
@@ -23,7 +67,6 @@
     .btn {
         text-align: center;
         width: max-content;
-        transform: translateX(40%);
     }
     .miniDescribe {
         color: #4a5568;
@@ -133,8 +176,8 @@
 }
 
 .btn {
-    display: inline-block;
     background: #2c5282;
+
     color: white;
     padding: 10px 20px;
     border-radius: 5px;

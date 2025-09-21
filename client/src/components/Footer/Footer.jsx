@@ -63,12 +63,12 @@ export default function Footer() {
                     <ul className={styles.footerLinks}>
                         <li>
                             <a href="tel:+84ABC">
-                                <FaPhone /> +84 ABC
+                                <FaPhone /> +84 0836816673
                             </a>
                         </li>
                         <li>
-                            <a href="mailto:ABC@gmail.com">
-                                <FaEnvelope /> ABC@gmail.com
+                            <a href="mailto:tienguyen3541@gmail.com">
+                                <FaEnvelope /> tienguyen3541@gmail.com
                             </a>
                         </li>
                         <li>
@@ -79,6 +79,12 @@ export default function Footer() {
                             >
                                 <MdEditNote style={{ fontSize: "22px" }} /> Gửi
                                 góp ý / hỗ trợ
+                            </a>
+                        </li>{" "}
+                        <li>
+                            <a href="http://localhost:5173/guide">
+                                <MdEditNote style={{ fontSize: "22px" }} />
+                                Hướng dẫn sử dụng website
                             </a>
                         </li>
                     </ul>

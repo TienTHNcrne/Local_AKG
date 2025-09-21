@@ -5,7 +5,7 @@ import "@ant-design/v5-patch-for-react-19";
 import { Link, useNavigate } from "react-router-dom";
 import { notification } from "antd";
 import { FaRoute } from "react-icons/fa";
-
+import { RiGuideFill } from "react-icons/ri";
 export default function Home() {
     const navigate = useNavigate();
 
@@ -23,6 +23,10 @@ export default function Home() {
     return (
         <div className={styles.container}>
             {/* Hero */}
+            <button className={styles.guide} onClick={() => navigate("/guide")}>
+                {" "}
+                <RiGuideFill />
+            </button>
             <section className={styles.hero}>
                 <div className={styles.heroContent}>
                     <h2>Khám phá vùng đất An Giang</h2>

@@ -21,6 +21,7 @@ import "./index.css";
 import About from "./pages/About/About";
 import Auth from "./Contexts/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
+import Guide from "./pages/Guide/Guide";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
             { path: "/Register", element: <Register /> },
             { path: "/profile", element: <Profile /> },
             { path: "/Religion", element: <Religion /> },
+            { path: "/Guide", element: <Guide /> },
 
             { path: "/Edit", element: <Rich_text /> },
             { path: "Climate", element: <Climate /> },
