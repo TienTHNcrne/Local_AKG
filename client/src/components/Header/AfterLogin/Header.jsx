@@ -42,7 +42,7 @@ export default function Header() {
             </div>
 
             <Link to="/" className={styles.logo}>
-                <h2>AKG</h2>
+                <h2>AGiLand</h2>
             </Link>
 
             <nav className={`${styles.nav} ${menuOpen ? styles.active : ""}`}>

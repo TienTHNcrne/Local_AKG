@@ -21,11 +21,10 @@ $tablet-breakpoint: 1024px;
 }
 
 .logo {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     color: white;
     text-decoration: none;
-    align-self: flex-start;
     transition: transform 0.2s ease;
     z-index: 1001;
 

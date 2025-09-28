@@ -5,11 +5,9 @@ export const CreateFoodController = async (req, res) => {
     try {
         const { name, general, smell, place, price } = req.body;
         let imageUrls = [];
-        console.log(req.body);
         if (req.files && req.files.length > 0) {
             imageUrls = await Cloudinary(req.files);
         }
-        console.log(req.files);
         const result = await CreateFood({
             name: name,
             general: general,

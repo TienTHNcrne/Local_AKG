@@ -16,6 +16,7 @@ export default function Rate({ setShow, lng, lat }) {
         e.target.style.height = "auto";
         e.target.style.height = e.target.scrollHeight + "px";
     };
+    console.log(img);
     return (
         <div className={styles.container}>
             <div className={styles.content}>
@@ -98,7 +99,7 @@ export default function Rate({ setShow, lng, lat }) {
                                 lng: lng,
                                 comment: describe,
                                 rate: rate,
-                                img: img,
+                                imgs: img,
                                 setShow: setShow,
                             });
                         }}

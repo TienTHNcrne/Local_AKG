@@ -19,7 +19,7 @@ export default function Comments({ lat, lng }) {
             .then((res) => setReviews(res.data))
             .catch((err) => console.error(err));
     }, [lat, lng]);
-
+    console.log(reviews);
     return (
         <div className={styles.container}>
             <button className={styles.review} onClick={() => setShow(true)}>
@@ -87,9 +87,9 @@ export default function Comments({ lat, lng }) {
                             </div>
                         </div>
                         <div className={styles.item3}>{value.comment}</div>
-                        {Array.isArray(value.img) && value.img.length > 0 && (
+                        {value.imgs.length > 0 && (
                             <div className={styles.images}>
-                                {value.img.map((img, id) => (
+                                {value.imgs.map((img, id) => (
                                     <img
                                         src={img}
                                         alt={`Ảnh ${id + 1}`}

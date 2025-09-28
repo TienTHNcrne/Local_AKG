@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
+
 export default function useSuggest(search) {
     const [suggest, setSuggest] = useState([]);
     useEffect(() => {
@@ -21,7 +22,7 @@ export default function useSuggest(search) {
                 }
             };
             offer();
-        }, 600);
+        }, 700);
 
         return () => clearTimeout(time);
     }, [search]);

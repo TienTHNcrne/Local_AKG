@@ -7,7 +7,7 @@ export default function About() {
     return (
         <div className={styles.about}>
             <section className={styles.intro}>
-                <h1>AKG — An Giang Knowledge</h1>
+                <h1>AGiLand — Hành trình khám phá An Giang </h1>
                 <p>
                     Chào bạn! Chúng tôi là <strong>Nguyễn Quốc Tiến</strong> và{" "}
                     <strong>Trần Mai Ái My</strong>, những học sinh cấp 3 với

@@ -133,8 +133,13 @@
     align-items: center;
     gap: 0.25rem;
 }
-
+.search {
+    display: flex;
+    flex-direction: column;
+}
 .suggests {
+    display: flex;
+    flex-direction: column;
     border: 1px solid #e5e7eb;
     border-radius: 8px;
     margin-top: 0.25rem;

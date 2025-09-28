@@ -10,13 +10,46 @@ import { useMapContext } from "../contexts/useMapContext";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 export default function GetPlace({ setDraw, setShows, shows }) {
     const { inFor, setDurDis, setShowD } = useMapContext();
+    const { durDis } = useMapContext();
+
     const [data, setData] = useState({ value: "", id: null });
     const [coordinates, setCoordinates] = useState(["", ""]);
     const [results, setResults] = useState([]);
     const [show, setShow] = useState(false);
     const [vehicle, setVehicle] = useState("driving-car");
     const [preVe, setPreVe] = useState("driving-car");
+    const [unit, setUnit] = useState({ time: "h", distance: "km" });
+    const [newData, setNewData] = useState({ distance: 0, duration: 0 });
+    useEffect(() => {
+        if (!durDis) return;
 
+        let distance = durDis.distance;
+        let duration = durDis.duration;
+
+        switch (unit.distance) {
+            case "km":
+                distance = (distance / 1000).toFixed(2);
+                break;
+            case "mi":
+                distance = (distance / 1609.34).toFixed(2);
+                break;
+            default:
+                distance = distance.toFixed(0);
+        }
+
+        switch (unit.time) {
+            case "min":
+                duration = (duration / 60).toFixed(0);
+                break;
+            case "h":
+                duration = (duration / 3600).toFixed(1);
+                break;
+            default:
+                duration = duration.toFixed(0);
+        }
+
+        setNewData({ distance, duration });
+    }, [unit, durDis]);
     // Update coordinates when inFor changes
     useEffect(() => {
         if (!inFor || Object.keys(inFor).length === 0) return;
@@ -199,7 +232,61 @@ export default function GetPlace({ setDraw, setShows, shows }) {
                     Tìm kiếm tuyến đường
                 </button>
             </form>
+            <div className={styles.miniBox}>
+                <div className={styles.step1}>
+                    <div className={styles.distance}>
+                        {["m", "km", "mi"].map((d) => (
+                            <button
+                                key={d}
+                                className={
+                                    unit.distance === d ? styles.acStep : ""
+                                }
+                                onClick={() =>
+                                    setUnit({ ...unit, distance: d })
+                                }
+                            >
+                                {d === "m"
+                                    ? "mét (m)"
+                                    : d === "km"
+                                    ? "km (km)"
+                                    : "dặm (mi)"}
+                            </button>
+                        ))}
+                    </div>
+                    <div className={styles.duration}>
+                        {["s", "min", "h"].map((t) => (
+                            <button
+                                key={t}
+                                className={unit.time === t ? styles.acStep : ""}
+                                onClick={() => setUnit({ ...unit, time: t })}
+                            >
+                                {t === "s"
+                                    ? "giây (s)"
+                                    : t === "min"
+                                    ? "phút (min)"
+                                    : "Giờ (h)"}
+                            </button>
+                        ))}
+                    </div>
+                </div>
 
+                <div className={styles.step2}>
+                    <div className={styles.content1}>
+                        <div className={styles.main}>
+                            <h3>Khoảng cách</h3>
+                            <p>
+                                {newData?.distance} ({unit.distance})
+                            </p>
+                        </div>
+                    </div>
+                    <div className={styles.content}>
+                        <h3>Thời gian trung bình</h3>
+                        <p>
+                            {newData?.duration} ({unit.time})
+                        </p>
+                    </div>
+                </div>
+            </div>
             {show && (
                 <Suggests
                     value={data.value}
