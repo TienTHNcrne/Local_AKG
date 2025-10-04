@@ -20,8 +20,23 @@
         font-size: 24px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         transition: all 0.3s ease;
-
+        animation: pulse 2s infinite;
+        span {
+            display: none;
+            position: absolute;
+            left: -200%;
+            transform: translateX(-50%);
+            background: #4285f4;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 17px;
+            white-space: nowrap;
+        }
         &:hover {
+            span {
+                display: block;
+            }
             transform: scale(1.1);
             background-color: #3367d6;
         }
@@ -195,4 +210,15 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(66, 133, 244, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0);
+    }
 }

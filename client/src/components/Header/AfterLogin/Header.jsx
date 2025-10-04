@@ -13,7 +13,7 @@ import { FaStar } from "react-icons/fa6";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri"; // icons for mobile
 import TourAi from "../../../pages/Profile/components/Tours/components/TourAi/TourAi";
 import { RiGuideFill } from "react-icons/ri";
-
+import { FaAngleDown } from "react-icons/fa6";
 export default function Header() {
     const { logout } = useAuth();
     const [add, setAdd] = useState(false);
@@ -57,6 +57,7 @@ export default function Header() {
                     <div>
                         <IoHome />
                         <span>Trang chủ</span>
+                        <FaAngleDown />
                     </div>
                     <ul
                         className={`${styles.dropdownMenu} ${
@@ -102,6 +103,7 @@ export default function Header() {
                     <div>
                         <IoShareSocial />
                         <span>Khám phá</span>
+                        <FaAngleDown />
                     </div>
                     <ul
                         className={`${styles.dropdownMenu} ${

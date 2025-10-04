@@ -57,3 +57,10 @@
         grid-template-columns: repeat(1, 1fr);
     }
 }
+.card {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+}

@@ -26,6 +26,7 @@ export default function Home() {
             <button className={styles.guide} onClick={() => navigate("/guide")}>
                 {" "}
                 <RiGuideFill />
+                <span>Hướng dẫn dùng website</span>
             </button>
             <section className={styles.hero}>
                 <div className={styles.heroContent}>

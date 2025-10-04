@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./BeforeLogin.module.scss";
 import { IoHome, IoShareSocial } from "react-icons/io5";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
+import { FaAngleDown } from "react-icons/fa6";
 
 export default function BeforeLogin() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -41,6 +42,7 @@ export default function BeforeLogin() {
                     <div>
                         <IoHome />
                         <span>Trang chủ</span>
+                        <FaAngleDown />
                     </div>
                     <ul
                         className={`${styles.dropdownMenu} ${
@@ -86,6 +88,7 @@ export default function BeforeLogin() {
                     <div>
                         <IoShareSocial />
                         <span>Khám phá</span>
+                        <FaAngleDown />
                     </div>
                     <ul
                         className={`${styles.dropdownMenu} ${

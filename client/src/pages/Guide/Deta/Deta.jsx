@@ -198,7 +198,7 @@ export default function Deta() {
 
             <h2>
                 Bây giờ thì bạn chỉ cần xách balo lên và đi thôi vì mọi chuyện
-                đã có website của chúng mính lo hết rồi😉😉
+                đã có website của chúng mình lo hết rồi😉😉
             </h2>
         </div>
     );

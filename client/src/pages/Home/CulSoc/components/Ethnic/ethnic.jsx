@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import styles from "./Ethnic.module.scss";
 export default function Ethnic() {
     const [imgs, setImgs] = useState([
-        "/imgs/ethnic_1.png",
-        "/imgs/ethnic_2.png",
-        "/imgs/ethnic_3.png",
-        "/imgs/ethnic_4.png",
+        { img: "/imgs/ethnic_1.png", text: "Dân tộc Kinh" },
+        { img: "/imgs/ethnic_2.png", text: "Dân tộc Khmer " },
+        { img: "/imgs/ethnic_3.png", text: "Dân tộc Chăm" },
+        { img: "/imgs/ethnic_4.png", text: "Dân tộc Hoa" },
     ]);
     console.log(imgs);
     return (
@@ -27,7 +27,10 @@ export default function Ethnic() {
                 </p>
                 <div className={styles.images}>
                     {imgs.map((value, id) => (
-                        <img src={value} alt="" />
+                        <div className={styles.card} key={id}>
+                            <img src={value.img} alt={value.text} />
+                            <p>{value.text}</p>
+                        </div>
                     ))}
                 </div>
             </div>

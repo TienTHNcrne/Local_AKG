@@ -146,24 +146,25 @@ $tablet-breakpoint: 1024px;
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
     background: #f1f8f1;
     padding: 10px 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     border-radius: 6px;
-    z-index: 99;
     min-width: 160px;
-
+    width: max-content;
+    border-radius: 12px;
+    transition: all 0.2s ease-in-out;
     li {
         list-style: none;
-
+        color: #2e7d32;
+        transform: translateX(4px);
         a {
             display: block;
             padding: 10px 20px;
             color: #2e7d32;
             text-decoration: none;
             transition: all 0.3s ease;
-
+            font-size: 17px;
             &:hover {
                 background: #c8e6c9;
                 color: #1b5e20;

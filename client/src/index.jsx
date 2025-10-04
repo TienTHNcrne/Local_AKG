@@ -22,6 +22,7 @@ import About from "./pages/About/About";
 import Auth from "./Contexts/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
 import Guide from "./pages/Guide/Guide";
+import Basic from "./pages/3d/Basic.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -45,7 +46,7 @@ const router = createBrowserRouter([
             { path: "History", element: <History /> },
             { path: "CulSoc", element: <CulSoc /> },
             { path: "About", element: <About /> },
-
+            { path: "3d", element: <Basic /> },
             { path: "Explore/map", element: <Map /> },
             { path: "Explore/TinhHoa", element: <TinhHoa /> },
         ],

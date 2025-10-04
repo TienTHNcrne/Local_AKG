@@ -8,12 +8,6 @@ export default function History() {
     const [choose, setChoose] = useState("before");
     return (
         <div className={styles.container}>
-            <p>
-                <strong>Ngày 12/6/2025</strong>, Quốc hội thông qua Nghị quyết
-                202/2025/QH15 – sáp nhập tỉnh Kiên Giang vào tỉnh An Giang, từ
-                đó mở ra kỷ nguyên phát triển đồng bộ và nâng tầm vị thế vùng
-                Đồng bằng sông Cửu Long.
-            </p>
             <div className={styles.header}>
                 <div className={styles.before}>
                     <h2
