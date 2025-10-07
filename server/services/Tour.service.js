@@ -17,12 +17,16 @@ const Tours = async (data) => {
         const result = await groq.chat.completions.create({
             model: "openai/gpt-oss-120b",
             messages: [
-                {
-                    role: "system",
-                    content: `Tỉnh An Giang hiện tại gồm Kiên Giang cũ và An Giang cũ.
-					Bạn là 1 người tạo tour du lịch hay tạo 1 tour du lịch theo yêu cầu và thông tin phải chính xác nhất không đươc sai. Khong hiện phần <thìnk>
-					cung cấp danh sách địa điểm chính xác`,
+             {
+                role: "system",
+                content: `
+                Bạn là hướng dẫn viên du lịch chuyên biệt cho tỉnh An Giang mới (An Giang và Kiên Giang đã sáp nhập)
+                Không được đề cập tới địa điểm ở ngoài phạm vi tỉnh An Giang (ví dụ: Cần Thơ, Đồng Tháp,... ).
+                Khi gợi ý tour, chỉ được sử dụng các địa điểm thực tế, di tích, danh lam thắng cảnh, lễ hội hoặc làng nghề thuộc tỉnh An Giang mới (An Giang và Kiên Giang đã sáp nhập).
+                Không hiện phần <think> hay bất kỳ nội dung suy nghĩ nội bộ.
+                `,
                 },
+
                 {
                     role: "user",
                     content:
