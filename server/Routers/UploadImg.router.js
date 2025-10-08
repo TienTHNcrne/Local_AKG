@@ -34,6 +34,7 @@ router.post("/upload", upload.array("images", 20), async (req, res) => {
         console.log("checkL", await gps.save());
 
         res.status(201).json({ message: "Tạo điểm GPS thành công", gps });
+        
     } catch (err) {
         console.error("UPLOAD ERROR:", err);
         res.status(500).json({ error: err.message });

@@ -180,7 +180,7 @@ export default function About() {
                             🚀 Khám Phá Ngay
                         </Link>
                         <a
-                            href="https://forms.gle/94YbZbFJaR13tUXx5"
+                            href="https://forms.gle/PRcDxxjKEpEQpKuT9"
                             target="_blank"
                             rel="noopener noreferrer"
                             className={styles.btnGhost}
