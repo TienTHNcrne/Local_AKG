@@ -58,7 +58,7 @@ export default function TourAi({ setHide }) {
         } else {
             s = "Tạo tôi 1 hành trình du lịch An Giang tối ưu";
         }
-        s += `Số ngày muốn đi là ${date}, số tiền có thể chi là ${money} triều đồng và địa điểm xuất phát là ${startPlace}`;
+        s += `Số ngày muốn đi là ${date}, số tiền có thể chi là ${money} triệu đồng và địa điểm xuất phát là ${startPlace}`;
 
         axios
             .post(

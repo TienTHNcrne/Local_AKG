@@ -44,7 +44,7 @@ async function callAPI(data, profile) {
                         },
                     }
                 )
-            );
+            );  
 
             return { status: 200, data: res.data };
         } catch (err) {
