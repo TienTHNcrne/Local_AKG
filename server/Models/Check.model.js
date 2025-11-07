@@ -1,6 +1,8 @@
-import mongoose, { Schema } from "mongoose";
-const details =  new Schema({
-     lat: {
+/** @format */
+
+import mongoose, { Schema } from 'mongoose';
+const Check = new Schema({
+    lat: {
         type: Number,
         required: true,
     },
@@ -27,12 +29,10 @@ const details =  new Schema({
     img: {
         type: [String],
     },
+    status: {
+        type: String,
+        required: true,
+    },
 });
 
-const Check = new Schema({
-    allow :{
-        type: [details],
-        default: [],
-    }
-})
-export default mongoose.model("Check", Check);
+export default mongoose.model('Check', Check);
