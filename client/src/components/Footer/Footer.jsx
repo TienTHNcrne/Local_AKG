@@ -83,7 +83,7 @@ export default function Footer() {
                             </a>
                         </li>{' '}
                         <li>
-                            <a href='http://localhost:5173/guide'>
+                            <a href='https://agiland-app.vercel.app/guide'>
                                 <MdEditNote style={{ fontSize: '22px' }} />
                                 Hướng dẫn sử dụng website
                             </a>
