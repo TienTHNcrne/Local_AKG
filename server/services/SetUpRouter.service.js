@@ -1,21 +1,20 @@
-// services/SetUpRouter.service.js
-import axios from "axios";
-import PQueue from "p-queue";
+/** @format */
 
-// Danh sách key
+// services/SetUpRouter.service.js
+import axios from 'axios';
+import PQueue from 'p-queue';
+
 const keys = [process.env.ROUTER1, process.env.ROUTER2];
 
-// Tạo 1 queue riêng cho từng key, quản lý rate-limit riêng
 const queues = keys.map(
     () =>
         new PQueue({
-            concurrency: 5, // cùng lúc max 5 request
-            interval: 60_000, // 1 phút
-            intervalCap: 400, // max 400 request / phút cho mỗi key
+            concurrency: 5,
+            interval: 60_000,
+            intervalCap: 400,
         })
 );
 
-// Sử dụng một mutex để xoay key an toàn
 let keyIndex = 0;
 const getNextKeyIndex = () => {
     const idx = keyIndex;
@@ -38,17 +37,16 @@ async function callAPI(data, profile) {
                     { coordinates: data },
                     {
                         headers: {
-                            Accept: "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8",
+                            Accept: 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8',
                             Authorization: key,
-                            "Content-Type": "application/json; charset=utf-8",
+                            'Content-Type': 'application/json; charset=utf-8',
                         },
                     }
                 )
-            );  
+            );
 
             return { status: 200, data: res.data };
         } catch (err) {
-            // Nếu bị rate limit, đánh dấu đã thử key này
             if (err.response?.status === 429) {
                 console.warn(`Key ${idx} hit rate limit, trying next key`);
                 triedKeys.add(idx);
@@ -59,7 +57,7 @@ async function callAPI(data, profile) {
         }
     }
 
-    return { status: 400, data: "All keys exhausted or failed" };
+    return { status: 400, data: 'All keys exhausted or failed' };
 }
 
 // Hàm public
