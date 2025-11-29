@@ -1,0 +1,217 @@
+/** @format */
+
+.container {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    width: 100%;
+    h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: left;
+        font-size: 24px;
+        font-weight: 600;
+        color: #2e7d32; // xanh lá cho nổi bật
+        margin-bottom: 12px;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #2e7d32, #81c784);
+            border-radius: 2px;
+        }
+    }
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    .addButton {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.5rem 0.75rem;
+        border: none;
+        background: #2d87f0;
+        color: #fff;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+
+        &:hover {
+            background: #1a6cd9;
+        }
+
+        span {
+            font-size: 0.9rem;
+        }
+
+        svg {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+.emptyState {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 2rem 0;
+}
+
+.plans {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.plan {
+    width: 300px;
+    height: 200px;
+    padding: 10px 20px;
+    font-size: large;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    gap: 20px;
+    min-height: 150px;
+    max-height: 300px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+}
+
+.planHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.planTitle {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    flex: 1;
+}
+
+.editButton {
+    border: none;
+    background: transparent;
+    color: #666;
+    cursor: pointer;
+    padding: 0.25rem;
+
+    &:hover {
+        color: #000;
+    }
+
+    svg {
+        font-size: 1rem;
+    }
+}
+
+.editControls {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    .nameInput {
+        flex: 1;
+        padding: 0.25rem 0.5rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .saveButton {
+        padding: 0.25rem 0.6rem;
+        border: none;
+        background: #28a745;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.85rem;
+
+        &:hover {
+            background: #218838;
+        }
+    }
+
+    .cancelButton {
+        border: none;
+        background: transparent;
+        color: #d33;
+        cursor: pointer;
+        padding: 0.25rem;
+
+        &:hover {
+            color: #a00;
+        }
+    }
+}
+
+.planContent {
+    font-size: 0.9rem;
+    color: #444;
+
+    p {
+        margin: 0.25rem 0;
+    }
+}
+.title {
+    display: flex;
+    color: #18731d;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 12px;
+    width: 100%;
+    position: relative;
+    padding-bottom: 10px;
+    svg {
+        align-items: flex-end;
+    }
+    h3 {
+        font-size: 26px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            align-self: center;
+
+            background: linear-gradient(90deg, #2e7d32, #81c784);
+            border-radius: 2px;
+        }
+    }
+}

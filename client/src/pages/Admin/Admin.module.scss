@@ -1,0 +1,163 @@
+/** @format */
+
+.container {
+    padding: 30px;
+    background: #f8fafc;
+    min-height: 100vh;
+    color: #222;
+    font-family: 'Inter', sans-serif;
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #1e293b;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+
+    th {
+        background: #2563eb;
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #e2e8f0;
+        vertical-align: middle;
+        font-size: 14px;
+    }
+
+    tr:nth-child(even) {
+        background: #f9fafb;
+    }
+
+    tr:hover {
+        background: #f1f5f9;
+    }
+}
+
+.preview {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.deleteBtn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 500;
+
+    &:hover {
+        background: #dc2626;
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.empty {
+    text-align: center;
+    padding: 40px;
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.imgs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    img {
+        width: 80px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+    }
+}
+
+.noImage {
+    color: #9ca3af;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.description {
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+
+    &.approved,
+    &.active {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    &.pending {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    &.rejected,
+    &.inactive {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+
+        th,
+        td {
+            padding: 8px;
+        }
+    }
+
+    .imgs {
+        flex-direction: column;
+
+        img {
+            width: 60px;
+            height: 45px;
+        }
+    }
+}

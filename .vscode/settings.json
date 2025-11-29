@@ -1,0 +1,14 @@
+{
+    "editor.formatOnSave": true,
+    "files.autoSave": "onFocusChange",
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.experimentalTernaries": true,
+    "prettier.jsxSingleQuote": true,
+    "prettier.insertPragma": true,
+    "prettier.htmlWhitespaceSensitivity": "ignore",
+    "prettier.singleAttributePerLine": true,
+    "prettier.singleQuote": true,
+    "prettier.arrowParens": "avoid",
+    "prettier.bracketSameLine": true
+}

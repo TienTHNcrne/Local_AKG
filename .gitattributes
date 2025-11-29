@@ -1,0 +1,2 @@
+client/src/assets/BackgroundHome.mp4 filter=lfs diff=lfs merge=lfs -text
+client/src/assets/ProvideAG.mp4 filter=lfs diff=lfs merge=lfs -text

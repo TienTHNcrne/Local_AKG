@@ -1,0 +1,460 @@
+/** @format */
+
+.container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+
+    // Mobile styles
+    @media (max-width: 768px) {
+        bottom: 20px;
+        right: 20px;
+
+        &.mobile {
+            right: 10px;
+            left: 10px;
+            bottom: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        bottom: 15px;
+        right: 15px;
+
+        &.mobile {
+            right: 5px;
+            left: 5px;
+            bottom: 15px;
+        }
+    }
+
+    .but {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        animation: pulse 2s infinite;
+
+        span {
+            display: none;
+            position: absolute;
+            left: -200%;
+            transform: translateX(-50%);
+            background: #4285f4;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 17px;
+            white-space: nowrap;
+        }
+
+        &:hover {
+            span {
+                display: block;
+            }
+            transform: scale(1.1);
+            background-color: #3367d6;
+        }
+
+        // Mobile styles for button
+        @media (max-width: 768px) {
+            width: 56px;
+            height: 56px;
+            font-size: 22px;
+
+            span {
+                font-size: 15px;
+                left: -180%;
+                padding: 3px 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            width: 52px;
+            height: 52px;
+            font-size: 20px;
+
+            span {
+                font-size: 14px;
+                left: -160%;
+            }
+        }
+
+        &.mobileBut {
+            // Additional mobile-specific button styles if needed
+        }
+    }
+
+    .chatbot {
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        width: 350px;
+        max-height: 500px;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        // Mobile styles
+        @media (max-width: 768px) {
+            width: calc(100vw - 40px);
+            max-width: 400px;
+            right: 20px;
+            left: auto;
+            bottom: 80px;
+            max-height: 60vh;
+        }
+
+        @media (max-width: 480px) {
+            width: calc(100vw - 20px);
+            right: 10px;
+            bottom: 70px;
+            max-height: 65vh;
+            border-radius: 10px;
+        }
+
+        // Full screen on very small devices
+        @media (max-width: 360px) {
+            width: calc(100vw - 10px);
+            right: 5px;
+            max-height: 70vh;
+        }
+
+        &.mobile {
+            @media (max-width: 768px) {
+                width: calc(100vw - 20px);
+                right: 10px;
+                left: 10px;
+            }
+
+            @media (max-width: 480px) {
+                width: calc(100vw - 10px);
+                right: 5px;
+                left: 5px;
+            }
+        }
+
+        .head {
+            padding: 16px;
+            background-color: #4285f4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+
+            h3 {
+                margin: 0;
+                font-size: 16px;
+                font-weight: 600;
+            }
+
+            button {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+                padding: 4px 8px;
+                line-height: 1;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    border-radius: 50%;
+                }
+            }
+
+            // Mobile styles for header
+            @media (max-width: 480px) {
+                padding: 14px 12px;
+
+                h3 {
+                    font-size: 15px;
+                }
+
+                button {
+                    font-size: 22px;
+                    width: 28px;
+                    height: 28px;
+                }
+            }
+        }
+
+        .content {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 200px;
+
+            // Mobile styles for content
+            @media (max-width: 480px) {
+                padding: 12px;
+                gap: 10px;
+            }
+
+            .welcome {
+                text-align: center;
+                color: #666;
+                font-style: italic;
+                padding: 20px 0;
+
+                @media (max-width: 480px) {
+                    padding: 16px 0;
+                    font-size: 14px;
+                }
+            }
+
+            .user {
+                align-self: flex-end;
+                background-color: #e3f2fd;
+                border-radius: 12px 12px 0 12px;
+                padding: 10px 14px;
+                max-width: 80%;
+
+                p {
+                    margin: 0;
+                    color: #0d47a1;
+                    word-wrap: break-word;
+                }
+
+                // Mobile styles for user messages
+                @media (max-width: 480px) {
+                    max-width: 85%;
+                    padding: 8px 12px;
+
+                    p {
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            .assistant {
+                align-self: flex-start;
+                background-color: #f1f1f1;
+                border-radius: 12px 12px 12px 0;
+                padding: 10px 14px;
+                max-width: 80%;
+
+                h1,
+                h2,
+                h3,
+                h4 {
+                    margin-top: 8px;
+                    margin-bottom: 4px;
+                    font-weight: 600;
+                    color: #0d47a1;
+                    font-size: 1.1em;
+                }
+
+                p {
+                    margin: 0 0 6px 0;
+                    color: #333;
+                    line-height: 1.5;
+                    word-wrap: break-word;
+                }
+
+                strong {
+                    color: #d32f2f;
+                }
+
+                ul,
+                ol {
+                    margin: 4px 0 8px 20px;
+                    padding-left: 16px;
+
+                    li {
+                        margin-bottom: 2px;
+                        word-wrap: break-word;
+                    }
+                }
+
+                ul li {
+                    list-style: disc;
+                }
+
+                ol li {
+                    list-style: decimal;
+                }
+
+                code {
+                    background: #eee;
+                    padding: 2px 4px;
+                    border-radius: 4px;
+                    font-size: 90%;
+                    word-break: break-all;
+                }
+
+                // Mobile styles for assistant messages
+                @media (max-width: 480px) {
+                    max-width: 85%;
+                    padding: 8px 12px;
+
+                    h1,
+                    h2,
+                    h3,
+                    h4 {
+                        font-size: 1em;
+                        margin-top: 6px;
+                        margin-bottom: 3px;
+                    }
+
+                    p {
+                        font-size: 14px;
+                        margin-bottom: 4px;
+                    }
+
+                    ul,
+                    ol {
+                        margin-left: 16px;
+                        padding-left: 12px;
+                    }
+
+                    code {
+                        font-size: 85%;
+                    }
+                }
+            }
+        }
+
+        .input {
+            display: flex;
+            padding: 12px;
+            border-top: 1px solid #eee;
+            gap: 8px;
+            flex-shrink: 0;
+
+            // Mobile styles for input
+            @media (max-width: 480px) {
+                padding: 10px;
+                gap: 6px;
+            }
+
+            input {
+                flex: 1;
+                padding: 10px 14px;
+                border: 1px solid #ddd;
+                border-radius: 20px;
+                outline: none;
+                font-size: 14px;
+                min-width: 0; // Prevents flex issues on mobile
+
+                &:focus {
+                    border-color: #4285f4;
+                }
+
+                // Mobile styles
+                @media (max-width: 480px) {
+                    padding: 8px 12px;
+                    font-size: 13px;
+                }
+            }
+
+            button {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: #4285f4;
+                color: white;
+                border: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background-color 0.2s;
+                flex-shrink: 0;
+
+                &:hover {
+                    background-color: #3367d6;
+                }
+
+                &:disabled {
+                    background-color: #cccccc;
+                    cursor: not-allowed;
+                }
+
+                // Mobile styles
+                @media (max-width: 480px) {
+                    width: 36px;
+                    height: 36px;
+
+                    svg {
+                        width: 18px;
+                        height: 18px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+// Mobile scrollbar
+@media (max-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(66, 133, 244, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0);
+    }
+}
+
+// Reduce animation on mobile for better performance
+@media (max-width: 768px) {
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.6);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(66, 133, 244, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(66, 133, 244, 0);
+        }
+    }
+}

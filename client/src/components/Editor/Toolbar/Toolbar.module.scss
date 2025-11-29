@@ -1,0 +1,54 @@
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 0.5rem 1rem;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        padding: 6px;
+        border-radius: 6px;
+        transition: background 0.2s;
+
+        &:hover {
+            background: #e0e0e0;
+        }
+
+        &.is-active {
+            background: #c0c0ff;
+            color: #000;
+        }
+    }
+
+    input[type="color"] {
+        border: none;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        background: none;
+        cursor: pointer;
+    }
+
+    input[type="number"] {
+        padding: 4px 6px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    svg {
+        vertical-align: middle;
+    }
+}

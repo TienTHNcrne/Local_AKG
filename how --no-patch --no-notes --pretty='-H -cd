@@ -1,0 +1,15 @@
+[33mcommit de6a89a23332f44690ce145b915abeff2a408fb2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: TienTHNcrne <tienguyen3541@gmail.com>
+Date:   Wed Sep 10 23:17:43 2025 +0700
+
+    update full
+
+ client/src/components/Footer/Footer.jsx            | 119 [32m++++++++++++++++[m[31m-----[m
+ client/src/components/Footer/Footer.module.scss    | 104 [32m++++++++++[m[31m--------[m
+ client/src/components/Header/AfterLogin/Header.jsx |  11 [32m+[m[31m-[m
+ .../components/Header/BeforeLogin/BeforeLogin.jsx  |  10 [32m+[m[31m-[m
+ client/src/pages/Explore/Map/Map.jsx               |  17 [32m+[m[31m--[m
+ client/src/pages/Home/Home.jsx                     |  21 [32m+++[m[31m-[m
+ client/src/pages/Home/Home.module.scss             |   7 [32m++[m
+ .../src/pages/Profile/components/Tours/Tours.jsx   |   2 [32m+[m[31m-[m
+ 8 files changed, 203 insertions(+), 88 deletions(-)

@@ -1,0 +1,25 @@
+ <div
+                    className={`${styles.miniBox} ${
+                        durDis?.distance && durDis?.duration
+                            ? styles.open1
+                            : styles.close1
+                    }`}
+                >
+                    <div className={styles.content}>
+                        <h3>Khoảng cách</h3>{" "}
+                        <p>
+                            {durDis?.distance
+                                ? `${(durDis.distance / 1000).toFixed(1)} km`
+                                : "--"}
+                        </p>
+                    </div>
+                    <div className={styles.content}>
+                        {" "}
+                        <h3>Thời gian trung bình</h3>{" "}
+                        <p>
+                            {durDis?.duration
+                                ? `${Math.ceil(durDis.duration / 60)} min`
+                                : "--"}
+                        </p>
+                    </div>
+                </div>
