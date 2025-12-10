@@ -46,7 +46,7 @@ export default function Game3D() {
                 bridge = gltf.scene;
                 bridge.position.set(0, 0, 0);
                 scene.add(bridge);
-
+                bridge.scale.set(0.01, 0.01, 0.01);
                 camera.position.set(0.5, 0, 0);
                 camera.lookAt(bridge.position);
             },
