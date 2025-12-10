@@ -186,7 +186,13 @@ export default function Header() {
                         </li>
                     </ul>
                 </div>
-
+                <div className={styles.navItem}>
+                    <Link
+                        to='/Game'
+                        onClick={handleLinkClick}>
+                        Game
+                    </Link>
+                </div>
                 {/*---- ABOUT ---- */}
                 <div className={styles.navItem}>
                     <Link
