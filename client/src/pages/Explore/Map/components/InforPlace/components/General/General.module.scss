@@ -1,0 +1,59 @@
+/** @format */
+
+.container {
+	display: flex;
+	flex-direction: column;
+	.scrollable-element {
+		scrollbar-color: black;
+	}
+}
+.header {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #f0f0f0;
+	margin-bottom: 5px;
+
+	h2 {
+		margin: 0;
+		font-size: 1.4rem;
+		color: #1a1a1a;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+
+		svg {
+			color: #007bff;
+		}
+	}
+}
+
+.option {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #f8f9fa;
+	padding: 12px 20px;
+	border-radius: 12px;
+	font-size: 25px;
+	scroll-behavior: smooth;
+	button {
+		background: none;
+		border: none;
+		svg {
+			font-size: 25px;
+		}
+	}
+	svg {
+		transition: all 0.2 s ease;
+		&:hover {
+			color: #007bff;
+		}
+	}
+}
+.inFor {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}

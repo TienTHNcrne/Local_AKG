@@ -1,0 +1,183 @@
+/** @format */
+
+// ====== AI CHAT BOX AND TOUR SUGGESTION
+.ChatAiContainer {
+    max-height: 70vh; // chiều cao khung chat
+    overflow-y: auto; // bật scroll
+    padding-right: 8px;
+    scroll-behavior: smooth;
+}
+
+.ChatAi {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.answer {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
+    &.new {
+        border: 2px solid #089062;
+        background: linear-gradient(135deg, #84ffbf 0%, #ffffff 100%);
+    }
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: #10b981;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #1f2937;
+        margin: 1rem 0 0.5rem 0;
+        line-height: 1.3;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+    h2 {
+        font-size: 1.3rem;
+    }
+    h3 {
+        font-size: 1.1rem;
+    }
+    h4 {
+        font-size: 1rem;
+    }
+
+    p {
+        margin: 0.75rem 0;
+        word-break: break-word;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    ul,
+    ol {
+        padding-left: 1.5rem;
+        margin: 0.75rem 0;
+
+        li {
+            word-break: break-word;
+            margin: 0.25rem 0;
+            line-height: 1.5;
+        }
+    }
+
+    strong {
+        color: #1f2937;
+        font-weight: 600;
+    }
+
+    em {
+        color: #6b7280;
+        font-style: italic;
+    }
+
+    blockquote {
+        border-left: 4px solid #10b981;
+        background: #ecfdf5;
+        padding: 1rem 1.25rem;
+        margin: 1rem 0;
+        border-radius: 0 8px 8px 0;
+
+        p {
+            margin: 0;
+            color: #065f46;
+        }
+    }
+
+    pre,
+    code {
+        background: #1f2937;
+        color: #f8fafc;
+        border-radius: 6px;
+        font-family: 'Monaco', 'Consolas', monospace;
+    }
+
+    pre {
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+
+        code {
+            background: none;
+            padding: 0;
+        }
+    }
+
+    code {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.9em;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+
+        th,
+        td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+    }
+}
+.SaveTour {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+
+    &:hover {
+        background: linear-gradient(135deg, #059669, #047857);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}

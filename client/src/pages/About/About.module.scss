@@ -1,0 +1,322 @@
+:root {
+    --green-900: #14532d;
+    --green-800: #166534;
+    --green-700: #15803d;
+    --green-600: #16a34a;
+    --green-500: #22c55e;
+    --green-300: #86efac;
+    --green-100: #dcfce7;
+
+    --ink-900: #0f172a;
+    --ink-700: #334155;
+    --ink-600: #475569;
+    --ink-500: #64748b;
+
+    --card-bg: #ffffff;
+    --bg: #f8fafc;
+}
+.about {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        opacity: 0.95;
+    }
+}
+.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    height: 250px;
+    padding: 2rem 4rem;
+    gap: 20px;
+    background: linear-gradient(120deg, #16a34a, #22c55e 60%, #6ee7b7);
+
+    h1 {
+        font-size: 2.4rem;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+    }
+    p {
+        margin: 12px auto 22px;
+        max-width: 900px;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 2rem 4rem;
+    flex-wrap: wrap;
+    p {
+        margin: 20px 40px;
+        font-size: 1.2rem;
+    }
+    h2 {
+        font-weight: bolder;
+        font-size: 1.5rem;
+        color: var(--green-800);
+        position: relative;
+        padding-bottom: 6px;
+        &::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 3px;
+            margin-top: 8px;
+            border-radius: 3px;
+            background: linear-gradient(
+                90deg,
+                var(--green-600),
+                var(--green-500)
+            );
+        }
+    }
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .icon {
+        font-size: 1.5rem;
+    }
+}
+//
+.gridThree,
+.gridTwo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.gridThree {
+    .feature1 {
+        margin: auto;
+        width: 80%;
+        grid-column: 1/3;
+    }
+}
+.card,
+.feature1,
+.feature {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 15px 0 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        transform: translateY(-5px) scale(1.02);
+    }
+}
+
+.checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    li,
+    ul {
+        list-style: none;
+        font-size: 1.1rem;
+    }
+    li {
+        position: relative;
+        padding-left: 28px;
+        color: var(--ink-700);
+        display: flex;
+        align-items: center;
+        &::before {
+            content: "✓";
+            position: absolute;
+            left: 8px;
+            top: 0;
+            color: var(--green-700);
+            font-weight: 900;
+        }
+    }
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    .mini {
+        display: flex;
+        gap: 20px;
+    }
+    .member,
+    .memberHD {
+        padding: 1rem 2rem 0 2rem;
+        width: fit-content;
+        border-radius: 10px;
+        align-items: center;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        &:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transform: translateY(-5px) scale(1.02);
+        }
+        p {
+            font-size: 1.1rem;
+        }
+        h4 {
+            font-size: 1.3rem;
+            text-align: center;
+        }
+    }
+}
+.cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(
+        120deg,
+        var(--green-600),
+        var(--green-500) 60%,
+        #6ee7b7
+    );
+    color: white;
+    border-radius: 18px;
+    padding: 28px 20px;
+    box-shadow: 0 10px 34px rgba(16, 185, 129, 0.25);
+    h3 {
+        font-size: 1.5rem;
+    }
+    .actions {
+        display: flex;
+        gap: 40px;
+        .btnPrimary,
+        .btnGhost {
+            color: #0f172a;
+            width: 200px;
+            height: 30px;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            background: #0b2e17;
+            color: #eafcf2;
+            border: 2px solid transparent;
+            text-decoration: none;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+            &:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+                transform: translateY(-5px) scale(1.02);
+            }
+        }
+    }
+}
+/* 📱 Responsive chỉnh cho About page */
+@media (max-width: 1024px) {
+    .intro {
+        height: auto;
+        padding: 2rem;
+        text-align: center;
+
+        h1 {
+            font-size: 2rem;
+        }
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .container {
+        padding: 2rem;
+        gap: 30px;
+        p {
+            margin: 10px 0;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .gridTwo,
+    .gridThree {
+        grid-template-columns: 1fr;
+    }
+
+    .gridThree .feature1 {
+        width: 100%;
+        grid-column: auto;
+    }
+
+    .team {
+        .mini {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    .cta {
+        padding: 20px;
+        h3 {
+            font-size: 1.2rem;
+        }
+        .actions {
+            flex-direction: column;
+            gap: 15px;
+
+            .btnPrimary,
+            .btnGhost {
+                width: 100%;
+                max-width: 150px;
+
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .intro {
+        padding: 1.5rem;
+        h1 {
+            font-size: 1.6rem;
+        }
+        p {
+            font-size: 0.95rem;
+        }
+    }
+
+    .container {
+        padding: 1.5rem;
+    }
+
+    .card,
+    .feature,
+    .feature1 {
+        padding: 12px;
+    }
+
+    .team {
+        .member,
+        .memberHD {
+            width: 100%;
+            padding: 1rem;
+        }
+    }
+
+    .checklist li {
+        font-size: 1rem;
+        padding-left: 24px;
+        &::before {
+            left: 4px;
+        }
+    }
+}

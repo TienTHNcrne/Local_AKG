@@ -1,0 +1,208 @@
+/** @format */
+
+// Variables - Green Theme
+$mobile-breakpoint: 768px;
+$primary-color: #10b981;
+$primary-dark: #059669;
+$primary-light: #d1fae5;
+$primary-lighter: #ecfdf5;
+$text-color: #1f2937;
+$light-gray: #f9fafb;
+$border-color: #e5e7eb;
+$success-color: #059669;
+$warning-color: #f59e0b;
+$shadow-light: 0 2px 10px rgba(16, 185, 129, 0.1);
+$shadow-medium: 0 8px 25px rgba(16, 185, 129, 0.15);
+$shadow-heavy: 0 15px 40px rgba(16, 185, 129, 0.2);
+
+// ====== ANIMATION =====
+@keyframes MoveToRight {
+    from {
+        left: -100%;
+    }
+    to {
+        right: 100%;
+    }
+}
+@keyframes MoveToLeft {
+    from {
+        right: 100%;
+    }
+    to {
+        left: -100%;
+    }
+}
+// Mixins
+@mixin mobile {
+    @media (max-width: #{$mobile-breakpoint}) {
+        @content;
+    }
+}
+
+// ======== CHOOSE PLACE (COLUMN 1) =========
+.choosePlace {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-radius: 20px;
+    align-items: center;
+    background: white;
+    box-shadow: $shadow-light;
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.checkAll {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    background: $primary-light;
+    transition: all 0.3s ease;
+    margin: 0;
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow-light;
+    }
+
+    input[type='checkbox'] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        accent-color: $primary-color;
+        transform: scale(1.1);
+    }
+}
+
+h3 {
+    font-size: 16px;
+    margin: 0;
+    color: #333;
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 2px;
+    gap: 1rem;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    box-shadow: $shadow-light;
+    height: 20%;
+    border-radius: 16px;
+    background: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+    img {
+        height: 90px;
+        width: 150px;
+        border-radius: 12px;
+        object-fit: cover;
+        flex-shrink: 0;
+        border: 2px solid $border-color;
+        transition: all 0.3s ease;
+    }
+
+    .text {
+        overflow: auto;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        gap: 1px;
+
+        position: relative;
+        h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: $text-color;
+            line-height: 1.3;
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+        }
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba($primary-color, 0.1),
+            transparent
+        );
+
+        transition: all 0.7s ease;
+    }
+    &:hover {
+        transform: scale(1.02) translateY(-5px);
+        box-shadow:
+            rgba(0, 0, 0, 0.19) 0px 10px 20px,
+            rgba(0, 0, 0, 0.23) 0px 6px 6px;
+        border: 1px solid $primary-color;
+
+        &::before {
+            left: 100%;
+        }
+        img {
+            transform: scale(1.03);
+        }
+    }
+}
+// ====== ANIMATION AFTER TICK =====
+.tick {
+    border: 2px solid $primary-color;
+    position: relative;
+    background: linear-gradient(
+        135deg,
+        $primary-light 0%,
+        #ffffff 100%
+    ) !important;
+    h3 {
+        color: $primary-dark !important;
+    }
+    &::after {
+        content: '✓';
+        position: absolute;
+        z-index: 2;
+        top: 12px;
+        left: 12px;
+        width: 24px;
+        height: 24px;
+        background: $success-color;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        border-radius: 50%;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .text h3 {
+        color: $primary-dark;
+    }
+}

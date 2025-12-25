@@ -1,0 +1,222 @@
+/** @format */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.roof {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.41);
+
+    z-index: 999;
+}
+.modal {
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    padding: 15px 14px;
+    .close {
+        align-self: flex-end;
+        font-size: large;
+        background: none;
+        border: none;
+        color: #666;
+        padding: 4px;
+        transition: all 0.3s ease;
+
+        &:hover {
+            color: #333;
+            transform: rotate(90deg);
+        }
+    }
+}
+
+.review {
+    align-self: center;
+    padding: 8px 16px;
+    background-color: #4285f4;
+    font-size: large;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+        transform: translateY(5px);
+        background-color: #3367d6;
+    }
+}
+//
+.comments {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 800px;
+}
+.images {
+    display: flex;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+
+    &::-webkit-scrollbar {
+        height: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(26, 26, 26, 0.7);
+        border-radius: 4px;
+    }
+
+    img {
+        height: 100px;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-right: 16px;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: transform 0.3s ease;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &:hover {
+            transform: translateY(-3px);
+        }
+    }
+}
+//Each card comment
+.comment {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: all 0.2s ease;
+    &:hover {
+        transform: scale(1.02);
+        border: 2px solid #3367d6;
+    }
+    .item1 {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        align-content: center;
+        .icon,
+        img {
+            border-radius: 50%;
+            font-size: 40px;
+        }
+        h5 {
+            font-size: 16px;
+        }
+        .bottom {
+            display: flex;
+            gap: 20px;
+        }
+    }
+}
+/** Mobile responsive layout */
+@media (max-width: 768px) {
+    .comments {
+        gap: 20px;
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .comment {
+        padding: 14px;
+        gap: 8px;
+
+        .item1 {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+
+            h5 {
+                font-size: 14px;
+            }
+
+            .bottom {
+                flex-direction: column;
+                gap: 6px;
+                font-size: 12px;
+            }
+
+            .icon,
+            img {
+                font-size: 32px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .item3 {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+    }
+
+    .images {
+        img {
+            height: 120px;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+    }
+
+    .review {
+        font-size: 21px;
+        padding: 6px 12px;
+        border-radius: 6px;
+    }
+
+    .modal {
+        width: 90%;
+        border-radius: 10px;
+        padding: 12px;
+    }
+}
+
+/** Extra small devices (≤ 480px) */
+@media (max-width: 480px) {
+    .comment {
+        padding: 12px;
+
+        .item1 {
+            h5 {
+                font-size: 13px;
+            }
+        }
+
+        .item3 {
+            font-size: 13px;
+        }
+    }
+
+    .images {
+        img {
+            height: 100px;
+        }
+    }
+
+    .review {
+        font-size: 16px;
+        padding: 5px 10px;
+    }
+
+    .modal {
+        padding: 10px;
+    }
+}

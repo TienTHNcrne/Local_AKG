@@ -1,0 +1,127 @@
+/** @format */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    h3 {
+        &::after {
+            content: "";
+            display: block;
+            margin: 10px 0;
+            width: 15%;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(
+                90deg,
+                #56ab2f,
+                #a8e063
+            ); // gradient xanh lá
+        }
+    }
+    .climate {
+        .title {
+            h3 {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+                color: #2e7d32; // xanh lá đậm (chủ đạo)
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        .con {
+            p {
+                font-size: 1.2rem;
+                line-height: 1.6;
+                margin-bottom: 15px;
+            }
+
+            h4 {
+                text-align: center;
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+                color: #333;
+            }
+
+            .grid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+
+                .con1 {
+                    display: flex;
+                    gap: 20px;
+                    flex: 1;
+
+                    .mua,
+                    .kho {
+                        flex: 1;
+                        background-color: #f5f5f5;
+                        padding: 15px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        transition: all 0.3s ease;
+
+                        h5 {
+                            font-size: 1.3rem;
+                            margin-bottom: 8px;
+                            color: #388e3c; // xanh lá tươi
+                        }
+
+                        p {
+                            font-size: 1.1rem;
+                            line-height: 1.5;
+                        }
+
+                        &:hover {
+                            transform: translateY(-5px);
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .temperature {
+        .title {
+            h3 {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+                color: #2e7d32; // xanh lá đậm
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        .bor {
+            border-left: 4px solid #388e3c; // xanh lá border
+            padding-left: 15px;
+
+            .content {
+                p {
+                    font-size: 1.2rem;
+                    line-height: 1.6;
+                }
+            }
+        }
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        .climate {
+            .grid {
+                .con1 {
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+}

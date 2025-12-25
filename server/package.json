@@ -1,0 +1,41 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "NodeJS Backend Server",
+    "type": "module",
+    "main": "server.js",
+    "scripts": {
+        "start": "nodemon server.js",
+        "dev": "nodemon server.js",
+        "beautiful": "prettier --write .",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^1.11.0",
+        "bcrypt": "6.0.0",
+        "body-parser": "^2.2.0",
+        "cloudinary": "^2.7.0",
+        "cors": "^2.8.5",
+        "dotenv": "^16.6.1",
+        "ejs": "^3.1.10",
+        "express": "^5.1.0",
+        "groq-sdk": "^0.27.0",
+        "jsonwebtoken": "9.0.2",
+        "mongodb": "^6.17.0",
+        "mongoose": "^8.16.0",
+        "morgan": "^1.10.0",
+        "multer": "^2.0.2",
+        "node-cron": "^4.2.1",
+        "openai": "^5.10.2",
+        "p-queue": "^8.1.0",
+        "redis": "^5.8.2",
+        "streamifier": "^0.1.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.0",
+        "prettier": "3.5.3"
+    }
+}

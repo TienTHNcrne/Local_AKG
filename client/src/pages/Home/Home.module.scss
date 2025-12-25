@@ -1,0 +1,340 @@
+/** @format */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.hero {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+.guide {
+    z-index: 100;
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    top: 100px; // vị trí trên màn hình
+    left: 50px;
+    border-radius: 50%;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    animation: pulse 2s infinite;
+    &:hover {
+        transform: scale(1.1);
+        background-color: #3367d6;
+    }
+
+    // responsive mobile
+    @media (max-width: 768px) {
+        top: 80px;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+    }
+}
+.guide span {
+    display: block;
+    position: absolute;
+    top: 70px; // hoặc tùy chỉnh
+    left: 70%;
+    transform: translateX(-50%);
+    background: #4285f4;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    @media (max-width: 768px) {
+        top: 15px;
+        left: 150px;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(66, 133, 244, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0);
+    }
+}
+.heroContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    .btn {
+        text-align: center;
+        width: max-content;
+    }
+    .miniDescribe {
+        color: #4a5568;
+        font-style: italic;
+    }
+    h2 {
+        color: #2c5c1f;
+        font-size: 2.2rem;
+        border-left: 5px solid #4a8c31;
+        padding-left: 15px;
+    }
+    p {
+        margin-bottom: 25px;
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+}
+
+.heroImage {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+
+        img {
+            transform: scale(1.05);
+        }
+
+        &::after {
+            opacity: 1;
+        }
+    }
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+    }
+}
+
+.sectionTitle {
+    text-align: center;
+    margin: 40px 0 30px;
+    color: #2c5c1f;
+    font-size: 2.2rem;
+    position: relative;
+    padding-bottom: 15px;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(to right, #2c5c1f, #4a8c31);
+        border-radius: 2px;
+    }
+}
+
+.featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.featureCard {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.featureImg {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.featureContent {
+    padding: 20px;
+    h3 {
+        color: #2c5282;
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+    }
+    p {
+        color: #4a5568;
+        margin-bottom: 20px;
+    }
+}
+
+.btn {
+    background: #2c5282;
+
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease;
+
+    &:hover {
+        background: #1a365d;
+    }
+}
+
+.highlight {
+    background: linear-gradient(135deg, #2c5c1f 0%, #4a8c31 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 40px;
+    margin-bottom: 50px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+    p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto 30px;
+    }
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.statItem {
+    text-align: center;
+    flex: 1;
+    min-width: 150px;
+}
+
+.statNumber {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.statLabel {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column; // ảnh & text xếp dọc
+        gap: 20px;
+    }
+
+    .heroContent {
+        padding: 20px;
+        h2 {
+            font-size: 1.8rem;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+    }
+
+    .heroImage {
+        order: -1; // ảnh lên trước nội dung nếu muốn
+        img {
+            height: auto;
+            max-height: 250px;
+            object-fit: cover;
+        }
+    }
+
+    .sectionTitle {
+        font-size: 1.8rem;
+    }
+
+    .featuresGrid {
+        grid-template-columns: 1fr; // 1 cột trên mobile
+        gap: 20px;
+    }
+
+    .featureContent h3 {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    .highlight {
+        padding: 25px 15px;
+        h2 {
+            font-size: 1.8rem;
+        }
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .statNumber {
+        font-size: 2rem;
+    }
+
+    .statLabel {
+        font-size: 1rem;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .heroContent h2 {
+        font-size: 1.5rem;
+    }
+    .heroContent p {
+        font-size: 0.95rem;
+    }
+    .sectionTitle {
+        font-size: 1.5rem;
+    }
+}

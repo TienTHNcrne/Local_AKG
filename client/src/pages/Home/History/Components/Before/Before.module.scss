@@ -1,0 +1,174 @@
+/** @format */
+/* File: Before.module.scss */
+
+.container {
+    padding: 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    h2 {
+        font-size: 1.6rem;
+        padding: 20px 0;
+        border-bottom: 2px solid #16a34a;
+        color: #14532d;
+    }
+
+    h3 {
+        font-size: 1.7rem;
+        padding: 0 20px;
+        border-left: 5px solid #16a34a;
+        color: #14532d;
+        font-weight: 700;
+    }
+
+    h4 {
+        font-size: 1.3rem;
+        color: #15803d;
+    }
+
+    p {
+        font-size: 1.2rem;
+        color: #374151;
+        line-height: 1.7;
+    }
+}
+
+.GoToPlace {
+    position: fixed;
+    right: 100px;
+    bottom: 38px;
+    border: none;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #22c55e, #15803d);
+    color: white;
+    width: 200px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: linear-gradient(135deg, #15803d, #14532d);
+        transform: translateY(-6px) scale(1.02);
+    }
+}
+
+.contentAG,
+.contentKG {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    img {
+        width: 500px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .item1,
+    .item2,
+    .item3 {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f9fafb;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .MainContent,
+        .MainContent1 {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            h4 {
+                text-align: center;
+                color: #15803d;
+            }
+        }
+
+        .MainContent1 {
+            margin-bottom: 80px;
+        }
+    }
+}
+
+.item2 {
+    .col1 {
+        flex: 1;
+        padding: 10px;
+
+        img {
+            width: 100%;
+            height: 80%;
+            border-radius: 8px;
+        }
+    }
+
+    .col2 {
+        flex: 0.5;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        img {
+            align-self: flex-end;
+            border-radius: 8px;
+        }
+    }
+}
+
+/* Riêng Kiên Giang */
+.contentKG {
+    h3 {
+        align-self: flex-end;
+        border: none;
+        border-right: 5px solid #16a34a;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contentAG img,
+    .contentKG img {
+        width: 100%;
+        height: auto;
+    }
+    .container {
+        padding: 0;
+    }
+    .item1,
+    .item2,
+    .item3 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .GoToPlace {
+        right: 20px;
+        bottom: 20px;
+        width: auto;
+        padding: 10px 18px;
+        font-size: 0.9rem;
+    }
+}
