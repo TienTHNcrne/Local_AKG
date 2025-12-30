@@ -13,6 +13,8 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Row1 />
+      <Row2 />
+      <Row3 />
     </div>
   );
 }
