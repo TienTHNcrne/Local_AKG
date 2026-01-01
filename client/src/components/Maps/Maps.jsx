@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import styles from "./Maps.module.scss";
 import axios from "axios";
 export default function Maps({ className }) {
     const [data, setData] = useState(null);
