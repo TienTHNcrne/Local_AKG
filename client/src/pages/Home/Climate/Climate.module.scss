@@ -1,127 +1,295 @@
-/** @format */
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 10px;
+
     display: flex;
     flex-direction: column;
     gap: 40px;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    h3 {
+
+    @media (max-width: 768px) {
+        padding: 0 15px;
+        gap: 30px;
+    }
+} /* =========================
+   AREA CLIMATE SECTION
+========================= */
+.areaClimate {
+    padding: 1rem;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+}
+
+/* =========================
+   AREA OVERVIEW
+========================= */
+.overview {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    .areaHeader {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+
+        h3 {
+            font-size: 2rem;
+            margin: 0;
+        }
         &::after {
             content: "";
-            display: block;
-            margin: 10px 0;
-            width: 15%;
-            height: 3px;
-            border-radius: 2px;
+            position: absolute;
+            bottom: -20px;
+            width: 100%;
+            height: 2px;
+
+            background: #66666697;
+        }
+    }
+
+    .areaTitle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        span {
+            font-size: 3rem;
+        }
+    }
+    .areaName {
+        display: flex;
+        flex-direction: column;
+        font-size: 1.5rem;
+        font-weight: 700;
+        gap: 10px;
+    }
+    .areaRatio {
+        padding: 5px 25px;
+        border-radius: 25px;
+        width: fit-content;
+        font-size: 0.89rem;
+        font-weight: 600;
+        color: #fff;
+
+        background: linear-gradient(135deg, #11998e, #38ef7d);
+    }
+
+    p {
+        font-size: 1.2rem;
+        color: #666;
+        line-height: 1.6;
+    }
+}
+.areaOverview {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    p {
+        font-size: 1.1rem;
+    }
+}
+.climateSummary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        .statLabel {
+            font-size: 1rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .statValue {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+    }
+}
+/* =========================
+   AREA SELECT BUTTONS
+========================= */
+.activeIndicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.overviewText {
+    h4 {
+        font-size: 1.5rem;
+        color: #1a1a1a;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #4a5568;
+        margin: 0;
+    }
+}
+.buttonAreaClimate {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 1rem;
+
+    button {
+        position: relative;
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 1.5rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        overflow: hidden;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #2d3748;
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        &:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: var(--card-shadow-hover);
+
+            &::before {
+                transform: scaleX(1);
+            }
+
+            .regionIcon {
+                transform: scale(1.1);
+            }
+        }
+
+        &.active {
+            border-color: var(--primary);
             background: linear-gradient(
-                90deg,
-                #56ab2f,
-                #a8e063
-            ); // gradient xanh lá
-        }
-    }
-    .climate {
-        .title {
-            h3 {
-                font-size: 1.8rem;
-                margin-bottom: 15px;
-                color: #2e7d32; // xanh lá đậm (chủ đạo)
-                display: flex;
-                flex-direction: column;
-            }
-        }
+                to bottom,
+                rgba(var(--primary-rgb), 0.05) 0%,
+                rgba(var(--primary-rgb), 0.02) 100%
+            );
 
-        .con {
-            p {
-                font-size: 1.2rem;
-                line-height: 1.6;
-                margin-bottom: 15px;
+            &::before {
+                transform: scaleX(1);
             }
 
-            h4 {
-                text-align: center;
-                font-size: 1.5rem;
-                margin-bottom: 10px;
-                color: #333;
-            }
-
-            .grid {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 20px;
-
-                .con1 {
-                    display: flex;
-                    gap: 20px;
-                    flex: 1;
-
-                    .mua,
-                    .kho {
-                        flex: 1;
-                        background-color: #f5f5f5;
-                        padding: 15px;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                        transition: all 0.3s ease;
-
-                        h5 {
-                            font-size: 1.3rem;
-                            margin-bottom: 8px;
-                            color: #388e3c; // xanh lá tươi
-                        }
-
-                        p {
-                            font-size: 1.1rem;
-                            line-height: 1.5;
-                        }
-
-                        &:hover {
-                            transform: translateY(-5px);
-                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .temperature {
-        .title {
-            h3 {
-                font-size: 1.8rem;
-                margin-bottom: 15px;
-                color: #2e7d32; // xanh lá đậm
-                display: flex;
-                flex-direction: column;
-            }
-        }
-
-        .bor {
-            border-left: 4px solid #388e3c; // xanh lá border
-            padding-left: 15px;
-
-            .content {
-                p {
-                    font-size: 1.2rem;
-                    line-height: 1.6;
-                }
+            .activeIndicator {
+                opacity: 1;
             }
         }
     }
 }
+/* =========================
+   TYPE INFORMATION SWITCH BUTTONS
+========================= */
+.ContainerBtn {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--card-shadow);
 
-/* Responsive */
-@media (max-width: 768px) {
-    .container {
-        .climate {
-            .grid {
-                .con1 {
-                    flex-direction: column;
-                }
-            }
+    .selectorLabel {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        h3 {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        p {
+            color: #666;
+            font-size: 1rem;
+        }
+    }
+}
+.typeInfoContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.typeInfo {
+    position: relative;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d3748;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+    .activeIndicator {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        opacity: 0;
+    }
+    &:hover {
+        background-color: #e9ecef;
+        transform: translateY(-2px);
+        border: 2px solid rgba(26, 41, 128, 0.9);
+    }
+    &.active {
+        background: linear-gradient(
+            135deg,
+            rgba(26, 41, 128, 0.9) 0%,
+            rgba(38, 208, 206, 0.9) 100%
+        );
+        color: #fff;
+        .activeIndicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 1;
+            background-color: #e9ecef;
         }
     }
 }

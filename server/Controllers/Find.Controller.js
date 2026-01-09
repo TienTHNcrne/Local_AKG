@@ -1,12 +1,12 @@
 /** @format */
 
-import { Find, TradePosToAddress } from '../services/Find.service.js';
+import { Find, TradePosToAddress } from "../services/Find.service.js";
 const FL = async (req, res) => {
     try {
         const result = await Find(req.query.q);
         const bruh = [];
         result.data.map((value, id) => {
-            if (!value.display_name.search('Việt Nam')) return;
+            if (!value.display_name.search("Việt Nam")) return;
             bruh.push({
                 lat: value.lat,
                 lng: value.lon,
@@ -23,6 +23,7 @@ const TradeToAddres = async (req, res) => {
     try {
         console.log(req.body);
         const e = { lat: req.body.lat, lng: req.body.lng };
+        console.log(e);
         const result = await TradePosToAddress(e);
         return res.status(result.status).json(result.data);
     } catch (err) {

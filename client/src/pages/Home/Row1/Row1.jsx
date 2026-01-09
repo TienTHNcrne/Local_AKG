@@ -1,87 +1,82 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Row1.module.scss";
-export default function Row1() {
-  const [picture, setPicture] = useState([]);
-  useEffect(() => {
-    const arr = [];
-    for (let i = 0; i <= 3; i++) {
-      arr.push(new URL(`../../../assets/test/${i}.jpg`, import.meta.url).href);
-    }
-    setPicture(arr);
-  }, []);
-  const Duration = 10;
-  console.log(picture);
-  return (
-    <div className={styles.container}>
-      <div className={styles.top}>
-        {/*------- LEFT ------  */}
+import { useNavigate } from "react-router-dom";
 
-        <div className={styles.left}>
-          <h1>
-            Khám phá vùng đất <strong>An Giang</strong>
-          </h1>
-          <p>
-            AGiland là website du lịch, mở ra cánh cửa đến với tỉnh An Giang hợp
-            nhất - nơi tinh hoa sơn, thuỷ, hải hội tụ.
-          </p>
-          <p>
-            Với sự kết hợp của vùng đất bảy núi huyền bí và vùng biển Tây Nam
-            trù phú, website cung cấp hành trình khám phá đa dạng, từ Cổng Trời
-            Tri Tôn đến đảo ngọc Phú Quốc rực nắng. Du khách có thể dễ dàng tìm
-            thấy các tuyến đường du lịch tâm linh, sinh thái sông nước đặc trưng
-            của miền Tây, cùng các trải nghiệm ẩm thực độc đáo tiện lợi.
-          </p>
-          <p>
-            Hãy truy cập ngay để lên kế hoạch cho chuyến đi tới một An Giang đầy
-            mới mẻ và hấp dẫn!
-          </p>
+export default function Row1() {
+    const [picture, setPicture] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const images = import.meta.glob(
+            "../../../assets/Cloudinary_Archive_2026-01-10_01_37_32_Originals/*.{png,jpg,jpeg,webp}",
+            { eager: true },
+        );
+
+        const imageArray = Object.values(images).map((img) => img.default);
+
+        setPicture(imageArray.slice(0, 8));
+    }, []);
+
+    const images = [...picture, ...picture];
+
+    return (
+        <div className={styles.container}>
+            <div className={styles.top}>
+                {/* ---------- LEFT ---------- */}
+                <div className={styles.left}>
+                    <h1>
+                        Khám phá vùng đất <strong>An Giang</strong>
+                    </h1>
+                    <p>
+                        AGiland là website du lịch, mở ra cánh cửa đến với tỉnh
+                        An Giang hợp nhất.
+                    </p>
+                    <p>
+                        Với sự kết hợp của vùng đất bảy núi huyền bí và vùng
+                        biển Tây Nam trù phú, du khách có thể khám phá các tuyến
+                        du lịch tâm linh, sinh thái và ẩm thực đặc trưng miền
+                        Tây.
+                    </p>
+                    <p>
+                        Hãy truy cập ngay để lên kế hoạch cho chuyến đi An Giang
+                        đầy mới mẻ và hấp dẫn!
+                    </p>
+                </div>
+
+                {/* ---------- RIGHT ---------- */}
+                <div className={styles.right}>
+                    {[styles.down, styles.up, styles.down].map(
+                        (dir, colIndex) => (
+                            <div className={styles.col} key={colIndex}>
+                                <div className={`${styles.track} ${dir}`}>
+                                    {images.map((src, i) => (
+                                        <img
+                                            key={`${colIndex}-${i}`}
+                                            src={src}
+                                            className={styles.image}
+                                            loading="lazy"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        ),
+                    )}
+                </div>
+            </div>
+
+            {/* ---------- BOTTOM ---------- */}
+            <div className={styles.bottom}>
+                <button className={styles.button}>Tinh hoa An Giang</button>
+
+                <button
+                    className={styles.button}
+                    onClick={() => navigate("/Explore/map")}
+                >
+                    Bản đồ tương tác
+                </button>
+
+                <button className={styles.button}>Dựng hành trình</button>
+            </div>
         </div>
-        {/*------- RIGHT ------  */}
-        <div className={styles.right}>
-          <div className={styles.col}>
-            {picture.map((value, id) => (
-              <img
-                src={value}
-                className={styles.imageDown}
-                style={{
-                  animationDelay: `-${(Duration / picture.length) * id}s`,
-                }}
-              />
-            ))}
-          </div>
-          <div className={styles.col}>
-            {picture.map((value, id) => (
-              <img
-                src={value}
-                className={styles.imageUp}
-                style={{
-                  animationDelay: `-${(Duration / picture.length) * id}s`,
-                }}
-              />
-            ))}
-          </div>
-          <div className={styles.col}>
-            {picture.map((value, id) => (
-              <img
-                src={value}
-                className={styles.imageDown}
-                style={{
-                  animationDelay: `-${(Duration / picture.length) * id}s`,
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className={styles.bottom}>
-        <button className={styles.button}>Tinh hoa An Giang</button>{" "}
-        <button className={styles.button} disabled>
-          Bản đồ tương tác
-        </button>
-        <button className={styles.button} disabled>
-          Dựng hành trình
-        </button>
-      </div>
-    </div>
-  );
+    );
 }
