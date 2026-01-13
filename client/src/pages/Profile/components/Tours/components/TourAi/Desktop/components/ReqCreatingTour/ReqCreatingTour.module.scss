@@ -37,12 +37,19 @@
         &:focus {
             border-color: #10b981;
         }
+
+        &:disabled {
+            background-color: #f3f4f6;
+            cursor: not-allowed;
+        }
     }
 }
+
 .ReqCreating {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
     font-size: 1rem;
     margin-top: 20px;
     border-radius: 10px;
@@ -54,4 +61,36 @@
     padding: 1rem 2rem;
     background: linear-gradient(135deg, #10b981, #059669);
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        background: linear-gradient(135deg, #6ee7b7, #34d399);
+    }
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ffffff;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
