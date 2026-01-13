@@ -21,6 +21,7 @@ const FL = async (req, res) => {
 
 const TradeToAddres = async (req, res) => {
     try {
+        res.send("oke");
         console.log(req.body);
         const e = { lat: req.body.lat, lng: req.body.lng };
         console.log(e);

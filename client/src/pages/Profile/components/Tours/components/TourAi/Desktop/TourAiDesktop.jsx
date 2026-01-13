@@ -36,7 +36,7 @@ export function Action({ setHide }) {
         if (!pos) return;
         try {
             axios
-                .post(`https://akg-rfjj.onrender.com/v1/api/TradePosToAdd`, {
+                .post(`${import.meta.env.VITE_BE_URL}/v1/api/TradePosToAdd`, {
                     lat: pos.lat,
                     lng: pos.lng,
                 })

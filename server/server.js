@@ -60,23 +60,6 @@ app.get("/", (req, res) => {
 
 // Start jobs
 weatherJob();
-console.log("🧭 Danh sách route đang sống:");
-
-app._router.stack.forEach((middleware) => {
-    if (middleware.route) {
-        const method = Object.keys(middleware.route.methods)[0].toUpperCase();
-        console.log(`👉 ${method} ${middleware.route.path}`);
-    } else if (middleware.name === "router") {
-        middleware.handle.stack.forEach((handler) => {
-            if (handler.route) {
-                const method = Object.keys(
-                    handler.route.methods,
-                )[0].toUpperCase();
-                console.log(`👉 ${method} ${handler.route.path}`);
-            }
-        });
-    }
-});
 
 // Start server
 (async () => {
