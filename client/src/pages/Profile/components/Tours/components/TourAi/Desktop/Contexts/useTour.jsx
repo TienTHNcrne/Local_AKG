@@ -1,18 +1,18 @@
 /** @format */
 
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext } from "react";
 
-import GetHis from '../../Hooks/GetHis';
+import GetHis from "../../Hooks/GetHis";
 const TourContext = createContext();
 
 export default function TourProvide({ children }) {
     const [lovePlaces, setLovePlaces] = useState(new Map());
-    const [chatPresent, setChatPresent] = GetHis();
+    const [chatPresent, setChatPresent] = GetHis("");
 
-    const [days, setDays] = useState('');
-    const [budget, setBudget] = useState('');
+    const [days, setDays] = useState("");
+    const [budget, setBudget] = useState("");
     const [loading, setLoading] = useState(false);
-    const [startPlace, setStartPlace] = useState('');
+    const [startPlace, setStartPlace] = useState("");
     const [startPos, setStartPos] = useState({ lat: null, lng: null });
     const value = {
         startPos,

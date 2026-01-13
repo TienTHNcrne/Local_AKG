@@ -41,7 +41,7 @@ export function Action({ setHide }) {
                     lng: pos.lng,
                 })
                 .then((res) => {
-                    // console.log(res.data);
+                    console.log(res.data);
                     setStartPlace(res.data.display_name);
 
                     setStartPos({

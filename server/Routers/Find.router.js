@@ -6,7 +6,5 @@ import { TradeToAddres, FL } from "../Controllers/Find.Controller.js";
 const router = express.Router();
 
 router.get("/find", FL);
-router.post("/TradePosToAdd", (req, res) => {
-    res.json({ message: "TradePosToAdd router OK" });
-});
+router.post("/TradePosToAdd", TradeToAddres);
 export default router;
