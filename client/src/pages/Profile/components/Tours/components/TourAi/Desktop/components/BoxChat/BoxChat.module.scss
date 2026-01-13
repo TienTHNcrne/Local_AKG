@@ -2,7 +2,7 @@
 
 // ====== AI CHAT BOX AND TOUR SUGGESTION
 .ChatAiContainer {
-    max-height: 70vh; // chiều cao khung chat
+    max-height: 50vh; // chiều cao khung chat
     overflow-y: auto; // bật scroll
     padding-right: 8px;
     scroll-behavior: smooth;
@@ -114,7 +114,7 @@
         background: #1f2937;
         color: #f8fafc;
         border-radius: 6px;
-        font-family: 'Monaco', 'Consolas', monospace;
+        font-family: "Monaco", "Consolas", monospace;
     }
 
     pre {

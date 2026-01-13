@@ -1,44 +1,51 @@
 /** @format */
+import React, { useEffect, useMemo, useRef } from "react";
+import styles from "./BoxChat.module.scss";
+import ReactMarkdown from "react-markdown";
+import { useTour } from "../../Contexts/useTour";
+import clsx from "clsx";
 
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './BoxChat.module.scss';
-import ReactMarkDown from 'react-markdown';
-import { useTour } from '../../Contexts/useTour';
-import clsx from 'clsx';
 export default function BoxChat({ className }) {
     const { chatPresent } = useTour();
     const contentRef = useRef(null);
-    const [isNew, setIsNew] = useState(false);
-    const assistantAi = chatPresent.filter(v => v.role === 'assistant');
 
+    /* ===== chỉ lấy assistant messages, có memo ===== */
+    const assistantAi = useMemo(
+        () => chatPresent.filter((v) => v.role === "assistant"),
+        [chatPresent],
+    );
+
+    /* ===== auto scroll khi có message mới ===== */
     useEffect(() => {
-        if (contentRef.current) {
-            contentRef.current.scrollTop = contentRef.current.scrollHeight;
-        }
-        setIsNew(true);
-    }, [chatPresent]);
+        if (!contentRef.current) return;
+        contentRef.current.scrollTop = contentRef.current.scrollHeight;
+    }, [assistantAi.length]);
 
     return (
         <div className={className}>
-            <div
-                ref={contentRef}
-                className={styles.ChatAiContainer}>
+            <div ref={contentRef} className={styles.ChatAiContainer}>
                 <div className={styles.ChatAi}>
-                    {assistantAi.map((value, id) => (
-                        <div
-                            className={clsx(styles.answer, {
-                                [styles.new]:
-                                    isNew && id === assistantAi.length - 1,
-                            })}
-                            key={id}>
-                            <ReactMarkDown>{value.text}</ReactMarkDown>
-                            <button
-                                type='button'
-                                className={styles.SaveTour}>
-                                Lưu chuyến đi
-                            </button>
-                        </div>
-                    ))}
+                    {assistantAi.map((value, index) => {
+                        const isLast = index === assistantAi.length - 1;
+
+                        return (
+                            <div
+                                key={value.id ?? index}
+                                className={clsx(styles.answer, {
+                                    [styles.new]: isLast,
+                                })}
+                            >
+                                <ReactMarkdown>{value.text}</ReactMarkdown>
+
+                                <button
+                                    type="button"
+                                    className={styles.SaveTour}
+                                >
+                                    Lưu chuyến đi
+                                </button>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </div>

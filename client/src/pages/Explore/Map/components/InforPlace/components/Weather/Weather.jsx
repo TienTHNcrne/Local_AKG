@@ -6,7 +6,6 @@ export default function Weather({ center }) {
     const [forecast, setForecast] = useState(null);
     const [current, setCurrent] = useState(null);
     const icons = Array.from({ length: 36 }, (_, i) => `/icons/${i + 1}.svg`);
-    const [details, setDetails] = useState(null);
 
     useEffect(() => {
         const fetchWeather = async () => {
@@ -19,7 +18,7 @@ export default function Weather({ center }) {
                                 lat: center.lat,
                                 lng: center.lng,
                             },
-                        }
+                        },
                     )
                     .then((res) => {
                         const time = new Date();
@@ -33,7 +32,7 @@ export default function Weather({ center }) {
                                 lat: center.lat,
                                 lng: center.lng,
                             },
-                        }
+                        },
                     )
                     .then((res) => {
                         setForecast(res.data);
