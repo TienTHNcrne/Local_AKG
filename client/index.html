@@ -1,128 +1,39 @@
+<!-- @format -->
 <!doctype html>
-<html lang="vi">
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <!-- Title & Meta -->
-        <title>AGiLand - Hỗ trợ phát triển du lịch tỉnh An Giang</title>
-        <meta
-            name="description"
-            content="AGiLand - Website hỗ trợ phát triển du lịch An Giang. Khám phá điểm đến, trải nghiệm và tour du lịch địa phương."
-        />
-        <link rel="canonical" href="https://agiland.vn.info.vn/" />
-
-        <!-- Open Graph -->
-        <meta
-            property="og:title"
-            content="AGiLand - Hỗ trợ phát triển du lịch An Giang"
-        />
-        <meta
-            property="og:description"
-            content="Khám phá du lịch An Giang cùng AGiLand. Điểm đến, trải nghiệm, tour du lịch địa phương."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://agiland.vn.info.vn/" />
-        <meta
-            property="og:image"
-            content="https://agiland.vn.info.vn/og-image.jpg"
-        />
-
-        <!-- Twitter Card -->
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-            name="twitter:title"
-            content="AGiLand - Hỗ trợ phát triển du lịch An Giang"
-        />
-        <meta
-            name="twitter:description"
-            content="Khám phá du lịch An Giang cùng AGiLand. Điểm đến, trải nghiệm, tour du lịch địa phương."
-        />
-        <meta
-            name="twitter:image"
-            content="https://agiland.vn.info.vn/og-image.jpg"
-        />
-
-        <!-- Slick Carousel CSS -->
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         <link
             rel="stylesheet"
+            type="text/css"
+            charset="UTF-8"
             href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
         />
         <link
             rel="stylesheet"
+            type="text/css"
             href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
         />
-
-        <!-- Preload font (nếu dùng custom font) -->
-        <!-- <link rel="preload" href="/fonts/your-font.woff2" as="font" type="font/woff2" crossorigin> -->
-
         <style>
             body {
                 margin: 0;
-                font-family: Arial, sans-serif;
             }
         </style>
-
-        <!-- Structured Data -->
-        <script type="application/ld+json">
-            {
-                "@context": "https://schema.org",
-                "@type": "TouristDestination",
-                "name": "An Giang",
-                "description": "Website hỗ trợ phát triển du lịch An Giang, cung cấp thông tin điểm du lịch và tour địa phương.",
-                "url": "https://agiland.vn.info.vn/",
-                "image": "https://agiland.vn.info.vn/og-image.jpg"
-            }
-        </script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AGiLand - du lịch tỉnh An Giang</title>
     </head>
     <body>
-        <div id="root">
-            <!-- React sẽ mount ở đây -->
-            <header>
-                <h1>AGiLand - Khám phá du lịch An Giang</h1>
-            </header>
-            <main>
-                <section>
-                    <h2>Điểm đến nổi bật</h2>
-                    <img
-                        src="/images/ha-tien.jpg"
-                        alt="Du lịch Hà Tiên, An Giang"
-                        loading="lazy"
-                        width="600"
-                        height="400"
-                    />
-                    <img
-                        src="/images/chau-doc.jpg"
-                        alt="Du lịch Châu Đốc, An Giang"
-                        loading="lazy"
-                        width="600"
-                        height="400"
-                    />
-                </section>
-                <section>
-                    <h2>Các tour du lịch</h2>
-                    <p>
-                        Chúng tôi cung cấp các tour du lịch đa dạng, trải nghiệm
-                        thực tế và hướng dẫn viên chuyên nghiệp.
-                    </p>
-                </section>
-            </main>
-            <footer>
-                <p>&copy; 2026 AGiLand - All rights reserved.</p>
-            </footer>
-        </div>
-
-        <!-- Importmap cho Three.js nếu dùng -->
+        <div id="root"></div>
+        google-site-verification: google9cb1b6d9752a0e34.html
         <script type="importmap">
             {
                 "imports": {
-                    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-                    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+                    "three": "https://cdn.jsdelivr.net/npm/three@<version>/build/three.module.js",
+                    "three/addons/": "https://cdn.jsdelivr.net/npm/three@<version>/examples/jsm/"
                 }
             }
         </script>
-
-        <!-- React entry point -->
         <script type="module" src="/src/index.jsx"></script>
     </body>
 </html>
