@@ -1,36 +1,107 @@
 .container {
     width: 60rem;
-    height: 160rem;
+    min-height: 160rem;
     border: 2px solid black;
     display: flex;
-    margin: 20px;
+    margin: 20px auto;
     border-radius: 20px;
     padding: 20px;
+    box-sizing: border-box;
 }
+
 .content {
     display: grid;
     width: 100%;
     gap: 20px;
+
     grid-template-areas:
         "header"
         "production"
-        "production"
-        "production"
-        "kq"
-        "kq"
-        "kq" "kq";
+        "kq";
+
+    grid-template-rows:
+        auto
+        1fr
+        1fr;
 }
 
+/* ===== HEADER ===== */
 .header {
     grid-area: header;
     border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    text-align: center;
+
+    h2 {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        line-height: 1.8;
+        font-weight: bold;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
 }
 
+/* ===== DEMO PRODUCTION ===== */
 .demoProduction {
     grid-area: production;
     border: 2px solid black;
+    padding: 20px;
+    display: grid;
+    grid-template-areas:
+        "oke"
+        "PageHome"
+        "different" "FunctionWeb";
+    h2 {
+        grid-area: oke;
+    }
 }
+.pageHome {
+    grid-area: PageHome;
+    width: auto;
+    overflow: hidden;
+    object-fit: cover;
+    width: 100%;
+}
+.different {
+    grid-area: different;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    width: 30%;
+    height: auto;
+    border: 2px solid black;
+    h3 {
+        text-align: center;
+        font-size: 1.2rem;
+    }
+    span {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        font-size: 1rem;
+        line-height: 150%;
+        &::before {
+            content: "-";
+            font-size: large;
+            font-weight: 700;
+        }
+    }
+}
+/* ===== KẾT QUẢ ===== */
 .kq {
     grid-area: kq;
     border: 2px solid black;
+    padding: 20px;
 }

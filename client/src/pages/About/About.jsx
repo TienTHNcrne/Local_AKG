@@ -1,7 +1,7 @@
 /** @format */
-import React from 'react';
-import styles from './About.module.scss';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styles from "./About.module.scss";
+import { Link } from "react-router-dom";
 
 export default function About() {
     return (
@@ -9,7 +9,7 @@ export default function About() {
             <section className={styles.intro}>
                 <h1>AGiLand — Hành trình khám phá An Giang </h1>
                 <p>
-                    Chào bạn! Chúng tôi là <strong>Nguyễn Quốc Tiến</strong> và{' '}
+                    Chào bạn! Chúng tôi là <strong>Nguyễn Quốc Tiến</strong> và{" "}
                     <strong>Trần Mai Ái My</strong>, những học sinh cấp 3 với
                     đam mê công nghệ và khao khát mang đến một góc nhìn mới mẻ,
                     sống động về quê hương An Giang sau sáp nhập. Dự án này
@@ -28,7 +28,7 @@ export default function About() {
                         những trải nghiệm chân thật nhất. Từ đó, ý tưởng về một
                         trang web <strong>tương tác hai chiều</strong> ra đời,
                         nơi mọi du khách không chỉ <strong>nhận</strong> thông
-                        tin mà còn có thể <strong>chia sẻ</strong> và{' '}
+                        tin mà còn có thể <strong>chia sẻ</strong> và{" "}
                         <strong>đóng góp</strong> trải nghiệm của chính mình,
                         cùng nhau vẽ nên bức tranh toàn cảnh và chân thực nhất
                         về An Giang.
@@ -43,7 +43,7 @@ export default function About() {
                             <div className={styles.title}>
                                 <span className={styles.icon}>🎯</span>
                                 <h3> Sứ Mệnh</h3>
-                            </div>{' '}
+                            </div>{" "}
                             <p>
                                 Tạo ra một <strong>nền tảng mở</strong> – nơi
                                 bất kỳ ai yêu mến An Giang cũng có thể cùng nhau
@@ -53,9 +53,9 @@ export default function About() {
                         </div>
                         <div className={styles.card}>
                             <div className={styles.title}>
-                                <span className={styles.icon}>🌱</span>{' '}
+                                <span className={styles.icon}>🌱</span>{" "}
                                 <h3> Tầm Nhìn</h3>
-                            </div>{' '}
+                            </div>{" "}
                             <p>
                                 Trở thành điểm hẹn của cộng đồng những người đam
                                 mê khám phá, biến An Giang thành một điểm đến
@@ -76,7 +76,7 @@ export default function About() {
                                 <h4>Bản Đồ Động</h4>
                             </div>
                             <p>
-                                Mỗi địa điểm đều “thở” bằng{' '}
+                                Mỗi địa điểm đều “thở” bằng{" "}
                                 <strong>
                                     đánh giá sao, bình luận và ảnh thật
                                 </strong>
@@ -94,7 +94,7 @@ export default function About() {
                                 Hãy <strong>thêm địa điểm mới</strong> và cùng
                                 quảng bá vẻ đẹp An Giang đến với muôn người.
                             </p>
-                        </div>{' '}
+                        </div>{" "}
                         <div className={styles.feature1}>
                             <div className={styles.title}>
                                 <span className={styles.icon}>🤖</span>
@@ -102,10 +102,10 @@ export default function About() {
                             </div>
                             <p>
                                 Công cụ AI giúp dựng hành trình chi tiết chỉ với
-                                1 cú click. AI học từ{' '}
+                                1 cú click. AI học từ{" "}
                                 <strong>
                                     đánh giá, bình luận, gợi ý của cộng đồng
-                                </strong>{' '}
+                                </strong>{" "}
                                 để đưa ra lịch trình thông minh, cảnh báo thời
                                 tiết và gợi ý thực tế về trang phục, phong cách
                                 chụp ảnh, ứng xử văn hoá.
@@ -147,7 +147,7 @@ export default function About() {
                             <div className={styles.member}>
                                 <h4>Nguyễn Quốc Tiến</h4>
                                 <p>
-                                    “Mình là người xây dựng{' '}
+                                    “Mình là người xây dựng{" "}
                                     <strong>‘bộ não’</strong> cho trang web: lập
                                     trình AI, xử lý dữ liệu cộng đồng và đảm bảo
                                     mọi tính năng mượt mà.”
@@ -176,21 +176,20 @@ export default function About() {
                         trọn vẹn nếu thiếu đi tiếng nói của bạn.
                     </p>
                     <div className={styles.actions}>
-                        <Link
-                            to='/Explore/map'
-                            className={styles.btnPrimary}>
+                        <Link to="/Explore/map" className={styles.btnPrimary}>
                             🚀 Khám Phá Ngay
                         </Link>
                         <a
-                            href='https://forms.gle/WDhh3EqcmEmwry9q6'
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className={styles.btnGhost}>
+                            href="https://forms.office.com/r/rE7K2eM27C"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.btnGhost}
+                        >
                             📢 Đóng góp ngay
                         </a>
                     </div>
                     <p className={styles.note}>
-                        💌 Dự án vẫn đang phát triển — mọi góp ý của bạn là{' '}
+                        💌 Dự án vẫn đang phát triển — mọi góp ý của bạn là{" "}
                         <strong>“tài nguyên quý giá”</strong> giúp chúng tôi
                         hoàn thiện hơn.
                     </p>
