@@ -18,9 +18,9 @@ import ReqCreatingTour from "./components/ReqCreatingTour/ReqCreatingTour";
 import SelectPlaces from "./components/SelectPlaces/SelectPlaces";
 import BoxChat from "./components/BoxChat/BoxChat";
 
-import GetLocation from "./LeafletFunction/GetLocation";
-import PickLocation from "./LeafletFunction/PickLocation";
-import TourProvide, { useTour } from "./Contexts/useTour";
+import GetLocation from "../LeafletFunction/GetLocation";
+import PickLocation from "../LeafletFunction/PickLocation";
+import { useTour } from "../Contexts/useTour.jsx";
 
 /* ================= MAP (memo để không re-render) ================= */
 const MapView = React.memo(function MapView({ data, pos, setPos }) {
@@ -56,7 +56,7 @@ const MapView = React.memo(function MapView({ data, pos, setPos }) {
 });
 
 /* ================= MAIN ================= */
-export function Action({ setHide }) {
+export default function TourAiDesktop({ setHide }) {
     const { setStartPlace, setStartPos, loading } = useTour();
 
     const [closePlace, setClosePlace] = useState(true);
@@ -103,7 +103,7 @@ export function Action({ setHide }) {
                     console.error("Reverse geocode error", err);
                 }
             }, 500),
-        [],
+        [setStartPlace, setStartPos],
     );
 
     /* ===== load geojson 1 lần ===== */
@@ -165,14 +165,5 @@ export function Action({ setHide }) {
                 </div>
             </div>
         </div>
-    );
-}
-
-/* ================= PROVIDER ================= */
-export default function TourAiDesktop({ setHide }) {
-    return (
-        <TourProvide>
-            <Action setHide={setHide} />
-        </TourProvide>
     );
 }

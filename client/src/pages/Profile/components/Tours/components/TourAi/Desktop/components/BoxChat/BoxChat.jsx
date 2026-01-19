@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import styles from "./BoxChat.module.scss";
 import ReactMarkdown from "react-markdown";
-import { useTour } from "../../Contexts/useTour";
+import { useTour } from "../../../Contexts/useTour";
 import clsx from "clsx";
 
 export default function BoxChat({ className }) {

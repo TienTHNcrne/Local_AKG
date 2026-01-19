@@ -1,8 +1,8 @@
 /** @format */
 
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "./ReqCreatingTour.module.scss";
-import { useTour } from "../../Contexts/useTour";
+import { useTour } from "../../../Contexts/useTour";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -18,6 +18,7 @@ export default function ReqCreatingTour({ className }) {
         setLoading,
         setChatPresent,
         lovePlaces,
+        loading,
     } = useTour();
 
     // ================= BUILD PROMPT AN TOÀN =================
@@ -83,7 +84,14 @@ export default function ReqCreatingTour({ className }) {
             setLoading(false);
         }
     };
-
+    const isFormValid = useMemo(() => {
+        return (
+            Number(days) > 0 &&
+            Number(budget) > 0 &&
+            typeof startPlace === "string" &&
+            startPlace.trim().length > 0
+        );
+    }, [days, budget, startPlace]);
     // ================= UI =================
     return (
         <div className={className}>
@@ -125,7 +133,7 @@ export default function ReqCreatingTour({ className }) {
                         type="button"
                         onClick={onSubmit}
                         className={styles.ReqCreating}
-                        disabled={isLoading}
+                        disabled={!isFormValid || loading}
                     >
                         {isLoading ? (
                             <>

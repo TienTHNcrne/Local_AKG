@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import styles from "./SelectPlaces.module.scss";
 import clsx from "clsx";
 import GetPlace from "../../../Hooks/GetPlace";
-import { useTour } from "../../Contexts/useTour";
+import { useTour } from "../../../Contexts/useTour";
 
 export default function SelectPlaces({ className }) {
     const Places = GetPlace() ?? [];

@@ -1,0 +1,562 @@
+/** @format */
+
+.container {
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #f8f9fa; // Nền sáng tổng thể
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.header {
+    padding: 20px 16px 16px;
+    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    color: #1f2937;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    line-height: 1.2;
+    color: #1f2937;
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.stats {
+    display: flex;
+    gap: 20px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.statItem {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.statIcon {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.ChatAiContainer {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    background: #ffffff;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f3f4f6;
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 4px;
+
+        &:hover {
+            background: #9ca3af;
+        }
+    }
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 40px 20px;
+    text-align: center;
+    color: #9ca3af;
+}
+
+.emptyIcon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.emptyState h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #374151;
+}
+
+.emptyState p {
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.4;
+    max-width: 300px;
+    color: #6b7280;
+}
+
+.ChatAi {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Các style cho tour card theo thứ tự */
+.tourCard {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    border: 2px solid #e5e7eb;
+    transition: all 0.3s ease;
+    animation: slideDown 0.4s ease-out;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Tour mới nhất - nổi bật nhất */
+.tourCard.newest {
+    background: #ffffff;
+    border: 2px solid #059669;
+    box-shadow:
+        0 8px 30px rgba(5, 150, 105, 0.1),
+        0 0 0 1px rgba(5, 150, 105, 0.05) inset;
+    transform: translateY(0);
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow:
+            0 12px 40px rgba(5, 150, 105, 0.15),
+            0 0 0 1px rgba(5, 150, 105, 0.1) inset;
+    }
+
+    .tourHeader {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+
+    .tourNumber {
+        color: #ffffff;
+        font-weight: 700;
+    }
+}
+
+/* Tour thứ 2 */
+.tourCard.secondNew {
+    background: #f9fafb;
+    border: 2px solid #d1d5db;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.05);
+
+    .tourHeader {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    }
+}
+
+/* Các tour cũ hơn */
+.tourCard.older {
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    opacity: 0.9;
+
+    .tourHeader {
+        background: #e5e7eb;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tourHeader {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tourMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.tourNumber {
+    font-size: 14px;
+    font-weight: 600;
+    color: #059669;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tourTime {
+    font-size: 12px;
+    color: #6b7280;
+    font-family: monospace;
+}
+
+.newBadge {
+    background: #ef4444;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+.tourContent {
+    padding: 20px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #1f2937;
+    background: #ffffff;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    border-bottom: 1px solid #e5e7eb;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f9fafb;
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 3px;
+
+        &:hover {
+            background: #9ca3af;
+        }
+    }
+}
+
+// Markdown styles cho nền sáng
+.markdownH3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #059669;
+    margin: 20px 0 12px 0;
+    line-height: 1.3;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 6px;
+}
+
+.markdownH4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #10b981;
+    margin: 16px 0 10px 0;
+    line-height: 1.3;
+}
+
+.markdownH5 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #374151;
+    margin: 12px 0 8px 0;
+    line-height: 1.3;
+}
+
+.markdownP {
+    margin: 0 0 12px 0;
+    line-height: 1.6;
+    color: #4b5563;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.markdownUl {
+    margin: 12px 0;
+    padding-left: 20px;
+    color: #4b5563;
+}
+
+.markdownLi {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    color: #374151;
+    position: relative;
+
+    &::before {
+        content: "•";
+        color: #059669;
+        font-weight: bold;
+        position: absolute;
+        left: -15px;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.markdownStrong {
+    color: #10b981;
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 10px;
+    padding: 16px;
+    background: #f9fafb;
+}
+
+.SaveTour,
+.CopyTour,
+.ShareTour {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    color: white;
+
+    &:active {
+        transform: scale(0.96);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+.SaveTour {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+
+    &.saved {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    &:hover:not(:disabled) {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+}
+
+.CopyTour {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+
+    &.copied {
+        background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    }
+
+    &:hover:not(:disabled) {
+        background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    }
+}
+
+.ShareTour {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+
+    &.shared {
+        background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    }
+
+    &:hover:not(:disabled) {
+        background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    }
+}
+
+.buttonIcon {
+    font-size: 16px;
+}
+
+.check-icon {
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.buttonSpinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.scrollIndicator {
+    position: sticky;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    color: #374151;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    backdrop-filter: blur(20px);
+    border: 1px solid #e5e7eb;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(59, 130, 246, 0.05) inset;
+    z-index: 5;
+    max-width: 90%;
+    transition: all 0.3s ease;
+
+    &:active {
+        transform: translateX(-50%) scale(0.95);
+        background: rgba(59, 130, 246, 0.95);
+        color: white;
+        border-color: #3b82f6;
+    }
+
+    &:hover {
+        background: rgba(59, 130, 246, 0.9);
+        color: white;
+        border-color: #3b82f6;
+    }
+}
+
+.scrollIcon {
+    display: inline-block;
+    margin-right: 8px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-3px);
+    }
+    60% {
+        transform: translateY(-1px);
+    }
+}
+
+// Small phone optimization
+@media (max-width: 360px) {
+    .header {
+        padding: 16px 12px 12px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .stats {
+        gap: 15px;
+        margin-top: 12px;
+        padding-top: 12px;
+    }
+
+    .tourContent {
+        padding: 16px;
+        font-size: 14px;
+        max-height: 350px;
+    }
+
+    .actionButtons {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .SaveTour,
+    .CopyTour,
+    .ShareTour {
+        padding: 10px;
+        font-size: 13px;
+        min-height: 40px;
+        gap: 6px;
+    }
+}
+
+// Landscape mode optimization
+@media (orientation: landscape) and (max-height: 500px) {
+    .container {
+        height: 90vh;
+    }
+
+    .tourContent {
+        max-height: 200px;
+    }
+
+    .ChatAiContainer {
+        max-height: calc(90vh - 120px);
+    }
+}

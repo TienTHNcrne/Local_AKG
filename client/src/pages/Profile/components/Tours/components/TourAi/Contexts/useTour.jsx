@@ -2,7 +2,7 @@
 
 import React, { createContext, useState, useContext } from "react";
 
-import GetHis from "../../Hooks/GetHis";
+import GetHis from "../Hooks/GetHis";
 const TourContext = createContext();
 
 export default function TourProvide({ children }) {

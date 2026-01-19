@@ -1,0 +1,76 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: space-between;
+    label {
+        font-weight: 500;
+        color: #1f2937;
+    }
+
+    input {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        align-items: flex-end;
+        padding: 0.5rem 1rem;
+        border: 1px solid #000000;
+        border-radius: 6px;
+        font-size: 1rem;
+        outline: none;
+        transition: border 0.2s ease;
+
+        &:focus {
+            border-color: #10b981;
+        }
+
+        &:disabled {
+            background-color: #f3f4f6;
+            cursor: not-allowed;
+        }
+    }
+}
+
+.ReqCreating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    margin-top: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: bolder;
+    border: none;
+    height: 20px;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        background: linear-gradient(135deg, #6ee7b7, #34d399);
+    }
+}

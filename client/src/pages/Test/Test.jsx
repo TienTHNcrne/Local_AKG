@@ -87,7 +87,6 @@ export default function Test() {
                 </div>
 
                 {/* ===== DEMO SẢN PHẨM ===== */}
-                <div className={styles.oke}>
                     <div className={styles.demoProduction}>
                         <div className={styles.titledemo}>
                             <img src={images.qr} alt="" className={styles.qr} />
@@ -113,20 +112,6 @@ export default function Test() {
                                     </div>
                                 ))}
                             </div>
-                            <div className={styles.different}>
-                                <h3>SỰ KHÁC BIỆT</h3>
-                                <div className={styles.contentdiff}>
-                                    {differences.map((diff, index) => (
-                                        <div
-                                            key={index}
-                                            className={styles.card}
-                                        >
-                                            <h4>{diff.title}</h4>
-                                            <p>{diff.description}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -145,7 +130,6 @@ export default function Test() {
                             nulla iste, assumenda blanditiis vero veniam.
                         </p>
                     </div>
-                </div>
             </div>
         </div>
     );

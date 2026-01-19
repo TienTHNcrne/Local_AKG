@@ -57,6 +57,7 @@
         "react-leaflet-google-layer": "^4.0.0",
         "react-leaflet-markercluster": "^5.0.0-rc.0",
         "react-markdown": "^10.1.0",
+        "react-responsive": "^10.0.1",
         "react-router-dom": "^7.6.3",
         "react-slick": "^0.31.0",
         "react-toastify": "^11.0.5",

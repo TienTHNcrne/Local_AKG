@@ -1,1 +1,197 @@
-google-site-verification: google9cb1b6d9752a0e34.html
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AGILand Layout Responsive</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="agiland-container">
+            <aside class="area-places card">
+                <h3>Địa điểm muốn đi</h3>
+                <div class="scrollable-content">
+                    <div class="place-item">
+                        <img src="https://via.placeholder.com/60" alt="img" />
+                        <div>
+                            <strong>Núi Cấm</strong>
+                            <p>An Giang</p>
+                        </div>
+                    </div>
+                    <div class="place-item">
+                        <img src="https://via.placeholder.com/60" alt="img" />
+                        <div>
+                            <strong>Chùa Tây An</strong>
+                            <p>Di tích lịch sử</p>
+                        </div>
+                    </div>
+                    <div class="place-item">
+                        <img src="https://via.placeholder.com/60" alt="img" />
+                        <div>
+                            <strong>Rừng Tràm</strong>
+                            <p>Sinh thái</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="area-map card">
+                <div class="map-placeholder">📍 BẢN ĐỒ (Map View)</div>
+            </section>
+
+            <aside class="area-form card">
+                <div class="form-group">
+                    <label>Số ngày muốn đi</label>
+                    <input type="text" placeholder="Ví dụ: 3" />
+                </div>
+                <div class="form-group">
+                    <label>Ngân sách (Triệu)</label>
+                    <input type="text" placeholder="Ví dụ: 5" />
+                </div>
+                <button class="btn-create">Tạo hành trình</button>
+
+                <hr />
+
+                <div class="scrollable-content result-box">
+                    <h4>Ngày 1: Di chuyển...</h4>
+                    <p>Khám phá các điểm du lịch địa phương...</p>
+                    <h4>Ngày 2: Tham quan...</h4>
+                    <p>Ăn uống tại các quán ăn địa phương...</p>
+                </div>
+            </aside>
+        </div>
+    </body>
+    <style>
+        /* --- Cài đặt cơ bản --- */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            height: 100vh; /* Full chiều cao màn hình */
+            padding: 10px;
+        }
+
+        /* Style cho các Card (Khối nội dung) */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Để nội dung con cuộn bên trong */
+        }
+
+        /* Style cho nội dung bên trong */
+        .scrollable-content {
+            overflow-y: auto; /* Cho phép cuộn dọc nếu dài */
+            flex-grow: 1;
+        }
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-weight: bold;
+            min-height: 200px;
+        }
+        .place-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .place-item img {
+            border-radius: 8px;
+        }
+        .btn-create {
+            background: #009966;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* =========================================
+   PHẦN QUAN TRỌNG NHẤT: GRID LAYOUT
+   ========================================= */
+
+        .agiland-container {
+            display: grid;
+            gap: 15px; /* Khoảng cách giữa các ô */
+            height: calc(100vh - 20px); /* Chiều cao full trừ padding body */
+        }
+
+        /* --- 1. MOBILE (Mặc định - Dưới 768px) --- 
+   Xếp chồng dọc: Bản đồ lên đầu -> Form -> Danh sách
+*/
+        .agiland-container {
+            grid-template-columns: 1fr; /* 1 cột duy nhất */
+            /* Định nghĩa vùng hiển thị */
+            grid-template-areas:
+                "map"
+                "form"
+                "places";
+            grid-template-rows: 300px auto auto; /* Bản đồ cao cố định 300px */
+            height: auto; /* Trên mobile cho phép trang dài ra để cuộn */
+        }
+
+        /* --- 2. TABLET (Từ 768px đến 1024px) --- 
+   Chia 2 cột: Danh sách bên trái, (Bản đồ + Form) bên phải
+*/
+        @media (min-width: 768px) {
+            .agiland-container {
+                grid-template-columns: 300px 1fr; /* Cột trái 300px, phải tự giãn */
+                grid-template-rows: 40% 60%; /* Chia chiều cao */
+                height: calc(
+                    100vh - 20px
+                ); /* Cố định chiều cao để không cuộn cả trang */
+
+                /* Sắp xếp vị trí các khối */
+                grid-template-areas:
+                    "places map" /* Hàng 1: Trái là Place, Phải là Map */
+                    "places form"; /* Hàng 2: Trái vẫn là Place, Phải là Form */
+            }
+        }
+
+        /* --- 3. DESKTOP (Trên 1200px) --- 
+   Chia 3 cột như ảnh gốc
+*/
+        @media (min-width: 1200px) {
+            .agiland-container {
+                /* Cột trái 280px, Cột phải 320px, Bản đồ ở giữa tự giãn */
+                grid-template-columns: 280px 1fr 320px;
+                grid-template-rows: 1fr; /* 1 hàng duy nhất */
+
+                grid-template-areas: "places map form";
+            }
+        }
+
+        /* Gán tên Area cho các class HTML */
+        .area-places {
+            grid-area: places;
+        }
+        .area-map {
+            grid-area: map;
+        }
+        .area-form {
+            grid-area: form;
+        }
+    </style>
+</html>
