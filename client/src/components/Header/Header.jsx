@@ -9,32 +9,56 @@ import { IoLogInOutline } from "react-icons/io5";
 import { AiFillProfile } from "react-icons/ai";
 import { useAuth } from "../../Contexts/Auth/Auth";
 import { FaStar } from "react-icons/fa6";
-import { RiMenu3Line, RiCloseLine, RiGuideFill } from "react-icons/ri";
-import { FaAngleDown } from "react-icons/fa6";
+import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import TourAi from "../../pages/Profile/components/Tours/components/TourAi/TourAi";
+import { RiGuideFill } from "react-icons/ri";
+import { FaAngleDown } from "react-icons/fa6";
 
 export default function Header() {
     const Logo = new URL("../../assets/Logo.png", import.meta.url).href;
-    const { logout, userId } = useAuth();
-
+    //---- State and Values ----//
+    const { logout } = useAuth();
     const [add, setAdd] = useState(false);
+    const [show, setShow] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(null);
-    const [show, setShow] = useState(false);
-
     const navigate = useNavigate();
+    const { userId } = useAuth();
     const accountRef = useRef(null);
 
+    // Close dropdown when clicking outside
     useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (accountRef.current && !accountRef.current.contains(e.target)) {
+        const handleClickOutside = (event) => {
+            if (
+                accountRef.current &&
+                !accountRef.current.contains(event.target)
+            ) {
                 setShow(false);
             }
         };
+
         document.addEventListener("mousedown", handleClickOutside);
         return () =>
             document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    // Close mobile menu when resizing to desktop
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth > 768) {
+                setMenuOpen(false);
+                setOpenDropdown(null);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    // --- Functions ---- //
+    const toggleDropdown = (name) => {
+        setOpenDropdown(openDropdown === name ? null : name);
+    };
 
     const handleLinkClick = () => {
         setMenuOpen(false);
@@ -42,15 +66,27 @@ export default function Header() {
         setShow(false);
     };
 
+    const ReturnNameMenu = (Name) => {
+        return openDropdown === Name ? styles.show : "";
+    };
+
+    const SetNameMenu = (Name) => {
+        if (openDropdown === Name) setOpenDropdown(null);
+        else toggleDropdown(Name);
+    };
+
     const handleLogout = () => {
         logout();
+        setShow(false);
         handleLinkClick();
     };
 
+    // ---- Render ---- //
     return (
-        <header className={styles.header}>
+        <div className={styles.header}>
             {add && <TourAi setHide={setAdd} />}
 
+            {/* Mobile Menu Icon */}
             <div
                 className={styles.menuIcon}
                 onClick={() => setMenuOpen(!menuOpen)}
@@ -58,51 +94,28 @@ export default function Header() {
                 {menuOpen ? <RiCloseLine /> : <RiMenu3Line />}
             </div>
 
-            <Link
-                to="/"
-                className={styles.logo}
-                onClick={handleLinkClick}
-                style={{ textDecoration: "none" }}
-            >
-                <img
-                    src={Logo}
-                    alt="AGILAND"
-                    style={{
-                        filter: "brightness(1.1) contrast(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
-                        WebkitFilter:
-                            "brightness(1.1) contrast(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
-                        backgroundColor: "transparent",
-                    }}
-                />
+            {/* Logo */}
+            <Link to="/" className={styles.logo} onClick={handleLinkClick}>
+                <img src={Logo} alt="" />
             </Link>
 
+            {/* Navigation */}
             <nav className={`${styles.nav} ${menuOpen ? styles.active : ""}`}>
+                {/*---- HOME ---- */}
                 <div
                     className={styles.dropdown}
                     onMouseEnter={() =>
-                        window.innerWidth > 768 && setOpenDropdown("home")
+                        window.innerWidth > 768 && SetNameMenu("home")
                     }
-                    onMouseLeave={() =>
-                        window.innerWidth > 768 && setOpenDropdown(null)
-                    }
+                    onClick={() => SetNameMenu("home")}
                 >
-                    <div
-                        className={styles.dropdownToggle}
-                        onClick={() =>
-                            window.innerWidth <= 768 &&
-                            setOpenDropdown(
-                                openDropdown === "home" ? null : "home",
-                            )
-                        }
-                    >
+                    <div className={styles.dropdownToggle}>
                         <IoHome />
                         <span>Trang chủ</span>
                         <FaAngleDown className={styles.arrow} />
                     </div>
                     <ul
-                        className={`${styles.dropdownMenu} ${
-                            openDropdown === "home" ? styles.show : ""
-                        }`}
+                        className={`${styles.dropdownMenu} ${ReturnNameMenu("home")}`}
                     >
                         <li>
                             <Link to="/Location" onClick={handleLinkClick}>
@@ -126,25 +139,49 @@ export default function Header() {
                         </li>
                         <li>
                             <Link to="/Religion" onClick={handleLinkClick}>
-                                Tôn giáo
+                                Tôn giáo - Tín ngưỡng
                             </Link>
                         </li>
                     </ul>
                 </div>
 
-                <div className={styles.navItem}>
-                    <Link to="/Explore/map" onClick={handleLinkClick}>
+                {/*---- EXPLORE ---- */}
+                <div
+                    className={styles.dropdown}
+                    onMouseEnter={() =>
+                        window.innerWidth > 768 && SetNameMenu("explore")
+                    }
+                    onClick={() => SetNameMenu("explore")}
+                >
+                    <div className={styles.dropdownToggle}>
                         <IoShareSocial />
                         <span>Khám phá</span>
-                    </Link>
+                        <FaAngleDown className={styles.arrow} />
+                    </div>
+                    <ul
+                        className={`${styles.dropdownMenu} ${ReturnNameMenu("explore")}`}
+                    >
+                        <li>
+                            <Link to="/Explore/map" onClick={handleLinkClick}>
+                                Bản đồ
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/Explore/TinhHoa"
+                                onClick={handleLinkClick}
+                            >
+                                Tinh hoa An Giang
+                            </Link>
+                        </li>
+                    </ul>
                 </div>
-
                 <div className={styles.navItem}>
                     <Link to="/Game" onClick={handleLinkClick}>
                         Game
                     </Link>
                 </div>
-
+                {/*---- ABOUT ---- */}
                 <div className={styles.navItem}>
                     <Link to="/About" onClick={handleLinkClick}>
                         Về chúng tôi
@@ -152,19 +189,20 @@ export default function Header() {
                 </div>
             </nav>
 
+            {/* User Actions */}
             {userId ? (
                 <div className={styles.right}>
                     <button
                         className={styles.iconBtn}
                         onClick={() => setAdd(true)}
-                        aria-label="Tạo tour AI"
+                        title="AI Tour"
                     >
                         <FaStar />
                     </button>
                     <button
                         className={styles.iconBtn}
                         onClick={() => navigate("/guide")}
-                        aria-label="Hướng dẫn"
+                        title="Hướng dẫn viên"
                     >
                         <RiGuideFill />
                     </button>
@@ -172,19 +210,17 @@ export default function Header() {
                         <button
                             className={styles.accountToggle}
                             onClick={() => setShow(!show)}
-                            aria-label="Tài khoản"
+                            title="Tài khoản"
                         >
                             <MdAccountCircle />
                         </button>
                         {show && (
                             <div className={styles.accountDropdown}>
-                                <Link
-                                    to="/profile"
-                                    onClick={handleLinkClick}
-                                    className={styles.dropdownItem}
-                                >
-                                    <AiFillProfile />
-                                    <span>Hồ sơ</span>
+                                <Link to="/profile" onClick={handleLinkClick}>
+                                    <div className={styles.dropdownItem}>
+                                        <AiFillProfile />
+                                        <span>Hồ sơ</span>
+                                    </div>
                                 </Link>
                                 <button
                                     onClick={handleLogout}
@@ -204,11 +240,11 @@ export default function Header() {
                     <Link to="/register" onClick={handleLinkClick}>
                         <button className={styles.signUpBtn}>Đăng ký</button>
                     </Link>
-                    <Link to="/login" onClick={handleLinkClick}>
+                    <Link to="/Login" onClick={handleLinkClick}>
                         <button className={styles.signInBtn}>Đăng nhập</button>
                     </Link>
                 </div>
             )}
-        </header>
+        </div>
     );
 }
