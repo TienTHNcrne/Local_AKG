@@ -99,7 +99,6 @@ export default function Row1() {
                                     />
 
                                     {/* Overlay gradient */}
-                                    <div className={styles.imageOverlay}></div>
                                 </div>
                             )}
                         </div>

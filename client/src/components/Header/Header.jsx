@@ -1,63 +1,40 @@
 /** @format */
 
-import React, { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import styles from './Header.module.scss';
-import { IoHome, IoShareSocial } from 'react-icons/io5';
-import { MdAccountCircle } from 'react-icons/md';
-import { IoLogInOutline } from 'react-icons/io5';
-import { AiFillProfile } from 'react-icons/ai';
-import { useAuth } from '../../Contexts/Auth/Auth';
-import { FaStar } from 'react-icons/fa6';
-import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
-import TourAi from '../../pages/Profile/components/Tours/components/TourAi/TourAi';
-import { RiGuideFill } from 'react-icons/ri';
-import { FaAngleDown } from 'react-icons/fa6';
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import styles from "./Header.module.scss";
+import { IoHome, IoShareSocial } from "react-icons/io5";
+import { MdAccountCircle } from "react-icons/md";
+import { IoLogInOutline } from "react-icons/io5";
+import { AiFillProfile } from "react-icons/ai";
+import { useAuth } from "../../Contexts/Auth/Auth";
+import { FaStar } from "react-icons/fa6";
+import { RiMenu3Line, RiCloseLine, RiGuideFill } from "react-icons/ri";
+import { FaAngleDown } from "react-icons/fa6";
+import TourAi from "../../pages/Profile/components/Tours/components/TourAi/TourAi";
 
 export default function Header() {
-    //---- State and Values ----//
-    const { logout } = useAuth();
+    const Logo = new URL("../../assets/Logo.png", import.meta.url).href;
+    const { logout, userId } = useAuth();
+
     const [add, setAdd] = useState(false);
-    const [show, setShow] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(null);
+    const [show, setShow] = useState(false);
+
     const navigate = useNavigate();
-    const { userId } = useAuth();
     const accountRef = useRef(null);
 
-    // Close dropdown when clicking outside
     useEffect(() => {
-        const handleClickOutside = event => {
-            if (
-                accountRef.current &&
-                !accountRef.current.contains(event.target)
-            ) {
+        const handleClickOutside = (e) => {
+            if (accountRef.current && !accountRef.current.contains(e.target)) {
                 setShow(false);
             }
         };
-
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
         return () =>
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
     }, []);
-
-    // Close mobile menu when resizing to desktop
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth > 768) {
-                setMenuOpen(false);
-                setOpenDropdown(null);
-            }
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    // --- Functions ---- //
-    const toggleDropdown = name => {
-        setOpenDropdown(openDropdown === name ? null : name);
-    };
 
     const handleLinkClick = () => {
         setMenuOpen(false);
@@ -65,181 +42,154 @@ export default function Header() {
         setShow(false);
     };
 
-    const ReturnNameMenu = Name => {
-        return openDropdown === Name ? styles.show : '';
-    };
-
-    const SetNameMenu = Name => {
-        if (openDropdown === Name) setOpenDropdown(null);
-        else toggleDropdown(Name);
-    };
-
     const handleLogout = () => {
         logout();
-        setShow(false);
         handleLinkClick();
     };
 
-    // ---- Render ---- //
     return (
-        <div className={styles.header}>
+        <header className={styles.header}>
             {add && <TourAi setHide={setAdd} />}
 
-            {/* Mobile Menu Icon */}
             <div
                 className={styles.menuIcon}
-                onClick={() => setMenuOpen(!menuOpen)}>
-                {menuOpen ?
-                    <RiCloseLine />
-                :   <RiMenu3Line />}
+                onClick={() => setMenuOpen(!menuOpen)}
+            >
+                {menuOpen ? <RiCloseLine /> : <RiMenu3Line />}
             </div>
 
-            {/* Logo */}
             <Link
-                to='/'
+                to="/"
                 className={styles.logo}
-                onClick={handleLinkClick}>
-                <h2>AGiLand</h2>
+                onClick={handleLinkClick}
+                style={{ textDecoration: "none" }}
+            >
+                <img
+                    src={Logo}
+                    alt="AGILAND"
+                    style={{
+                        filter: "brightness(1.1) contrast(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+                        WebkitFilter:
+                            "brightness(1.1) contrast(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+                        backgroundColor: "transparent",
+                    }}
+                />
             </Link>
 
-            {/* Navigation */}
-            <nav className={`${styles.nav} ${menuOpen ? styles.active : ''}`}>
-                {/*---- HOME ---- */}
+            <nav className={`${styles.nav} ${menuOpen ? styles.active : ""}`}>
                 <div
                     className={styles.dropdown}
                     onMouseEnter={() =>
-                        window.innerWidth > 768 && SetNameMenu('home')
+                        window.innerWidth > 768 && setOpenDropdown("home")
                     }
-                    onClick={() => SetNameMenu('home')}>
-                    <div className={styles.dropdownToggle}>
+                    onMouseLeave={() =>
+                        window.innerWidth > 768 && setOpenDropdown(null)
+                    }
+                >
+                    <div
+                        className={styles.dropdownToggle}
+                        onClick={() =>
+                            window.innerWidth <= 768 &&
+                            setOpenDropdown(
+                                openDropdown === "home" ? null : "home",
+                            )
+                        }
+                    >
                         <IoHome />
                         <span>Trang chủ</span>
                         <FaAngleDown className={styles.arrow} />
                     </div>
                     <ul
-                        className={`${styles.dropdownMenu} ${ReturnNameMenu('home')}`}>
+                        className={`${styles.dropdownMenu} ${
+                            openDropdown === "home" ? styles.show : ""
+                        }`}
+                    >
                         <li>
-                            <Link
-                                to='/Location'
-                                onClick={handleLinkClick}>
+                            <Link to="/Location" onClick={handleLinkClick}>
                                 Tổng quan
                             </Link>
                         </li>
                         <li>
-                            <Link
-                                to='/Climate'
-                                onClick={handleLinkClick}>
+                            <Link to="/Climate" onClick={handleLinkClick}>
                                 Khí hậu
                             </Link>
                         </li>
                         <li>
-                            <Link
-                                to='/History'
-                                onClick={handleLinkClick}>
+                            <Link to="/History" onClick={handleLinkClick}>
                                 Lịch sử
                             </Link>
                         </li>
                         <li>
-                            <Link
-                                to='/CulSoc'
-                                onClick={handleLinkClick}>
+                            <Link to="/CulSoc" onClick={handleLinkClick}>
                                 Dân tộc - Lễ hội
                             </Link>
                         </li>
                         <li>
-                            <Link
-                                to='/Religion'
-                                onClick={handleLinkClick}>
-                                Tôn giáo - Tín ngưỡng
+                            <Link to="/Religion" onClick={handleLinkClick}>
+                                Tôn giáo
                             </Link>
                         </li>
                     </ul>
                 </div>
 
-                {/*---- EXPLORE ---- */}
-                <div
-                    className={styles.dropdown}
-                    onMouseEnter={() =>
-                        window.innerWidth > 768 && SetNameMenu('explore')
-                    }
-                    onClick={() => SetNameMenu('explore')}>
-                    <div className={styles.dropdownToggle}>
+                <div className={styles.navItem}>
+                    <Link to="/Explore/map" onClick={handleLinkClick}>
                         <IoShareSocial />
                         <span>Khám phá</span>
-                        <FaAngleDown className={styles.arrow} />
-                    </div>
-                    <ul
-                        className={`${styles.dropdownMenu} ${ReturnNameMenu('explore')}`}>
-                        <li>
-                            <Link
-                                to='/Explore/map'
-                                onClick={handleLinkClick}>
-                                Bản đồ
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                to='/Explore/TinhHoa'
-                                onClick={handleLinkClick}>
-                                Tinh hoa An Giang
-                            </Link>
-                        </li>
-                    </ul>
+                    </Link>
                 </div>
+
                 <div className={styles.navItem}>
-                    <Link
-                        to='/Game'
-                        onClick={handleLinkClick}>
+                    <Link to="/Game" onClick={handleLinkClick}>
                         Game
                     </Link>
                 </div>
-                {/*---- ABOUT ---- */}
+
                 <div className={styles.navItem}>
-                    <Link
-                        to='/About'
-                        onClick={handleLinkClick}>
+                    <Link to="/About" onClick={handleLinkClick}>
                         Về chúng tôi
                     </Link>
                 </div>
             </nav>
 
-            {/* User Actions */}
-            {userId ?
+            {userId ? (
                 <div className={styles.right}>
                     <button
                         className={styles.iconBtn}
                         onClick={() => setAdd(true)}
-                        title='AI Tour'>
+                        aria-label="Tạo tour AI"
+                    >
                         <FaStar />
                     </button>
                     <button
                         className={styles.iconBtn}
-                        onClick={() => navigate('/guide')}
-                        title='Hướng dẫn viên'>
+                        onClick={() => navigate("/guide")}
+                        aria-label="Hướng dẫn"
+                    >
                         <RiGuideFill />
                     </button>
-                    <div
-                        className={styles.account}
-                        ref={accountRef}>
+                    <div className={styles.account} ref={accountRef}>
                         <button
                             className={styles.accountToggle}
                             onClick={() => setShow(!show)}
-                            title='Tài khoản'>
+                            aria-label="Tài khoản"
+                        >
                             <MdAccountCircle />
                         </button>
                         {show && (
                             <div className={styles.accountDropdown}>
                                 <Link
-                                    to='/profile'
-                                    onClick={handleLinkClick}>
-                                    <div className={styles.dropdownItem}>
-                                        <AiFillProfile />
-                                        <span>Hồ sơ</span>
-                                    </div>
+                                    to="/profile"
+                                    onClick={handleLinkClick}
+                                    className={styles.dropdownItem}
+                                >
+                                    <AiFillProfile />
+                                    <span>Hồ sơ</span>
                                 </Link>
                                 <button
                                     onClick={handleLogout}
-                                    className={styles.dropdownBtn}>
+                                    className={styles.dropdownBtn}
+                                >
                                     <div className={styles.dropdownItem}>
                                         <IoLogInOutline />
                                         <span>Đăng xuất</span>
@@ -249,19 +199,16 @@ export default function Header() {
                         )}
                     </div>
                 </div>
-            :   <div className={styles.rightB}>
-                    <Link
-                        to='/register'
-                        onClick={handleLinkClick}>
+            ) : (
+                <div className={styles.rightB}>
+                    <Link to="/register" onClick={handleLinkClick}>
                         <button className={styles.signUpBtn}>Đăng ký</button>
                     </Link>
-                    <Link
-                        to='/Login'
-                        onClick={handleLinkClick}>
+                    <Link to="/login" onClick={handleLinkClick}>
                         <button className={styles.signInBtn}>Đăng nhập</button>
                     </Link>
                 </div>
-            }
-        </div>
+            )}
+        </header>
     );
 }
