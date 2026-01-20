@@ -10,11 +10,11 @@ import Row3 from "./Row3/Row3";
 import { FaRoute } from "react-icons/fa";
 import { RiGuideFill } from "react-icons/ri";
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Row1 />
-      <Row2 />
-      <Row3 />
-    </div>
-  );
+    return (
+        <div className={styles.container}>
+            <Row1 />
+            <Row2 />
+            <Row3 />
+        </div>
+    );
 }
