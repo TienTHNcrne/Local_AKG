@@ -87,7 +87,7 @@ export default function TourAiDesktop({ setHide }) {
                             lng: pos.lng,
                         },
                     );
-
+                    console.log(res);
                     const data = {
                         name: res.data.display_name,
                         pos: {

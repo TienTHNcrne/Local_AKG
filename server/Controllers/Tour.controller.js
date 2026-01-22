@@ -10,7 +10,8 @@ const Tour = async (req, res) => {
         const prompt = req.body.prompt;
         console.log("oke", prompt);
         const bruh = await Tours(prompt);
-        const response = bruh.data.choices[0].message.content;
+        console.log(bruh.data);
+        const response = bruh.data;
         const id = req.headers.userid;
         await historyTour({ userId: id, prompt, response });
         const kq = response.replace(/\n{3,}/g, "\n\n").trim();

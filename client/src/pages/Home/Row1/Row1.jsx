@@ -98,7 +98,6 @@ export default function Row1() {
                                         alt={`An Giang landscape ${currentImageIndex + 1}`}
                                     />
 
-                                    {/* Overlay gradient */}
                                 </div>
                             )}
                         </div>

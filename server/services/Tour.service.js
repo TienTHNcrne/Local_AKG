@@ -1,23 +1,27 @@
 /** @format */
-
-// Save box chat and send response to user
-
-import Groq from "groq-sdk"; // Library official of Groq
-import mongoose from "mongoose";
-import Tour from "../Models/Tour.model.js";
+import Groq from "groq-sdk";
 import dotenv from "dotenv";
-dotenv.config();
-
 import fs from "fs";
 
+dotenv.config();
 const placesPath = new URL("../data/places.json", import.meta.url);
-const raws = JSON.parse(fs.readFileSync(placesPath, "utf8"));
-const places = raws.dia_diem;
+const places = JSON.parse(fs.readFileSync(placesPath, "utf8"));
+
 const Tours = async (data) => {
     try {
         const groq = new Groq({
             apiKey: process.env.OPENAI_API_KEY,
         });
+        console.log(data);
+        // Chuyển danh sách thành chuỗi văn bản chi tiết để làm "não" cho AI
+        const knowledgeBase = places
+            .map(
+                (p) =>
+                    `+ Địa danh: ${p.name}
+              - Thuộc khu vực: ${p.khu_vuc}
+              `,
+            )
+            .join("\n\n");
 
         const result = await groq.chat.completions.create({
             model: "llama-3.3-70b-versatile",
@@ -25,28 +29,32 @@ const Tours = async (data) => {
                 {
                     role: "system",
                     content: `
-                Bạn là hướng dẫn viên du lịch chuyên biệt cho tỉnh An Giang mới (An Giang và Kiên Giang đã sáp nhập)
-                Không được đề cập tới địa điểm ở ngoài phạm vi tỉnh An Giang (ví dụ: Cần Thơ, Đồng Tháp,... ).
-                Khi gợi ý tour, chỉ được sử dụng các địa điểm thực tế, di tích, danh lam thắng cảnh, lễ hội hoặc làng nghề thuộc tỉnh An Giang mới (An Giang và Kiên Giang đã sáp nhập).
-                Không hiện phần <think> hay bất kỳ nội dung suy nghĩ nội bộ.
-                 DANH SÁCH ĐỊA ĐIỂM HỢP LỆ:
-                                    ${places.map((p) => "- " + p.name).join("\n")}
+                Bạn là hướng viên du lịch chuyên biệt cho tỉnh An Giang mới (An Giang và Kiên Giang đã sáp nhập).
+                
+                ⚠️ QUY TẮC CỐT LÕI:
+                1. Chỉ sử dụng thông tin trong "DỮ LIỆU ĐỊA PHƯƠNG" dưới đây. Không dùng kiến thức cũ của bạn.
+                2. Nếu người dùng hỏi về địa điểm cũ (ví dụ: Núi Sập), bạn phải tra cứu xem nó thuộc "Địa danh" nào và hiện nằm ở "Vị trí hành chính mới" nào (ví dụ: Xã Thoại Sơn).
+                3. Tuyệt đối không nói sai vị trí (Ví dụ: Không được nói Núi Sập ở Tịnh Biên vì dữ liệu ghi rõ thuộc Thoại Sơn).
+           
+
+                DỮ LIỆU ĐỊA PHƯƠNG:
+
+                ${knowledgeBase}
+                TẠO 1 TOUR DU LỊCH ĐÚNG VỚI DỮ LIỆU VÀ YÊU CẦU CỦA NGƯỜI DÙNG
                 `,
                 },
-
                 {
                     role: "user",
                     content:
                         data || "Xin chào, Tôi có thể giúp gì được cho bạn?",
                 },
             ],
-            temperature: 0.7,
-            max_tokens: 5000,
+            temperature: 0.1,
+            max_tokens: 2000,
         });
-
         return {
             status: 200,
-            data: result,
+            data: result.choices[0].message.content,
         };
     } catch (err) {
         return {

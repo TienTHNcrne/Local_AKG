@@ -1,27 +1,27 @@
 /** @format */
 
-import Groq from 'groq-sdk';
-import mongoose from 'mongoose';
-import HistoricAI from '../Models/Historic_AI.model.js';
-import dotenv from 'dotenv';
-import axios from 'axios';
+import Groq from "groq-sdk";
+import mongoose from "mongoose";
+import HistoricAI from "../Models/Historic_AI.model.js";
+import dotenv from "dotenv";
+import axios from "axios";
 dotenv.config();
-import fs from 'fs';
+import fs from "fs";
 
-const placesPath = new URL('../data/places.json', import.meta.url);
-const places = JSON.parse(fs.readFileSync(placesPath, 'utf8'));
+const placesPath = new URL("../data/places.json", import.meta.url);
+const places = JSON.parse(fs.readFileSync(placesPath, "utf8"));
 
-const AI = async places => {
+const AI = async (places) => {
     try {
         const groq = new Groq({
             apiKey: process.env.OPENAI_API_KEY,
         });
 
         const result = await groq.chat.completions.create({
-            model: 'llama-3.3-70b-instant',
+            model: "llama-3.3-70b-instant",
             messages: [
                 {
-                    role: 'system',
+                    role: "system",
                     content: `
                     Bạn là hướng dẫn viên du lịch chuyên biệt cho tỉnh An Giang mới (An Giang + Kiên Giang đã sáp nhập).
 
@@ -31,7 +31,7 @@ const AI = async places => {
                     "Rất tiếc, địa điểm này không nằm trong danh sách du lịch chính thức của An Giang mới."
 
                     DANH SÁCH ĐỊA ĐIỂM HỢP LỆ:
-                    ${places.map(p => '- ' + p.name).join('\n')}
+                    ${places.map((p) => "- " + p.name).join("\n")}
 
                     Nhiệm vụ:
                     1. Nếu được đưa một tên địa điểm (đúng với danh sách), mô tả ngắn gọn < 200 từ:
@@ -46,9 +46,9 @@ const AI = async places => {
                     `,
                 },
                 {
-                    role: 'user',
+                    role: "user",
                     content:
-                        places || 'Xin chào, Tôi có thể giúp gì được cho bạn?',
+                        places || "Xin chào, Tôi có thể giúp gì được cho bạn?",
                 },
             ],
             temperature: 0.7,
@@ -75,15 +75,15 @@ const history = async ({ userId, prompt, response }) => {
                 $push: {
                     content: {
                         $each: [
-                            { role: 'user', text: prompt },
-                            { role: 'assistant', text: response },
+                            { role: "user", text: prompt },
+                            { role: "assistant", text: response },
                         ],
                     },
                 },
             },
-            { new: true, upsert: true }
+            { new: true, upsert: true },
         );
-        console.log('full');
+        console.log("full");
     } catch (err) {
         console.log("don't save");
     }
@@ -92,7 +92,7 @@ const history = async ({ userId, prompt, response }) => {
 //
 const getHistory = async ({ userId }) => {
     try {
-        console.log('FINDING HISTORY FOR:', userId);
+        console.log("FINDING HISTORY FOR:", userId);
 
         const result = await HistoricAI.findOne({ userId: userId });
         return {

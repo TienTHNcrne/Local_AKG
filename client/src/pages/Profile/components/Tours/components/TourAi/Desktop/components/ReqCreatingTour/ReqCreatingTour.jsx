@@ -24,13 +24,13 @@ export default function ReqCreatingTour({ className }) {
     // ================= BUILD PROMPT AN TOÀN =================
     const buildPrompt = () => {
         let prompt = "";
-
-        if (Array.isArray(lovePlaces) && lovePlaces.length > 0) {
-            const places = lovePlaces
-                .filter((p) => p?.name && typeof p.name === "string")
-                .map((p) => p.name.split(",")[0])
+        console.log(lovePlaces);
+        if (lovePlaces.size > 0) {
+            const places = [...lovePlaces.keys()]
+                .map((v) => v.split(",")[0])
                 .join(", ");
 
+            console.log("oke", places);
             if (places.length > 0) {
                 prompt = `Tôi muốn đi du lịch các địa điểm: ${places}. `;
             } else {
