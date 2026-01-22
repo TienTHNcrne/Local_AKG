@@ -5,3 +5,9 @@
     display: flex;
     flex-direction: column;
 }
+.button {
+    display: flex;
+    bottom: 50%;
+    left: 10px;
+    z-index: 100;
+}

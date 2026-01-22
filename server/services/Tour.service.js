@@ -52,7 +52,7 @@ const Tours = async (data) => {
             temperature: 0.1,
             max_tokens: 2000,
         });
-        console.log(result);
+        console.log("okw", result);
         return {
             status: 200,
             data: result.choices[0].message.content,
