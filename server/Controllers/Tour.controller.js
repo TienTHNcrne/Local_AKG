@@ -8,15 +8,15 @@ import {
 const Tour = async (req, res) => {
     try {
         const prompt = req.body.prompt;
-        console.log("oke", prompt);
         const bruh = await Tours(prompt);
         console.log(bruh.data);
-        const response = bruh.data;
         const id = req.headers.userid;
-        await historyTour({ userId: id, prompt, response });
-        const kq = response.replace(/\n{3,}/g, "\n\n").trim();
-
-        return res.status(bruh.status).json(kq);
+        await historyTour({
+            userId: id,
+            prompt,
+            response: bruh.data,
+        });
+        return res.status(bruh.status).json(bruh.data);
     } catch (error) {
         console.error("Lỗi gọi AI:", error.message);
         return res.status(500).json({ error: "Lỗi server" });
