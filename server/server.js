@@ -5,6 +5,8 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
+import session from "express-session";
+import passport from "./config/passport.js";
 import { EventEmitter } from "events";
 
 import connection from "./config/database.js";
@@ -26,22 +28,62 @@ import Tours from "./Routers/Tour.router.js";
 import Rate from "./Routers/Rate.router.js";
 import Plan from "./Routers/Plan.router.js";
 import Check from "./Routers/Check.router.js";
+
 const app = express();
 const PORT = process.env.PORT || 8081;
-
-// EventEmitter setup
 EventEmitter.defaultMaxListeners = 20;
 
-// Middleware
-app.use(cors());
+// ===== Middleware cơ bản =====
+app.use(
+    cors({
+        origin: "https://agiland.vn.info.vn",
+        credentials: true,
+    }),
+);
 app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 
-// Routes
+// ===== SESSION + PASSPORT (PHẢI ĐẶT TRƯỚC ROUTES) =====
+app.use(
+    session({
+        secret: "secret123",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+        },
+    }),
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// ===== GOOGLE AUTH =====
+app.get(
+    "/auth/google",
+    passport.authenticate("google", { scope: ["profile", "email"] }),
+);
+
+app.get(
+    "/auth/google/callback",
+    passport.authenticate("google", { failureRedirect: "/" }),
+    async (req, res) => {
+        res.json({
+            name: req.user.displayName,
+            email: req.user.emails[0].value,
+            avatar: req.user.photos[0].value,
+        });
+    },
+);
+
+// ===== API ROUTES =====
 app.use("/v2/api", router);
 app.use("/v2/api", weather);
 app.use("/v2/api", UploadImg);
 app.use("/v2/api", Check);
+
 app.use("/v1/api", userRouter);
 app.use("/v1/api", Food);
 app.use("/v1/api", aiRoute);
@@ -53,29 +95,27 @@ app.use("/v1/api", GpsRouter);
 app.use("/v1/api", Festival);
 app.use("/v1/api", PlaceLove);
 
-// Health check
+// ===== HEALTH =====
 app.get("/", (req, res) => {
     res.send("Backend is running!");
 });
 
-// Start jobs
+// ===== JOBS =====
 weatherJob();
 
-// Start server
+// ===== START =====
 (async () => {
     try {
         await connection();
         await connectRedis();
 
-        // Redis test
         await redisClient.set("test_key", "Hello Redis!");
-        const value = await redisClient.get("test_key");
-        console.log("Redis test value:", value);
+        console.log("Redis test:", await redisClient.get("test_key"));
 
         app.listen(PORT, () => {
-            console.log(`Server is running at http://localhost:${PORT}`);
+            console.log(`Server running: http://localhost:${PORT}`);
         });
-    } catch (error) {
-        console.error("Failed to connect:", error);
+    } catch (err) {
+        console.error("Failed to connect:", err);
     }
 })();

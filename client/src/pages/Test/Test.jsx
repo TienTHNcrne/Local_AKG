@@ -43,7 +43,7 @@ export default function Test() {
     const submit = async (e) => {
         e.preventDefault();
 
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 12; i++) {
             const user = randomUser();
 
             try {
