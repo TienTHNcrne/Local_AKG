@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>AGILAND Hero</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: Inter, sans-serif;
+            }
+            body {
+                background: #f4f6fb;
+            }
+
+            /* HERO */
+            .hero {
+                min-height: 70vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #059669; /* green */
+                color: white;
+            }
+            .hero-box {
+                max-width: 900px;
+                text-align: center;
+                padding: 60px 20px;
+            }
+            .hero-box h1 {
+                font-size: 48px;
+                margin-bottom: 15px;
+            }
+            .hero-box p {
+                opacity: 0.9;
+                margin-bottom: 40px;
+                font-size: 18px;
+            }
+
+            /* ROLES */
+            .roles {
+                display: flex;
+                justify-content: center;
+                gap: 80px;
+                text-align: left;
+            }
+            .role h3 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+            .role ul {
+                list-style: none;
+                font-size: 16px;
+            }
+            .role li {
+                margin-bottom: 6px;
+            }
+
+            /* MOBILE */
+            @media (max-width: 768px) {
+                .hero-box h1 {
+                    font-size: 32px;
+                }
+                .roles {
+                    flex-direction: column;
+                    gap: 30px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <section class="hero">
+            <div class="hero-box">
+                <h1>Plan smarter. Travel better.</h1>
+                <p>
+                    One AI platform connecting travelers and businesses into a
+                    smart travel ecosystem.
+                </p>
+
+                <div class="roles">
+                    <div class="role">
+                        <h3>👤 Traveler</h3>
+                        <ul>
+                            <li>• AI itinerary generation</li>
+                            <li>• Real-time cost estimates</li>
+                            <li>• Smart route optimization</li>
+                            <li>• Hotel & restaurant bookings</li>
+                        </ul>
+                    </div>
+
+                    <div class="role">
+                        <h3>🏢 Business</h3>
+                        <ul>
+                            <li>• Service listing & management</li>
+                            <li>• Automated booking system</li>
+                            <li>• AI-powered insights</li>
+                            <li>• Revenue growth analytics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

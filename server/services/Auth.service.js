@@ -7,6 +7,14 @@ import dotenv from "dotenv";
 dotenv.config();
 const CreateAccount = async (name, email, password, filter) => {
     try {
+        const existingUser = await Auth.findOne({ email: email });
+        if (existingUser) {
+            return {
+                status: 200,
+                EC: 1,
+                message: "Email đã tồn tại",
+            };
+        }
         const saltRounds = 10;
         const hashPass = await bcrypt.hash(password, saltRounds);
         const user = await Auth.create({
@@ -54,7 +62,7 @@ const LoginAccount = async (email, password) => {
 
         return {
             status: 200,
-            EC: 2,
+            EC: 0,
             message: "Đăng nhập thành công",
             payload,
             accessToken,
@@ -77,9 +85,9 @@ const LoginGoogle = async (googleProfile) => {
                 avatar:
                     googleProfile.avatar || googleProfile.photos?.[0]?.value,
                 filter: "google",
-                password: null,
             });
         }
+        console.log("USER CREATED:", user);
 
         const payload = {
             name: user.name,
@@ -93,7 +101,7 @@ const LoginGoogle = async (googleProfile) => {
 
         return {
             status: 200,
-            EC: 2,
+            EC: 0,
             message: "Đăng nhập Google thành công",
             payload,
             accessToken,

@@ -24,6 +24,8 @@ import Guide from "./pages/Guide/Guide";
 import Game3D from "./pages/Game3D/Game3D.jsx";
 import Admin from "./pages/Admin/Admin.jsx";
 import Test from "./pages/Test/Test.jsx";
+import LoginSuccess from "./pages/Login/LoginSuccess.jsx";
+import { ConfigProvider } from "antd";
 
 const router = createBrowserRouter([
     {
@@ -37,11 +39,10 @@ const router = createBrowserRouter([
             { path: "/Login", element: <Login /> },
             { path: "/Food", element: <Food /> },
 
-            { path: "/Register", element: <Register /> },
             { path: "/profile", element: <Profile /> },
             { path: "/Religion", element: <Religion /> },
             { path: "/Guide", element: <Guide /> },
-
+            { path: "/login/success", element: <LoginSuccess /> },
             { path: "Climate", element: <Climate /> },
             { path: "Location", element: <Location /> },
             { path: "History", element: <History /> },
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
             { path: "Test", element: <Test /> },
         ],
     },
+    { path: "/Register", element: <Register /> },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

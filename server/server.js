@@ -36,7 +36,7 @@ EventEmitter.defaultMaxListeners = 20;
 // ===== Middleware cơ bản =====
 app.use(
     cors({
-        origin: "https://agiland.vn.info.vn",
+        origin: ["http://localhost:5173", "https://agiland.vn.info.vn"],
         credentials: true,
     }),
 );
