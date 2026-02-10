@@ -16,8 +16,8 @@ export default function LoginSuccess() {
                 // Lưu vào localStorage
                 localStorage.setItem("token", decoded.token);
                 localStorage.setItem("user", JSON.stringify(decoded.user));
-
-                console.log("Login OK:", decoded);
+                localStorage.setItem("userid", decoded.user.userId);
+                console.log("Login OK:", decoded.user.userId);
             } catch (err) {
                 console.error("Parse login data failed:", err);
             }
