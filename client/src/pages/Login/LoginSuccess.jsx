@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Contexts/Auth/Auth";
 export default function LoginSuccess() {
     const navigate = useNavigate();
+    const { setUserId } = useAuth();
 
     useEffect(() => {
         // Lấy data từ URL
         const params = new URLSearchParams(window.location.search);
         const data = params.get("data");
-        const { setUserId } = useAuth();
 
         if (data) {
             try {
