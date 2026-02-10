@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../../Contexts/Auth/Auth";
 export default function LoginSuccess() {
     const navigate = useNavigate();
 
@@ -8,6 +8,7 @@ export default function LoginSuccess() {
         // Lấy data từ URL
         const params = new URLSearchParams(window.location.search);
         const data = params.get("data");
+        const { setUserId } = useAuth();
 
         if (data) {
             try {
@@ -17,6 +18,7 @@ export default function LoginSuccess() {
                 localStorage.setItem("token", decoded.token);
                 localStorage.setItem("user", JSON.stringify(decoded.user));
                 localStorage.setItem("userid", decoded.user.userId);
+                setUserId(decoded.user.userId);
                 console.log(
                     "Login OK:",
                     decoded.user.userId,

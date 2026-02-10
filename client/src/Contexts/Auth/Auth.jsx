@@ -23,7 +23,7 @@ export default function Auth({ children }) {
         setUserId(null);
     };
     return (
-        <AuthContext.Provider value={{ userId, login, logout }}>
+        <AuthContext.Provider value={{ userId, login, logout, setUserId }}>
             {children}
         </AuthContext.Provider>
     );
