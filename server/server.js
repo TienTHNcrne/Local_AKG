@@ -14,7 +14,7 @@ import { connectRedis, client as redisClient } from "./config/redis.js";
 import weatherJob from "./jobs/weather.jobs.js";
 
 // Routers
-import userRouter from "./Routers/user.router.js";
+import Auth from "./Routers/Auth.router.js";
 import FindRouter from "./Routers/Find.router.js";
 import Festival from "./Routers/Festival.router.js";
 import aiRoute from "./Routers/Ai.router.js";
@@ -57,26 +57,9 @@ app.use(
     }),
 );
 
+// Initialize Passport (requires session middleware to be configured first)
 app.use(passport.initialize());
 app.use(passport.session());
-
-// ===== GOOGLE AUTH =====
-app.get(
-    "/auth/google",
-    passport.authenticate("google", { scope: ["profile", "email"] }),
-);
-
-app.get(
-    "/auth/google/callback",
-    passport.authenticate("google", { failureRedirect: "/" }),
-    async (req, res) => {
-        res.json({
-            name: req.user.displayName,
-            email: req.user.emails[0].value,
-            avatar: req.user.photos[0].value,
-        });
-    },
-);
 
 // ===== API ROUTES =====
 app.use("/v2/api", router);
@@ -84,7 +67,7 @@ app.use("/v2/api", weather);
 app.use("/v2/api", UploadImg);
 app.use("/v2/api", Check);
 
-app.use("/v1/api", userRouter);
+app.use("/v1/api", Auth);
 app.use("/v1/api", Food);
 app.use("/v1/api", aiRoute);
 app.use("/v1/api", Tours);

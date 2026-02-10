@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const users = new mongoose.Schema({
     name: {
         type: String,
@@ -6,11 +7,27 @@ const users = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
+        default: null,
     },
     email: {
         type: String,
         required: true,
+        unique: true,
+    },
+    avatar: {
+        type: String,
+    },
+    filter: {
+        type: String,
+        required: true,
+    },
+
+    provider: {
+        type: String,
+        default: "local",
+    },
+    googleId: {
+        type: String,
     },
 });
 

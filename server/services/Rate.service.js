@@ -2,8 +2,6 @@
 
 import RateModel from "../Models/Rate.model.js";
 
-import UserModel from "../Models/user.model.js";
-
 const Create = async ({ lat, lng, UserId, comment, rate, imgs }) => {
     try {
         const result = await RateModel.create({
