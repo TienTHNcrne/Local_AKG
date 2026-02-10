@@ -29,9 +29,15 @@ const loginGoogleCtrl = async (req, res) => {
             `https://agiland.vn.info.vn/login/error?msg=${encodeURIComponent(result.message)}`,
         );
     }
+    const data = {
+        token: result.accessToken,
+        user: result.payload, // name, email, userId
+    };
+
+    const encoded = encodeURIComponent(JSON.stringify(data));
 
     return res.redirect(
-        `https://agiland.vn.info.vn/login/success?token=${result.accessToken}`,
+        `https://agiland.vn.info.vn/login/success?data=${encoded}`,
     );
 };
 
