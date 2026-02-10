@@ -26,7 +26,7 @@ import Admin from "./pages/Admin/Admin.jsx";
 import Test from "./pages/Test/Test.jsx";
 import LoginSuccess from "./pages/Login/LoginSuccess.jsx";
 import { ConfigProvider } from "antd";
-
+import OAuthGoogleCallback from "./pages/Login/OAuthGoogleCallback.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -38,7 +38,10 @@ const router = createBrowserRouter([
             },
             { path: "/Login", element: <Login /> },
             { path: "/Food", element: <Food /> },
-
+            {
+                path: "/auth/google/callback",
+                element: <OAuthGoogleCallback />,
+            },
             { path: "/profile", element: <Profile /> },
             { path: "/Religion", element: <Religion /> },
             { path: "/Guide", element: <Guide /> },
