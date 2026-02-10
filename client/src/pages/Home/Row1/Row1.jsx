@@ -10,7 +10,10 @@ export default function Row1() {
     const [isPlaying, setIsPlaying] = useState(true);
     const navigate = useNavigate();
     const slideshowRef = useRef(null);
-
+    const infinityIcon = new URL(
+        "../../../assets/infinity.png",
+        import.meta.url,
+    ).href;
     useEffect(() => {
         const images = import.meta.glob(
             "../../../assets/Cloudinary_Archive_2026-01-10_01_37_32_Originals/*.{png,jpg,jpeg,webp}",
@@ -42,42 +45,35 @@ export default function Row1() {
                 {/* ---------- LEFT - CONTENT ---------- */}
                 <div className={styles.left}>
                     <h1>
-                        Khám phá vùng đất <strong>An Giang</strong>
+                        <strong>AGiLand</strong> – Bản đồ du lịch số của{" "}
+                        <strong className={styles.VN}>Việt Nam</strong>{" "}
                     </h1>
-                    <p className={styles.lead}>
-                        AGiland là website du lịch, mở ra cánh cửa đến với tỉnh
-                        An Giang hợp nhất.
-                    </p>
+
                     <div className={styles.description}>
                         <p>
-                            Với sự kết hợp của vùng đất bảy núi huyền bí và vùng
-                            biển Tây Nam trù phú, du khách có thể khám phá các
-                            tuyến du lịch tâm linh, sinh thái và ẩm thực đặc
-                            trưng miền Tây.
+                            AGiLand kết hợp Digital Twin và dữ liệu du lịch để
+                            xây dựng các “bản sao số” cho địa phương, giúp du
+                            khách đi đúng chỗ – chính quyền ra quyết định đúng
+                            thời điểm.
                         </p>
                         <p>
-                            Hãy truy cập ngay để lên kế hoạch cho chuyến đi An
-                            Giang đầy mới mẻ và hấp dẫn!
+                            Một nền tảng – nhiều vùng đất – vô hạn hành trình.
                         </p>
                     </div>
 
                     {/* Quick stats */}
                     <div className={styles.stats}>
                         <div className={styles.statItem}>
-                            <span className={styles.statNumber}>7</span>
-                            <span className={styles.statLabel}>
-                                Núi huyền bí
-                            </span>
+                            <span className={styles.statNumber}>20+</span>
+                            <span className={styles.statLabel}>Tỉnh thành</span>
                         </div>
                         <div className={styles.statItem}>
-                            <span className={styles.statNumber}>50+</span>
-                            <span className={styles.statLabel}>Điểm đến</span>
+                            <span className={styles.statNumber}>1</span>
+                            <span className={styles.statLabel}>Nền tảnh</span>
                         </div>
                         <div className={styles.statItem}>
-                            <span className={styles.statNumber}>100+</span>
-                            <span className={styles.statLabel}>
-                                Món ăn đặc sản
-                            </span>
+                            <span className={styles.statNumber}>oo </span>
+                            <span className={styles.statLabel}>Hành trình</span>
                         </div>
                     </div>
                 </div>
@@ -97,7 +93,6 @@ export default function Row1() {
                                         className={styles.mainImage}
                                         alt={`An Giang landscape ${currentImageIndex + 1}`}
                                     />
-
                                 </div>
                             )}
                         </div>
