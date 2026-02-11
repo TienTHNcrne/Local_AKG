@@ -1,0 +1,310 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 70px;
+    background: linear-gradient(135deg, #0c4a6e 0%, #059669 100%);
+    box-shadow: 0 4px 20px rgba(5, 150, 105, 0.15);
+    border-bottom: 1px solid rgba(167, 243, 208, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+/* Logo Section */
+.logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+.logoIcon {
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(1.3) contrast(1.2)
+        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+    border-radius: 4px;
+    padding: 2px;
+    background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    transition: all 0.2s ease;
+}
+
+.logoText {
+    display: flex;
+    flex-direction: column;
+}
+
+.logoMain {
+    font-size: 1.4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.logoSub {
+    font-size: 0.75rem;
+    color: #a7f3d0;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* Navigation Menu */
+.navMenu {
+    display: flex;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(167, 243, 208, 0.1);
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    color: #d1fae5;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #10b981, #a7f3d0);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    &:hover {
+        background: rgba(167, 243, 208, 0.1);
+        color: #ffffff;
+
+        &::before {
+            width: 80%;
+        }
+    }
+
+    &.active {
+        background: rgba(16, 185, 129, 0.2);
+        color: #ffffff;
+
+        &::before {
+            width: 80%;
+        }
+    }
+
+    svg {
+        transition: transform 0.3s ease;
+    }
+
+    &:hover svg {
+        transform: translateY(-2px);
+    }
+}
+
+/* Actions Container */
+.actionsContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Notification Button */
+.notificationBtn {
+    position: relative;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(167, 243, 208, 0.2);
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #d1fae5;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(167, 243, 208, 0.15);
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.2);
+    }
+
+    svg {
+        animation: gentlePulse 4s infinite;
+    }
+}
+
+@keyframes gentlePulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.notificationBadge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: linear-gradient(135deg, #ef4444, #f87171);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #0c4a6e;
+}
+
+/* Profile Dropdown */
+.profileDropdown {
+    position: relative;
+}
+
+.profileInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(167, 243, 208, 0.1);
+
+    &:hover {
+        background: rgba(167, 243, 208, 0.1);
+        transform: translateY(-1px);
+    }
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid #10b981;
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+}
+
+.profileText {
+    display: flex;
+    flex-direction: column;
+}
+
+.profileName {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.profileRole {
+    font-size: 0.75rem;
+    color: #a7f3d0;
+    opacity: 0.8;
+}
+
+.chevron {
+    color: #a7f3d0;
+    transition: transform 0.3s ease;
+}
+
+.profileInfo:hover .chevron {
+    transform: rotate(180deg);
+}
+
+/* Logout Button */
+.logoutBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    }
+
+    svg {
+        transition: transform 0.3s ease;
+    }
+
+    &:hover svg {
+        transform: translateX(2px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .header {
+        padding: 0 1rem;
+    }
+
+    .navMenu {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .logoSub {
+        display: none;
+    }
+
+    .profileRole {
+        display: none;
+    }
+
+    .logoutBtn span {
+        display: none;
+    }
+
+    .logoutBtn {
+        padding: 10px;
+        border-radius: 10px;
+    }
+}

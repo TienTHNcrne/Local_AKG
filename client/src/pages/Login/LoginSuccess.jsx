@@ -18,6 +18,7 @@ export default function LoginSuccess() {
                 localStorage.setItem("token", decoded.token);
                 localStorage.setItem("user", JSON.stringify(decoded.user));
                 localStorage.setItem("userid", decoded.user.userId);
+                localStorage.setItem("role", decoded.user.role);
                 setUserId(decoded.user.userId);
                 console.log(
                     "Login OK:",

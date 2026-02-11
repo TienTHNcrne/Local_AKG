@@ -2,20 +2,20 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./Header.module.scss";
+import styles from "./TravelerHeader.module.scss";
 import { IoHome, IoShareSocial } from "react-icons/io5";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogInOutline } from "react-icons/io5";
 import { AiFillProfile } from "react-icons/ai";
-import { useAuth } from "../../Contexts/Auth/Auth";
+import { useAuth } from "../../../Contexts/Auth/Auth";
 import { FaStar } from "react-icons/fa6";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
-import TourAi from "../../pages/Profile/components/Tours/components/TourAi/TourAi";
+import TourAi from "../../../pages/Profile/components/Tours/components/TourAi/TourAi";
 import { RiGuideFill } from "react-icons/ri";
 import { FaAngleDown } from "react-icons/fa6";
 
-export default function Header() {
-    const Logo = new URL("../../assets/Logo.png", import.meta.url).href;
+export default function TravlerHeader() {
+    const Logo = new URL("../../../assets/Logo.png", import.meta.url).href;
     //---- State and Values ----//
     const { logout } = useAuth();
     const [add, setAdd] = useState(false);

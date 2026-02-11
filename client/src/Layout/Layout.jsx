@@ -1,14 +1,19 @@
 /** @format */
 
-import React from 'react';
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
-import styles from './Layout.module.scss';
-import AI from '../components/AI/AI';
+import React from "react";
+import TravelerHeader from "../components/Header/TravelerHeader/TravelerHeader";
+import BusinessHeader from "../components/Header/BusinessHeader/BusinessHeader";
+import Footer from "../components/Footer/Footer";
+import styles from "./Layout.module.scss";
+import AI from "../components/AI/AI";
 export default function Before_Login({ children }) {
     return (
         <div className={styles.wrapper}>
-            <Header />
+            {localStorage.getItem("role") === "traveler" ? (
+                <TravelerHeader />
+            ) : (
+                <BusinessHeader />
+            )}
             <div className={styles.extra}>
                 <AI />
             </div>
