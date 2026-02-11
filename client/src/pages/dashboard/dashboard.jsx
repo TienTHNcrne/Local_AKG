@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Dashboard.module.scss";
+import styles from "./dashboard.module.scss";
 import MapShow from "./components/mapShow.jsx/mapShow.jsx";
 import {
     FiUsers,
@@ -14,7 +14,7 @@ import {
 } from "react-icons/fi";
 import { AiOutlineRocket } from "react-icons/ai";
 
-export default function Dashboard() {
+export default function dashboard() {
     return (
         <div className={styles.dashboard}>
             {/* Header */}
