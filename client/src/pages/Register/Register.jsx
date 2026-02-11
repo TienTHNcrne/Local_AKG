@@ -198,16 +198,14 @@ export default function Register() {
                     </div>
 
                     <div className={styles.OthersLogin}>
-                        <button type="button" className={styles.GoogleButton}>
+                        <button
+                            type="button"
+                            className={styles.GoogleButton}
+                            onClick={SendRole}
+                        >
                             <img src={iconGoogle} alt="Google Icon" />
-                            <a
-                                href={`${import.meta.env.VITE_BE_URL}/v1/api/auth/google`}
-                            >
-                                Đăng nhập bằng Google với vai trò{" "}
-                                {role === "business"
-                                    ? "Doanh nghiệp"
-                                    : "Du khách"}
-                            </a>{" "}
+                            Đăng nhập bằng Google với vai trò{" "}
+                            {role === "business" ? "Doanh nghiệp" : "Du khách"}
                         </button>
                     </div>
 
