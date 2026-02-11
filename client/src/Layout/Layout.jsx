@@ -9,10 +9,10 @@ import AI from "../components/AI/AI";
 export default function Before_Login({ children }) {
     return (
         <div className={styles.wrapper}>
-            {localStorage.getItem("role") === "traveler" ? (
-                <TravelerHeader />
-            ) : (
+            {localStorage.getItem("role") === "business" ? (
                 <BusinessHeader />
+            ) : (
+                <TravelerHeader />
             )}
             <div className={styles.extra}>
                 <AI />

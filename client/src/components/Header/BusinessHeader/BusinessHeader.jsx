@@ -44,17 +44,13 @@ export default function BusinessHeader() {
                     <Briefcase size={18} />
                     <span>Dịch vụ</span>
                 </Link>
-                <Link to="/business/bookings" className={styles.navItem}>
+                <Link to="/business/managers" className={styles.navItem}>
                     <Calendar size={18} />
-                    <span>Đặt chỗ</span>
+                    <span>Quan lí</span>
                 </Link>
                 <Link to="/business/analytics" className={styles.navItem}>
                     <BarChart3 size={18} />
                     <span>Phân tích</span>
-                </Link>
-                <Link to="/business/map" className={styles.navItem}>
-                    <MapPin size={18} />
-                    <span>Bản đồ số</span>
                 </Link>
             </nav>
 

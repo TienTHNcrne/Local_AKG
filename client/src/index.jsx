@@ -27,6 +27,11 @@ import Test from "./pages/Test/Test.jsx";
 import LoginSuccess from "./pages/Login/LoginSuccess.jsx";
 import { ConfigProvider } from "antd";
 import OAuthGoogleCallback from "./pages/Login/OAuthGoogleCallback.jsx";
+import Dashboard from "./pages/dashboard/dashboard.jsx";
+import Services from "./pages/Services/Services.jsx";
+import Managers from "./pages/Managers/Managers.jsx";
+import Analytics from "./pages/Analytics/Analytics.jsx";
+import MapBusiness from "./pages/Explore/MapBusiness/MapBusiness.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -42,6 +47,12 @@ const router = createBrowserRouter([
                 path: "/auth/google/callback",
                 element: <OAuthGoogleCallback />,
             },
+            { path: "/business/dashboard", element: <Dashboard /> },
+            { path: "/business/services", element: <Services /> },
+            { path: "/business/managers", element: <Managers /> },
+            { path: "/business/analytics", element: <Analytics /> },
+            { path: "/business/map", element: <MapBusiness /> },
+
             { path: "/profile", element: <Profile /> },
             { path: "/Religion", element: <Religion /> },
             { path: "/Guide", element: <Guide /> },
