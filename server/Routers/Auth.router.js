@@ -3,26 +3,41 @@ import passport from "../config/passport.js";
 import {
     CreateAccountCtrl,
     loginLocalCtrl,
-    loginGoogleCtrl,
 } from "../Controllers/Auth.Controller.js";
-
+import { LoginGoogle } from "../Services/Auth.Service.js";
 const route = express.Router();
 
 route.post("/register", CreateAccountCtrl);
 route.post("/login", loginLocalCtrl);
-
-route.get(
-    "/auth/google",
-    passport.authenticate("google", { scope: ["profile", "email"] }),
-);
-
+route.get("/auth/google", (req, res, next) => {
+    passport.authenticate("google", {
+        scope: ["profile", "email"],
+        state: req.query.state, // nhận từ FE
+        session: false,
+    })(req, res, next);
+});
 route.get(
     "/auth/google/callback",
-    passport.authenticate("google", {
-        failureRedirect: "https://agiland.vn.info.vn/login",
-        session: false,
-    }),
-    loginGoogleCtrl,
+    passport.authenticate("google", { session: false }),
+    async (req, res) => {
+        const state = req.query.state
+            ? JSON.parse(decodeURIComponent(req.query.state))
+            : {};
+
+        const result = await LoginGoogle(req.user, state.role);
+
+        const data = {
+            token: result.accessToken,
+            user: result.payload,
+            role: state.role,
+        };
+
+        const encoded = encodeURIComponent(JSON.stringify(data));
+
+        return res.redirect(
+            `https://agiland.vn.info.vn/login/success?data=${encoded}`,
+        );
+    },
 );
 
 export default route;

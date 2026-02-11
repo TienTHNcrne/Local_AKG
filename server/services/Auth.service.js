@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();
-const CreateAccount = async (name, email, password, filter) => {
+const CreateAccount = async (name, email, password, role) => {
     try {
         const existingUser = await Auth.findOne({ email: email });
         if (existingUser) {
@@ -21,7 +21,7 @@ const CreateAccount = async (name, email, password, filter) => {
             name,
             password: hashPass,
             email,
-            filter,
+            role,
         });
 
         return {
@@ -32,7 +32,7 @@ const CreateAccount = async (name, email, password, filter) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                filter: user.filter,
+                role: user.role,
             },
         };
     } catch (error) {
@@ -71,7 +71,7 @@ const LoginAccount = async (email, password) => {
         return { status: 500, message: error.message };
     }
 };
-const LoginGoogle = async (googleProfile) => {
+const LoginGoogle = async (googleProfile, role) => {
     try {
         const email = googleProfile.email || googleProfile.emails?.[0]?.value;
 
@@ -82,9 +82,10 @@ const LoginGoogle = async (googleProfile) => {
             user = await Auth.create({
                 name: googleProfile.name || googleProfile.displayName,
                 email,
+
                 avatar:
                     googleProfile.avatar || googleProfile.photos?.[0]?.value,
-                filter: "google",
+                role: role,
             });
         }
         console.log("USER CREATED:", user);

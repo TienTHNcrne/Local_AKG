@@ -15,7 +15,12 @@ export default function Register() {
         password: "",
         confirmPassword: "",
     });
+    const SendRole = async () => {
+        const data = { role };
+        const encoded = encodeURIComponent(JSON.stringify(data));
 
+        window.location.href = `${import.meta.env.VITE_BE_URL}/v1/api/auth/google?state=${encoded}`;
+    };
     const SumbitForm = async (e) => {
         e.preventDefault();
         axios
@@ -23,7 +28,7 @@ export default function Register() {
                 name: formData.username,
                 email: formData.email,
                 password: formData.password,
-                filter: role,
+                role: role,
             })
             .then((response) => {
                 console.log("Registration response:", response.data);
@@ -198,7 +203,10 @@ export default function Register() {
                             <a
                                 href={`${import.meta.env.VITE_BE_URL}/v1/api/auth/google`}
                             >
-                                Đăng nhập bằng Google
+                                Đăng nhập bằng Google với vai trò{" "}
+                                {role === "business"
+                                    ? "Doanh nghiệp"
+                                    : "Du khách"}
                             </a>{" "}
                         </button>
                     </div>

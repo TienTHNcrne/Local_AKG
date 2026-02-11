@@ -8,8 +8,8 @@ import {
 
 const CreateAccountCtrl = async (req, res) => {
     console.log("Register data:", req.body);
-    const { name, email, password, filter } = req.body;
-    const result = await CreateAccount(name, email, password, filter);
+    const { name, email, password, role } = req.body;
+    const result = await CreateAccount(name, email, password, role);
     console.log("CreateAccount result:", result);
     return res.status(result.status).json(result);
 };
@@ -21,7 +21,6 @@ const loginLocalCtrl = async (req, res) => {
 };
 
 const loginGoogleCtrl = async (req, res) => {
-    console.log("Google profile:", req.user);
     const result = await LoginGoogle(req.user);
     console.log("LoginGoogle result:", result);
     if (result.status !== 200) {

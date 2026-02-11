@@ -17,7 +17,7 @@ const Auth = new mongoose.Schema({
     avatar: {
         type: String,
     },
-    filter: {
+    role: {
         type: String,
         required: true,
     },
