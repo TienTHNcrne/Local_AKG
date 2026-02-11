@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import styles from "./Managers.module.scss";
+import styles from "./tem.module.scss";
 import {
     FiSearch,
     FiFilter,
