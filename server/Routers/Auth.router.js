@@ -4,7 +4,7 @@ import {
     CreateAccountCtrl,
     loginLocalCtrl,
 } from "../Controllers/Auth.Controller.js";
-import { LoginGoogle } from "../Services/Auth.Service.js";
+import { LoginGoogle } from "../services/Auth.service.js";
 const route = express.Router();
 
 route.post("/register", CreateAccountCtrl);
