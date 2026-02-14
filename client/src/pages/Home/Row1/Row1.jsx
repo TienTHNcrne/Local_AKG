@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./Row1.module.scss";
 import { useNavigate } from "react-router-dom";
-import TourAi from "../../Profile/components/Tours/components/TourAi/TourAi";
+import TourAi from "../../Auth/Profile/components/Tours/components/TourAi/TourAi";
 export default function Row1() {
     const [add, setAdd] = useState(false);
 

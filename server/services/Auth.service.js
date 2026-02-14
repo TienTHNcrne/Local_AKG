@@ -73,6 +73,7 @@ const LoginAccount = async (email, password) => {
 };
 const LoginGoogle = async (googleProfile, role) => {
     try {
+        console.log("role:", role.role);
         const email = googleProfile.email || googleProfile.emails?.[0]?.value;
 
         let user = await Auth.findOne({ email });
@@ -85,7 +86,7 @@ const LoginGoogle = async (googleProfile, role) => {
 
                 avatar:
                     googleProfile.avatar || googleProfile.photos?.[0]?.value,
-                role: role,
+                role: role.role,
             });
         }
         console.log("USER CREATED:", user);
@@ -94,6 +95,7 @@ const LoginGoogle = async (googleProfile, role) => {
             name: user.name,
             email: user.email,
             userId: user._id,
+            role: user.role,
         };
 
         const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {

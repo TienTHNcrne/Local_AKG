@@ -7,6 +7,7 @@ import Footer from "../components/Footer/Footer";
 import styles from "./Layout.module.scss";
 import AI from "../components/AI/AI";
 export default function Before_Login({ children }) {
+    console.log("Current role in Layout:", localStorage.getItem("role"));
     return (
         <div className={styles.wrapper}>
             {localStorage.getItem("role") === "business" ? (

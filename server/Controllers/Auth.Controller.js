@@ -21,8 +21,12 @@ const loginLocalCtrl = async (req, res) => {
 };
 
 const loginGoogleCtrl = async (req, res) => {
-    const result = await LoginGoogle(req.user);
-    console.log("LoginGoogle result:", result);
+    const result = await LoginGoogle(
+        req.user,
+        JSON.parse(decodeURIComponent(req.query.state || "{}")),
+    );
+
+    console.log("LoginGoogle result:", result.payload);
     if (result.status !== 200) {
         return res.redirect(
             `https://agiland.vn.info.vn/login/error?msg=${encodeURIComponent(result.message)}`,
@@ -30,7 +34,7 @@ const loginGoogleCtrl = async (req, res) => {
     }
     const data = {
         token: result.accessToken,
-        user: result.payload, // name, email, userId
+        user: result.payload,
     };
 
     const encoded = encodeURIComponent(JSON.stringify(data));

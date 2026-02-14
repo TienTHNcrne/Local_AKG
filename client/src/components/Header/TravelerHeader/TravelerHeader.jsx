@@ -1,64 +1,45 @@
 /** @format */
-
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./TravelerHeader.module.scss";
-import { IoHome, IoShareSocial } from "react-icons/io5";
+import clsx from "clsx";
+import { IoHome, IoShareSocial, IoLogInOutline } from "react-icons/io5";
 import { MdAccountCircle } from "react-icons/md";
-import { IoLogInOutline } from "react-icons/io5";
 import { AiFillProfile } from "react-icons/ai";
-import { useAuth } from "../../../Contexts/Auth/Auth";
-import { FaStar } from "react-icons/fa6";
-import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
-import TourAi from "../../../pages/Profile/components/Tours/components/TourAi/TourAi";
-import { RiGuideFill } from "react-icons/ri";
-import { FaAngleDown } from "react-icons/fa6";
+import { FaStar, FaAngleDown } from "react-icons/fa6";
+import { RiMenu3Line, RiCloseLine, RiGuideFill } from "react-icons/ri";
 
-export default function TravlerHeader() {
+import styles from "./TravelerHeader.module.scss";
+import { useAuth } from "../../../Contexts/Auth/Auth";
+import TourAi from "../../../pages/Auth/Profile/components/Tours/components/TourAi/TourAi";
+
+export default function TravelerHeader() {
     const Logo = new URL("../../../assets/Logo.png", import.meta.url).href;
-    //---- State and Values ----//
-    const { logout } = useAuth();
+    const { logout, userId } = useAuth();
+    const navigate = useNavigate();
+    const accountRef = useRef(null);
+
     const [add, setAdd] = useState(false);
     const [show, setShow] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(null);
-    const navigate = useNavigate();
-    const { userId } = useAuth();
-    const accountRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-    // Close dropdown when clicking outside
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (
-                accountRef.current &&
-                !accountRef.current.contains(event.target)
-            ) {
+        const handleClickOutside = (e) => {
+            if (accountRef.current && !accountRef.current.contains(e.target)) {
                 setShow(false);
             }
         };
-
         document.addEventListener("mousedown", handleClickOutside);
         return () =>
             document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    // Close mobile menu when resizing to desktop
     useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth > 768) {
-                setMenuOpen(false);
-                setOpenDropdown(null);
-            }
-        };
-
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-
-    // --- Functions ---- //
-    const toggleDropdown = (name) => {
-        setOpenDropdown(openDropdown === name ? null : name);
-    };
 
     const handleLinkClick = () => {
         setMenuOpen(false);
@@ -66,183 +47,250 @@ export default function TravlerHeader() {
         setShow(false);
     };
 
-    const ReturnNameMenu = (Name) => {
-        return openDropdown === Name ? styles.show : "";
-    };
-
-    const SetNameMenu = (Name) => {
-        if (openDropdown === Name) setOpenDropdown(null);
-        else toggleDropdown(Name);
-    };
+    const SetNameMenu = (name) =>
+        setOpenDropdown(openDropdown === name ? null : name);
 
     const handleLogout = () => {
+        localStorage.clear();
         logout();
-        setShow(false);
         handleLinkClick();
+        window.location.href = "/";
     };
 
-    // ---- Render ---- //
     return (
         <div className={styles.header}>
             {add && <TourAi setHide={setAdd} />}
 
-            {/* Mobile Menu Icon */}
+            {/* Mobile */}
             <div
-                className={styles.menuIcon}
+                className={isMobile ? styles.menuIcon : styles.menuIconHidden}
                 onClick={() => setMenuOpen(!menuOpen)}
             >
                 {menuOpen ? <RiCloseLine /> : <RiMenu3Line />}
             </div>
 
             {/* Logo */}
-            <Link to="/" className={styles.logo} onClick={handleLinkClick}>
-                <img src={Logo} alt="" />
-            </Link>
+            <div className={styles.logoContainer} onClick={() => navigate("/")}>
+                <img src={Logo} className={styles.logoIcon} alt="" />
+                <div className={styles.logoText}>
+                    <h1 className={styles.logoMain}>AGiLand</h1>
+                    <span className={styles.logoSub}>Traveler Portal</span>
+                </div>
+            </div>
 
-            {/* Navigation */}
-            <nav className={`${styles.nav} ${menuOpen ? styles.active : ""}`}>
-                {/*---- HOME ---- */}
+            {/* NAV */}
+            <nav
+                className={clsx(
+                    styles.navMenu,
+                    menuOpen && isMobile && styles.active,
+                )}
+            >
+                {/* Hồ sơ tỉnh */}
                 <div
-                    className={styles.dropdown}
-                    onMouseEnter={() =>
-                        window.innerWidth > 768 && SetNameMenu("home")
-                    }
-                    onClick={() => SetNameMenu("home")}
+                    className={clsx(
+                        styles.navItem,
+                        openDropdown === "province" && styles.activeNav,
+                    )}
+                    onClick={() => SetNameMenu("province")}
                 >
                     <div className={styles.dropdownToggle}>
                         <IoHome />
-                        <span>Trang chủ</span>
-                        <FaAngleDown className={styles.arrow} />
+                        <span>Hồ sơ tỉnh</span>
+                        <FaAngleDown />
                     </div>
                     <ul
-                        className={`${styles.dropdownMenu} ${ReturnNameMenu("home")}`}
+                        className={styles.dropdownMenu}
+                        style={
+                            openDropdown === "province"
+                                ? { opacity: 1, visibility: "visible" }
+                                : { opacity: 0, visibility: "hidden" }
+                        }
                     >
                         <li>
-                            <Link to="/Location" onClick={handleLinkClick}>
+                            <Link
+                                to="/province/overview"
+                                onClick={handleLinkClick}
+                            >
                                 Tổng quan
                             </Link>
                         </li>
                         <li>
-                            <Link to="/Climate" onClick={handleLinkClick}>
+                            <Link
+                                to="/province/climate"
+                                onClick={handleLinkClick}
+                            >
                                 Khí hậu
                             </Link>
                         </li>
                         <li>
-                            <Link to="/History" onClick={handleLinkClick}>
+                            <Link
+                                to="/province/history"
+                                onClick={handleLinkClick}
+                            >
                                 Lịch sử
                             </Link>
                         </li>
                         <li>
-                            <Link to="/CulSoc" onClick={handleLinkClick}>
-                                Dân tộc - Lễ hội
+                            <Link
+                                to="/province/culture"
+                                onClick={handleLinkClick}
+                            >
+                                Văn hóa
                             </Link>
                         </li>
                         <li>
-                            <Link to="/Religion" onClick={handleLinkClick}>
-                                Tôn giáo - Tín ngưỡng
+                            <Link
+                                to="/province/religion"
+                                onClick={handleLinkClick}
+                            >
+                                Tín ngưỡng
                             </Link>
                         </li>
                     </ul>
                 </div>
 
-                {/*---- EXPLORE ---- */}
+                {/* Khám phá */}
                 <div
-                    className={styles.dropdown}
-                    onMouseEnter={() =>
-                        window.innerWidth > 768 && SetNameMenu("explore")
-                    }
+                    className={clsx(
+                        styles.navItem,
+                        openDropdown === "explore" && styles.activeNav,
+                    )}
                     onClick={() => SetNameMenu("explore")}
                 >
                     <div className={styles.dropdownToggle}>
                         <IoShareSocial />
                         <span>Khám phá</span>
-                        <FaAngleDown className={styles.arrow} />
+                        <FaAngleDown />
                     </div>
                     <ul
-                        className={`${styles.dropdownMenu} ${ReturnNameMenu("explore")}`}
+                        className={styles.dropdownMenu}
+                        style={
+                            openDropdown === "explore"
+                                ? { opacity: 1, visibility: "visible" }
+                                : { opacity: 0, visibility: "hidden" }
+                        }
                     >
                         <li>
-                            <Link to="/Explore/map" onClick={handleLinkClick}>
-                                Bản đồ
+                            <Link to="/explore/map" onClick={handleLinkClick}>
+                                Bản đồ số
                             </Link>
                         </li>
                         <li>
                             <Link
-                                to="/Explore/TinhHoa"
+                                to="/Explore/TinhHoa/place"
                                 onClick={handleLinkClick}
                             >
-                                Tinh hoa An Giang
+                                Điểm đến
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/Explore/TinhHoa/food"
+                                onClick={handleLinkClick}
+                            >
+                                Ẩm thực
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/Explore/TinhHoa/event"
+                                onClick={handleLinkClick}
+                            >
+                                Lễ hội{" "}
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/explore/stay" onClick={handleLinkClick}>
+                                Lưu trú
                             </Link>
                         </li>
                     </ul>
                 </div>
-                <div className={styles.navItem}>
-                    <Link to="/Game" onClick={handleLinkClick}>
-                        Game
-                    </Link>
+
+                {/* AI */}
+                <div
+                    className={clsx(
+                        styles.navItem,
+                        openDropdown === "ai" && styles.activeNav,
+                    )}
+                    onClick={() => SetNameMenu("ai")}
+                >
+                    <div className={styles.dropdownToggle}>
+                        <RiGuideFill />
+                        <span>Lịch trình AI</span>
+                        <FaAngleDown />
+                    </div>
+                    <ul
+                        className={styles.dropdownMenu}
+                        style={
+                            openDropdown === "ai"
+                                ? { opacity: 1, visibility: "visible" }
+                                : { opacity: 0, visibility: "hidden" }
+                        }
+                    >
+                        <li>
+                            <Link to="/ai/suggest" onClick={handleLinkClick}>
+                                Gợi ý
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/ai/budget" onClick={handleLinkClick}>
+                                Theo ngân sách
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/ai/route" onClick={handleLinkClick}>
+                                Lộ trình
+                            </Link>
+                        </li>
+                    </ul>
                 </div>
-                {/*---- ABOUT ---- */}
-                <div className={styles.navItem}>
-                    <Link to="/About" onClick={handleLinkClick}>
-                        Về chúng tôi
-                    </Link>
-                </div>
+
+                <Link
+                    to="/booking"
+                    onClick={handleLinkClick}
+                    className={styles.navItem}
+                >
+                    Đặt chỗ
+                </Link>
+
+                <Link
+                    to="/About"
+                    onClick={handleLinkClick}
+                    className={styles.navItem}
+                >
+                    Về chúng tôi
+                </Link>
             </nav>
 
-            {/* User Actions */}
+            {/* RIGHT */}
             {userId ? (
-                <div className={styles.right}>
-                    <button
-                        className={styles.iconBtn}
-                        onClick={() => setAdd(true)}
-                        title="AI Tour"
-                    >
+                <div className={styles.accountMenu}>
+                    <button onClick={() => setAdd(true)}>
                         <FaStar />
                     </button>
-                    <button
-                        className={styles.iconBtn}
-                        onClick={() => navigate("/guide")}
-                        title="Hướng dẫn viên"
-                    >
-                        <RiGuideFill />
-                    </button>
+
                     <div className={styles.account} ref={accountRef}>
-                        <button
-                            className={styles.accountToggle}
-                            onClick={() => setShow(!show)}
-                            title="Tài khoản"
-                        >
+                        <button onClick={() => setShow(!show)}>
                             <MdAccountCircle />
                         </button>
+
                         {show && (
                             <div className={styles.accountDropdown}>
-                                <Link to="/profile" onClick={handleLinkClick}>
-                                    <div className={styles.dropdownItem}>
-                                        <AiFillProfile />
-                                        <span>Hồ sơ</span>
-                                    </div>
-                                </Link>
-                                <button
-                                    onClick={handleLogout}
-                                    className={styles.dropdownBtn}
-                                >
-                                    <div className={styles.dropdownItem}>
-                                        <IoLogInOutline />
-                                        <span>Đăng xuất</span>
-                                    </div>
+                                <button onClick={() => navigate("/profile")}>
+                                    <AiFillProfile /> Hồ sơ
+                                </button>
+                                <button onClick={handleLogout}>
+                                    <IoLogInOutline /> Đăng xuất
                                 </button>
                             </div>
                         )}
                     </div>
                 </div>
             ) : (
-                <div className={styles.rightB}>
-                    <Link to="/register" onClick={handleLinkClick}>
-                        <button className={styles.signUpBtn}>Đăng ký</button>
-                    </Link>
-                    <Link to="/Login" onClick={handleLinkClick}>
-                        <button className={styles.signInBtn}>Đăng nhập</button>
-                    </Link>
+                <div className={styles.authLinks}>
+                    <Link to="/register">Đăng ký</Link>
+                    <Link to="/Login">Đăng nhập</Link>
                 </div>
             )}
         </div>

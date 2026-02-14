@@ -1,33 +1,53 @@
-import React from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./BusinessHeader.module.scss";
 import {
     Bell,
     LogOut,
     ChevronDown,
-    MapPin,
     BarChart3,
     Calendar,
     Briefcase,
     Home,
 } from "lucide-react";
 
+const LOGO_URL = new URL("../../../assets/Logo.png", import.meta.url).href;
+
+const NAV_ITEMS = [
+    { path: "/business/dashboard", label: "Dashboard", icon: Home },
+    { path: "/business/services", label: "Dịch vụ", icon: Briefcase },
+    { path: "/business/managers", label: "Quản lý", icon: Calendar },
+    { path: "/business/analytics", label: "Phân tích", icon: BarChart3 },
+];
+
+const PROFILE_INFO = {
+    name: "Doanh nghiệp của tôi",
+    role: "Quản lý doanh nghiệp",
+};
+
 export default function BusinessHeader() {
     const navigate = useNavigate();
+    const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        navigate("/login");
+        localStorage.clear();
+        navigate("/");
+        window.location.reload();
     };
-    const Logo = new URL("../../../assets/Logo.png", import.meta.url).href;
+
+    const handleLogoClick = () => navigate("/business");
+    const toggleProfileDropdown = () => setShowProfileDropdown((prev) => !prev);
+
     return (
         <header className={styles.header}>
-            {/* Logo with gradient */}
+            {/* Logo Section */}
             <div
                 className={styles.logoContainer}
-                onClick={() => navigate("/business")}
+                onClick={handleLogoClick}
+                role="button"
+                tabIndex={0}
             >
-                <img src={Logo} className={styles.logoIcon} alt="" />
+                <img src={LOGO_URL} className={styles.logoIcon} alt="Logo" />
                 <div className={styles.logoText}>
                     <h1 className={styles.logoMain}>AGiLand</h1>
                     <span className={styles.logoSub}>Business Portal</span>
@@ -36,49 +56,55 @@ export default function BusinessHeader() {
 
             {/* Navigation Menu */}
             <nav className={styles.navMenu}>
-                <Link to="/business/dashboard" className={styles.navItem}>
-                    <Home size={18} />
-                    <span>Dashboard</span>
-                </Link>
-                <Link to="/business/services" className={styles.navItem}>
-                    <Briefcase size={18} />
-                    <span>Dịch vụ</span>
-                </Link>
-                <Link to="/business/managers" className={styles.navItem}>
-                    <Calendar size={18} />
-                    <span>Quan lí</span>
-                </Link>
-                <Link to="/business/analytics" className={styles.navItem}>
-                    <BarChart3 size={18} />
-                    <span>Phân tích</span>
-                </Link>
+                {NAV_ITEMS.map(({ path, label, icon: Icon }) => (
+                    <Link key={path} to={path} className={styles.navItem}>
+                        <Icon size={18} />
+                        <span>{label}</span>
+                    </Link>
+                ))}
             </nav>
 
-            {/* Right Actions */}
+            {/* Actions Container */}
             <div className={styles.actionsContainer}>
-                {/* Notification Bell with Badge */}
-                <button className={styles.notificationBtn}>
+                {/* Notifications */}
+                <button
+                    className={styles.notificationBtn}
+                    aria-label="Notifications"
+                >
                     <Bell size={20} />
                     <span className={styles.notificationBadge}>3</span>
                 </button>
 
                 {/* Profile Dropdown */}
                 <div className={styles.profileDropdown}>
-                    <div className={styles.profileInfo}>
+                    <button
+                        className={styles.profileInfo}
+                        onClick={toggleProfileDropdown}
+                        aria-label="Profile menu"
+                    >
                         <div className={styles.profileText}>
                             <span className={styles.profileName}>
-                                My Business
+                                {PROFILE_INFO.name}
                             </span>
                             <span className={styles.profileRole}>
-                                Quản lý doanh nghiệp
+                                {PROFILE_INFO.role}
                             </span>
                         </div>
-                        <ChevronDown size={16} className={styles.chevron} />
-                    </div>
+                        <ChevronDown
+                            size={16}
+                            className={`${styles.chevron} ${
+                                showProfileDropdown ? styles.rotated : ""
+                            }`}
+                        />
+                    </button>
                 </div>
 
                 {/* Logout Button */}
-                <button className={styles.logoutBtn} onClick={handleLogout}>
+                <button
+                    className={styles.logoutBtn}
+                    onClick={handleLogout}
+                    aria-label="Logout"
+                >
                     <LogOut size={18} />
                     <span>Đăng xuất</span>
                 </button>
