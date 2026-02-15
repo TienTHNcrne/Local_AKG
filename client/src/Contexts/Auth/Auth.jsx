@@ -1,33 +1,22 @@
 /** @format */
 
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext } from "react";
 const AuthContext = createContext();
-
+import axios from "axios";
 export default function Auth({ children }) {
-    const [userId, setUserId] = useState(() => localStorage.getItem("userid"));
+    const [user, setUser] = useState();
 
-    useEffect(() => {
-        if (userId) {
-            localStorage.setItem("userid", userId);
-        } else {
-            localStorage.removeItem("userid");
-            localStorage.removeItem("name");
-            localStorage.removeItem("email");
-        }
-    }, [userId]);
-
-    const login = (id) => {
-        setUserId(id);
-    };
     const logout = () => {
-        setUserId(null);
+        setUser(null);
+        axios.post("/api/verify/logout", {}, { withCredentials: true });
     };
     return (
-        <AuthContext.Provider value={{ userId, login, logout, setUserId }}>
+        <AuthContext.Provider value={{ user, setUser, logout }}>
             {children}
         </AuthContext.Provider>
     );
 }
+
 export function useAuth() {
     return useContext(AuthContext);
 }

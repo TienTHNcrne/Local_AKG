@@ -23,7 +23,7 @@ import About from "./pages/About/About";
 // Explore Pages
 import Map from "./pages/Traveler/Explore/Map/Map";
 import TinhHoa from "./pages/Traveler/Explore/TinhHoa/TinhHoa";
-import MapBusiness from "./pages/Business/MapBusiness/MapBusiness";
+import MapBusiness from "./pages/Business/MapBusiness/MapBusiness.jsx";
 
 // Auth Pages
 import Login from "./pages/Auth/Login/Login";

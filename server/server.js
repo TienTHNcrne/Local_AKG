@@ -8,6 +8,7 @@ import cors from "cors";
 import session from "express-session";
 import passport from "./config/passport.js";
 import { EventEmitter } from "events";
+import cookieParser from "cookie-parser";
 
 import connection from "./config/database.js";
 import { connectRedis, client as redisClient } from "./config/redis.js";
@@ -28,6 +29,7 @@ import Tours from "./Routers/Tour.router.js";
 import Rate from "./Routers/Rate.router.js";
 import Plan from "./Routers/Plan.router.js";
 import Check from "./Routers/Check.router.js";
+import { auth } from "./Middlewares/Auth.middleware.js";
 
 const app = express();
 const PORT = process.env.PORT || 8081;
@@ -42,6 +44,11 @@ app.use(
 );
 app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ extended: true, limit: "100mb" }));
+app.use(cookieParser());
+
+app.get("/api/verify/login", auth, (req, res) => {
+    res.json(req.user);
+});
 
 // ===== SESSION + PASSPORT (PHẢI ĐẶT TRƯỚC ROUTES) =====
 app.use(

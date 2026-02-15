@@ -6,42 +6,72 @@ import {
     LoginGoogle,
 } from "../services/Auth.service.js";
 
+// REGISTER
 const CreateAccountCtrl = async (req, res) => {
-    console.log("Register data:", req.body);
     const { name, email, password, role } = req.body;
     const result = await CreateAccount(name, email, password, role);
-    console.log("CreateAccount result:", result);
-    return res.status(result.status).json(result);
+
+    if (result.status !== 201 && result.status !== 200) {
+        return res.status(result.status).json({ message: result.message });
+    }
+
+    // Nếu bạn muốn auto-login sau register:
+    if (result.accessToken) {
+        res.cookie("token", result.accessToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            path: "/",
+            maxAge: 7 * 86400000,
+        });
+    }
+
+    return res.json({ success: true });
 };
 
+// LOGIN LOCAL
 const loginLocalCtrl = async (req, res) => {
     const { email, password } = req.body;
     const result = await LoginAccount(email, password);
-    return res.status(result.status).json(result);
+
+    if (result.status !== 200) {
+        return res.status(result.status).json({ message: result.message });
+    }
+
+    res.cookie("token", result.accessToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        path: "/",
+        maxAge: 7 * 86400000,
+    });
+
+    return res.json({ success: true });
 };
 
+// LOGIN GOOGLE
 const loginGoogleCtrl = async (req, res) => {
     const result = await LoginGoogle(
         req.user,
         JSON.parse(decodeURIComponent(req.query.state || "{}")),
     );
 
-    console.log("LoginGoogle result:", result.payload);
     if (result.status !== 200) {
         return res.redirect(
-            `https://agiland.vn.info.vn/login/error?msg=${encodeURIComponent(result.message)}`,
+            `https:/agliand.vn.info.vn/login/error?msg=${encodeURIComponent(result.message)}`,
         );
     }
-    const data = {
-        token: result.accessToken,
-        user: result.payload,
-    };
 
-    const encoded = encodeURIComponent(JSON.stringify(data));
+    // Set cookie thay vì gửi token qua URL
+    res.cookie("token", result.accessToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        path: "/",
+        maxAge: 7 * 86400000,
+    });
 
-    return res.redirect(
-        `https://agiland.vn.info.vn/login/success?data=${encoded}`,
-    );
+    return res.redirect("https:/agliand.vn.info.vn/login/success");
 };
 
 export { CreateAccountCtrl, loginLocalCtrl, loginGoogleCtrl };

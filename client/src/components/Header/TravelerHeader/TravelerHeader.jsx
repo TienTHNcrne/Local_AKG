@@ -14,7 +14,7 @@ import TourAi from "../../../pages/Auth/Profile/components/Tours/components/Tour
 
 export default function TravelerHeader() {
     const Logo = new URL("../../../assets/Logo.png", import.meta.url).href;
-    const { logout, userId } = useAuth();
+    const { logout, user } = useAuth();
     const navigate = useNavigate();
     const accountRef = useRef(null);
 
@@ -264,7 +264,7 @@ export default function TravelerHeader() {
             </nav>
 
             {/* RIGHT */}
-            {userId ? (
+            {user.userId ? (
                 <div className={styles.accountMenu}>
                     <button onClick={() => setAdd(true)}>
                         <FaStar />
