@@ -10,6 +10,7 @@ import {
     Briefcase,
     Home,
 } from "lucide-react";
+import { useAuth } from "../../../Contexts/Auth/Auth";
 
 const LOGO_URL = new URL("../../../assets/Logo.png", import.meta.url).href;
 
@@ -28,7 +29,7 @@ const PROFILE_INFO = {
 export default function BusinessHeader() {
     const navigate = useNavigate();
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-
+    const { logout } = useAuth();
     const handleLogout = () => {
         localStorage.clear();
         navigate("/");
@@ -102,7 +103,7 @@ export default function BusinessHeader() {
                 {/* Logout Button */}
                 <button
                     className={styles.logoutBtn}
-                    onClick={handleLogout}
+                    onClick={logout}
                     aria-label="Logout"
                 >
                     <LogOut size={18} />

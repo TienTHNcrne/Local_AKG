@@ -58,7 +58,7 @@ const loginGoogleCtrl = async (req, res) => {
 
     if (result.status !== 200) {
         return res.redirect(
-            `https:/agliand.vn.info.vn/login/error?msg=${encodeURIComponent(result.message)}`,
+            `https://agiland.vn.info.vn/login/error?msg=${encodeURIComponent(result.message)}`,
         );
     }
 
@@ -71,7 +71,7 @@ const loginGoogleCtrl = async (req, res) => {
         maxAge: 7 * 86400000,
     });
 
-    return res.redirect("https:/agliand.vn.info.vn/login/success");
+    return res.redirect("https://agiland.vn.info.vn/login/success");
 };
 
 export { CreateAccountCtrl, loginLocalCtrl, loginGoogleCtrl };

@@ -50,13 +50,6 @@ export default function TravelerHeader() {
     const SetNameMenu = (name) =>
         setOpenDropdown(openDropdown === name ? null : name);
 
-    const handleLogout = () => {
-        localStorage.clear();
-        logout();
-        handleLinkClick();
-        window.location.href = "/";
-    };
-
     return (
         <div className={styles.header}>
             {add && <TourAi setHide={setAdd} />}
@@ -72,10 +65,12 @@ export default function TravelerHeader() {
             {/* Logo */}
             <div className={styles.logoContainer} onClick={() => navigate("/")}>
                 <img src={Logo} className={styles.logoIcon} alt="" />
-                <div className={styles.logoText}>
-                    <h1 className={styles.logoMain}>AGiLand</h1>
-                    <span className={styles.logoSub}>Traveler Portal</span>
-                </div>
+                {user.userId && (
+                    <div className={styles.logoText}>
+                        <h1 className={styles.logoMain}>AGiLand</h1>
+                        <span className={styles.logoSub}>Traveler Portal</span>
+                    </div>
+                )}
             </div>
 
             {/* NAV */}
@@ -280,7 +275,7 @@ export default function TravelerHeader() {
                                 <button onClick={() => navigate("/profile")}>
                                     <AiFillProfile /> Hồ sơ
                                 </button>
-                                <button onClick={handleLogout}>
+                                <button onClick={logout}>
                                     <IoLogInOutline /> Đăng xuất
                                 </button>
                             </div>

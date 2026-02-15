@@ -8,7 +8,7 @@ import AI from "../components/AI/AI";
 import { useAuth } from "../Contexts/Auth/Auth";
 export default function Before_Login({ children }) {
     const { user } = useAuth();
-    console.log("Current role in Layout:", localStorage.getItem("role"));
+    console.log(user);
     return (
         <div className={styles.wrapper}>
             {user.role === "business" ? <BusinessHeader /> : <TravelerHeader />}
