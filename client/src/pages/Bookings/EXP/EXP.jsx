@@ -3,7 +3,33 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import styles from "./exp.module.scss";
 import clsx from "clsx";
-
+export const MOCK_EXP = [
+    {
+        _id: "1",
+        name: "Nhà hàng khách sạn Hải Đăng – Khu du lịch Mũi Nai",
+        description:
+            "An toàn, chu đáo, ân cần. Công ty TNHH thương mại dịch vụ du lịch tàu thuyền Thuận Mẫn.",
+        address: "Số 7 đường chữ T, Khu phố 3, Phường Hà Tiên, Tỉnh An Giang",
+        category: "adventure",
+        price: 0,
+        images: [],
+        services: [
+            "Phao chuối 100k/n",
+            "Phao bay 150k/n",
+            "Phao sopha 150k/n",
+            "Phao vịt 150k/n",
+            "Dù bay 1tr3/cặp",
+            "Flycam 300–400k/lượt quay",
+        ],
+        contact: {
+            name: "Thanh Nguyệt",
+            phone: "0896733383",
+            avatar: null,
+            qr: null,
+            zalo: "https://zalo.me/0896733383",
+        },
+    },
+];
 /* ── Image lightbox ── */
 function Lightbox({ images, startIndex, onClose }) {
     const [idx, setIdx] = useState(startIndex);

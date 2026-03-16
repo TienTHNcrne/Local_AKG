@@ -132,7 +132,7 @@ export default function InforProvide() {
 
             setLoading(true);
             setError(null);
-
+            // okekeekekek
             try {
                 const res = await fetch(
                     "https://api.anthropic.com/v1/messages",
