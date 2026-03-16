@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import styles from "./Stays.module.scss";
 import { InputNumber, Slider, Space, Rate, Input, Calendar } from "antd";
 import { data } from "../Data/data";
-import ToolBar from "./components/toolbar/toolbar";
+import ToolBar from "./components/ToolBar/ToolBar.jsx";
 
 const generateFakeStays = (count = 12) => {
     const names = [
