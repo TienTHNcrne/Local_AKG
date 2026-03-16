@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./toolbar.module.scss";
+import styles from "./Toolbar.module.scss";
 import { InputNumber, Slider, Input, DatePicker } from "antd";
 import {
     SearchOutlined,
