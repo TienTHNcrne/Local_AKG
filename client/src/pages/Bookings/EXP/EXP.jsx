@@ -8,24 +8,72 @@ import clsx from "clsx";
 export const MOCK_EXP = [
     {
         _id: "1",
-        name: "Nhà hàng khách sạn Hải Đăng – Khu du lịch Mũi Nai",
+        name: "Công ty TNHH thương mại dịch vụ du lịch tàu thuyền Thuận Mẫn phục",
         description:
-            "An toàn, chu đáo, ân cần. Công ty TNHH thương mại dịch vụ du lịch tàu thuyền Thuận Mẫn.",
-        address: "Số 7 đường chữ T, Khu phố 3, Phường Hà Tiên, Tỉnh An Giang",
+            "An toàn, chu đáo, ân cần, phục vụ tận tình với nhiều loại hình trải nghiệm biển độc đáo.",
+        address: "Số 7 đường chữ T, Khu phố 3, Phường Hà Tiên, Tỉnh Kiên Giang",
         category: "adventure",
         price: 0,
         rating: 4.5,
         reviewCount: 38,
         hours: { open: "06:00", close: "18:00", note: "Hàng ngày" },
-        mapUrl: "https://maps.google.com/?q=Mũi+Nai+Hà+Tiên+Kiên+Giang",
-        images: [],
+        mapUrl: "https://maps.google.com/?q=10.3814806,104.4428275",
+        images: [
+            "/imageservices/1.jpg",
+            "/imageservices/2.jpg",
+            "/imageservices/3.jpg",
+            "/imageservices/4.jpg",
+            "/imageservices/5.jpg",
+        ],
         services: [
-            "Phao chuối 100k/n",
-            "Phao bay 150k/n",
-            "Phao sopha 150k/n",
-            "Phao vịt 150k/n",
-            "Dù bay 1tr3/cặp",
+            "Phao chuối 100k/người",
+            "Phao bay 150k/người",
+            "Phao sopha 150k/người",
+            "Phao vịt 150k/người",
+            "Dù bay 1.3tr/cặp",
             "Flycam 300–400k/lượt quay",
+            "Mô tô nước 500k/15 phút",
+            "Chèo thuyền kayak 100k/giờ",
+            "Lặn ngắm san hô 250k/người",
+        ],
+        contact: {
+            name: "Thanh Nguyệt",
+            phone: "0896733383",
+            avatar: null,
+            qr: null,
+            zalo: "https://zalo.me/0896733383",
+        },
+    },
+    {
+        _id: "1",
+        name: "Nhà hàng khách sạn Hải Đăng – Khu du lịch Mũi Nai",
+        description:
+            "An toàn, chu đáo, ân cần.  tận tình với nhiều loại hình trải nghiệm biển độc đáo.",
+        address: "Số 7 đường chữ T, Khu phố 3, Phường Hà Tiên, Tỉnh Kiên Giang",
+        category: "adventure",
+        price: 0,
+        rating: 4.5,
+        reviewCount: 38,
+        hours: { open: "06:00", close: "18:00", note: "Hàng ngày" },
+        mapUrl: "https://maps.google.com/?q=10.3814806,104.4428275",
+        images: [
+            "/imageservices/2.jpg",
+
+            "/imageservices/1.jpg",
+            "/imageservices/3.jpg",
+            "/imageservices/4.jpg",
+            "/imageservices/5.jpg",
+        ],
+        services: [
+            "Phao chuối 100k/người",
+            "Phao bay 150k/người",
+            "Phao sopha 150k/người",
+            "Phao vịt 150k/người",
+            "Dù bay 1.3tr/cặp",
+            "Flycam 300–400k/lượt quay",
+            "Mô tô nước 500k/15 phút",
+            "Chèo thuyền kayak 100k/giờ",
+            "Lặn ngắm san hô 250k/người",
         ],
         contact: {
             name: "Thanh Nguyệt",
@@ -37,7 +85,7 @@ export const MOCK_EXP = [
     },
 ];
 
-// ── Helpers ───────────────────────────────────────────────────
+// ── Star Rating ───────────────────────────────────────────────
 function StarRating({ rating = 0, count = 0 }) {
     const full = Math.floor(rating);
     const half = rating - full >= 0.5;
@@ -57,14 +105,13 @@ function StarRating({ rating = 0, count = 0 }) {
     );
 }
 
+// ── Hours ─────────────────────────────────────────────────────
 function HoursRow({ hours }) {
     if (!hours) return null;
     const now = new Date();
     const hhmm = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
-    const open = hours.open ?? "00:00";
-    const close = hours.close ?? "23:59";
-    const isOpen = hhmm >= open && hhmm < close;
-
+    const isOpen =
+        hhmm >= (hours.open ?? "00:00") && hhmm < (hours.close ?? "23:59");
     return (
         <div className={styles.hoursRow}>
             <span
@@ -73,10 +120,10 @@ function HoursRow({ hours }) {
                     isOpen ? styles.hoursOpen : styles.hoursClosed,
                 )}
             >
-                {isOpen ? "● Đang mở" : "● Đã đóng"}
+                {isOpen ? "Đang mở" : "Đã đóng"}
             </span>
             <span className={styles.hoursTime}>
-                {open} – {close}
+                {hours.open} – {hours.close}
             </span>
             {hours.note && (
                 <span className={styles.hoursNote}>{hours.note}</span>
@@ -85,6 +132,7 @@ function HoursRow({ hours }) {
     );
 }
 
+// ── Address ───────────────────────────────────────────────────
 function AddressRow({ address, mapUrl }) {
     if (!address) return null;
     return (
@@ -97,7 +145,6 @@ function AddressRow({ address, mapUrl }) {
                     target="_blank"
                     rel="noreferrer"
                     className={styles.mapLink}
-                    title="Xem trên bản đồ"
                 >
                     🗺️ Bản đồ
                 </a>
@@ -167,7 +214,7 @@ function Lightbox({ images, startIndex, onClose }) {
     );
 }
 
-// ── Image gallery ─────────────────────────────────────────────
+// ── Image Gallery ─────────────────────────────────────────────
 function ImageGallery({ images = [] }) {
     const [lightbox, setLightbox] = useState(null);
     if (!images.length)
@@ -218,21 +265,45 @@ function ImageGallery({ images = [] }) {
     );
 }
 
-// ── Service tags ──────────────────────────────────────────────
+// ── Service Tags với chế độ thu gọn ──────────────────────────────
 function ServiceTags({ services = [] }) {
+    const [expanded, setExpanded] = useState(false);
+
     if (!services.length) return null;
+
+    const MAX_VISIBLE = 3; // Chỉ hiển thị 3 service đầu tiên khi thu gọn
+    const visibleServices = expanded
+        ? services
+        : services.slice(0, MAX_VISIBLE);
+    const hasMore = services.length > MAX_VISIBLE;
+
     return (
         <div className={styles.services}>
-            {services.map((s, i) => (
-                <span key={i} className={styles.serviceTag}>
-                    {s}
-                </span>
-            ))}
+            <div className={styles.servicesGrid}>
+                {visibleServices.map((s, i) => (
+                    <span key={i} className={styles.serviceTag}>
+                        {s}
+                    </span>
+                ))}
+            </div>
+
+            {hasMore && (
+                <button
+                    className={styles.servicesToggle}
+                    onClick={() => setExpanded(!expanded)}
+                >
+                    {expanded ? (
+                        <>Thu gọn ↑</>
+                    ) : (
+                        <>+{services.length - MAX_VISIBLE} dịch vụ khác ↓</>
+                    )}
+                </button>
+            )}
         </div>
     );
 }
 
-// ── Contact card ──────────────────────────────────────────────
+// ── Contact Card ──────────────────────────────────────────────
 function ContactCard({ contact }) {
     if (!contact) return null;
     return (
@@ -288,10 +359,9 @@ function ContactCard({ contact }) {
     );
 }
 
-// ── Main card ─────────────────────────────────────────────────
+// ── Exp Card ──────────────────────────────────────────────────
 function ExpCard({ item }) {
     const [expanded, setExpanded] = useState(false);
-
     return (
         <article className={styles.card}>
             <ImageGallery
@@ -305,18 +375,8 @@ function ExpCard({ item }) {
             <div className={styles.cardBody}>
                 <h3 className={styles.cardTitle}>{item.name}</h3>
 
-                {/* Rating */}
-                {item.rating != null && (
-                    <StarRating rating={item.rating} count={item.reviewCount} />
-                )}
-
-                {/* Address + map */}
-                <AddressRow address={item.address} mapUrl={item.mapUrl} />
-
-                {/* Hours */}
                 <HoursRow hours={item.hours} />
 
-                {/* Description */}
                 {item.description && (
                     <p
                         className={clsx(styles.desc, {
@@ -335,21 +395,21 @@ function ExpCard({ item }) {
                     </button>
                 )}
 
-                {/* Services */}
                 <ServiceTags services={item.services ?? []} />
 
-                {/* Price */}
                 {item.price != null && (
                     <div className={styles.priceRow}>
-                        <span className={styles.price}>
-                            {item.price === 0
-                                ? "Miễn phí"
-                                : `${item.price.toLocaleString("vi-VN")} đ`}
-                        </span>
-                        {item.unit && (
-                            <span className={styles.priceUnit}>
-                                / {item.unit}
-                            </span>
+                        {item.price > 0 ? (
+                            <>
+                                {item.price.toLocaleString()}đ
+                                {item.unit && (
+                                    <span className={styles.priceUnit}>
+                                        / {item.unit}
+                                    </span>
+                                )}
+                            </>
+                        ) : (
+                            <span className={styles.priceFree}>Miễn phí</span>
                         )}
                     </div>
                 )}
@@ -378,7 +438,7 @@ export default function Exp() {
                 );
                 setData(res.data);
             } catch {
-                setData(MOCK_EXP); // fallback mock
+                setData(MOCK_EXP);
             } finally {
                 setLoading(false);
             }
@@ -386,32 +446,38 @@ export default function Exp() {
         load();
     }, []);
 
-    const normalize = (str = "") =>
-        str
+    const normalize = (s = "") =>
+        s
             .toLowerCase()
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "");
 
     const filtered = data.filter((item) => {
         const key = normalize(keyword);
-        const matchKeyword =
+        const match =
             normalize(item.name).includes(key) ||
             normalize(item.description ?? "").includes(key) ||
             normalize(item.address ?? "").includes(key);
         const matchType =
             type === "all" || normalize(item.category) === normalize(type);
-        return matchKeyword && matchType;
+        return match && matchType;
     });
 
     return (
         <div className={styles.page}>
+            {/* Hero */}
             <div className={styles.hero}>
-                <h1 className={styles.heroTitle}>Trải nghiệm</h1>
-                <p className={styles.heroSub}>
-                    Khám phá các hoạt động thú vị tại An Giang
-                </p>
+                <div className={styles.heroBubble} />
+                <div className={styles.heroBubble} />
+                <div className={styles.heroBubble} />
+                <div className={styles.heroBubble} />
+
+                <div className={styles.heroContent}>
+                    <h1 className={styles.heroTitle}>Trải nghiệm</h1>
+                </div>
             </div>
 
+            {/* Toolbar */}
             <div className={styles.toolbar}>
                 <div className={styles.searchWrap}>
                     <span className={styles.searchIcon}>🔍</span>
@@ -452,6 +518,7 @@ export default function Exp() {
                 </div>
             </div>
 
+            {/* Content */}
             {loading ? (
                 <div className={styles.skeletonGrid}>
                     {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -460,11 +527,11 @@ export default function Exp() {
                             <div className={styles.skeletonBody}>
                                 <div
                                     className={styles.skeletonLine}
-                                    style={{ width: "70%" }}
+                                    style={{ width: "65%" }}
                                 />
                                 <div
                                     className={styles.skeletonLine}
-                                    style={{ width: "90%" }}
+                                    style={{ width: "85%" }}
                                 />
                                 <div
                                     className={styles.skeletonLine}
