@@ -1,8 +1,10 @@
 /** @format */
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./exp.module.scss";
 import clsx from "clsx";
+
+// ── Mock data ─────────────────────────────────────────────────
 export const MOCK_EXP = [
     {
         _id: "1",
@@ -12,6 +14,10 @@ export const MOCK_EXP = [
         address: "Số 7 đường chữ T, Khu phố 3, Phường Hà Tiên, Tỉnh An Giang",
         category: "adventure",
         price: 0,
+        rating: 4.5,
+        reviewCount: 38,
+        hours: { open: "06:00", close: "18:00", note: "Hàng ngày" },
+        mapUrl: "https://maps.google.com/?q=Mũi+Nai+Hà+Tiên+Kiên+Giang",
         images: [],
         services: [
             "Phao chuối 100k/n",
@@ -30,19 +36,88 @@ export const MOCK_EXP = [
         },
     },
 ];
-/* ── Image lightbox ── */
+
+// ── Helpers ───────────────────────────────────────────────────
+function StarRating({ rating = 0, count = 0 }) {
+    const full = Math.floor(rating);
+    const half = rating - full >= 0.5;
+    const empty = 5 - full - (half ? 1 : 0);
+    return (
+        <div className={styles.rating}>
+            <span className={styles.ratingStars}>
+                {"★".repeat(full)}
+                {half ? "½" : ""}
+                {"☆".repeat(empty)}
+            </span>
+            <span className={styles.ratingNum}>{rating.toFixed(1)}</span>
+            {count > 0 && (
+                <span className={styles.ratingCount}>({count} đánh giá)</span>
+            )}
+        </div>
+    );
+}
+
+function HoursRow({ hours }) {
+    if (!hours) return null;
+    const now = new Date();
+    const hhmm = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
+    const open = hours.open ?? "00:00";
+    const close = hours.close ?? "23:59";
+    const isOpen = hhmm >= open && hhmm < close;
+
+    return (
+        <div className={styles.hoursRow}>
+            <span
+                className={clsx(
+                    styles.hoursStatus,
+                    isOpen ? styles.hoursOpen : styles.hoursClosed,
+                )}
+            >
+                {isOpen ? "● Đang mở" : "● Đã đóng"}
+            </span>
+            <span className={styles.hoursTime}>
+                {open} – {close}
+            </span>
+            {hours.note && (
+                <span className={styles.hoursNote}>{hours.note}</span>
+            )}
+        </div>
+    );
+}
+
+function AddressRow({ address, mapUrl }) {
+    if (!address) return null;
+    return (
+        <div className={styles.addressRow}>
+            <span className={styles.addressIcon}>📍</span>
+            <span className={styles.addressText}>{address}</span>
+            {mapUrl && (
+                <a
+                    href={mapUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={styles.mapLink}
+                    title="Xem trên bản đồ"
+                >
+                    🗺️ Bản đồ
+                </a>
+            )}
+        </div>
+    );
+}
+
+// ── Lightbox ──────────────────────────────────────────────────
 function Lightbox({ images, startIndex, onClose }) {
     const [idx, setIdx] = useState(startIndex);
-
     useEffect(() => {
-        const handler = (e) => {
+        const h = (e) => {
             if (e.key === "Escape") onClose();
             if (e.key === "ArrowRight") setIdx((i) => (i + 1) % images.length);
             if (e.key === "ArrowLeft")
                 setIdx((i) => (i - 1 + images.length) % images.length);
         };
-        window.addEventListener("keydown", handler);
-        return () => window.removeEventListener("keydown", handler);
+        window.addEventListener("keydown", h);
+        return () => window.removeEventListener("keydown", h);
     }, [images.length, onClose]);
 
     return (
@@ -92,7 +167,7 @@ function Lightbox({ images, startIndex, onClose }) {
     );
 }
 
-/* ── Image gallery inside card ── */
+// ── Image gallery ─────────────────────────────────────────────
 function ImageGallery({ images = [] }) {
     const [lightbox, setLightbox] = useState(null);
     if (!images.length)
@@ -101,23 +176,18 @@ function ImageGallery({ images = [] }) {
                 <span>🏖️</span>
             </div>
         );
-
     const main = images[0];
     const thumbs = images.slice(1, 4);
     const remaining = images.length - 4;
-
     return (
         <>
             <div className={styles.gallery}>
-                {/* Main image */}
                 <div
                     className={styles.galleryMain}
                     onClick={() => setLightbox(0)}
                 >
                     <img src={main} alt="" loading="lazy" />
                 </div>
-
-                {/* Thumbs */}
                 {thumbs.length > 0 && (
                     <div className={styles.galleryThumbs}>
                         {thumbs.map((img, i) => (
@@ -127,7 +197,6 @@ function ImageGallery({ images = [] }) {
                                 onClick={() => setLightbox(i + 1)}
                             >
                                 <img src={img} alt="" loading="lazy" />
-                                {/* +N overlay on last thumb */}
                                 {i === thumbs.length - 1 && remaining > 0 && (
                                     <div className={styles.galleryMore}>
                                         +{remaining + 1}
@@ -138,7 +207,6 @@ function ImageGallery({ images = [] }) {
                     </div>
                 )}
             </div>
-
             {lightbox !== null && (
                 <Lightbox
                     images={images}
@@ -150,7 +218,7 @@ function ImageGallery({ images = [] }) {
     );
 }
 
-/* ── Service tags (từ ảnh: phao chuối, phao bay...) ── */
+// ── Service tags ──────────────────────────────────────────────
 function ServiceTags({ services = [] }) {
     if (!services.length) return null;
     return (
@@ -164,7 +232,7 @@ function ServiceTags({ services = [] }) {
     );
 }
 
-/* ── Contact card ── */
+// ── Contact card ──────────────────────────────────────────────
 function ContactCard({ contact }) {
     if (!contact) return null;
     return (
@@ -220,18 +288,16 @@ function ContactCard({ contact }) {
     );
 }
 
-/* ── Main card ── */
+// ── Main card ─────────────────────────────────────────────────
 function ExpCard({ item }) {
     const [expanded, setExpanded] = useState(false);
 
     return (
         <article className={styles.card}>
-            {/* Image gallery */}
             <ImageGallery
                 images={item.images ?? (item.image ? [item.image] : [])}
             />
 
-            {/* Category badge */}
             {item.category && (
                 <span className={styles.categoryBadge}>{item.category}</span>
             )}
@@ -239,6 +305,18 @@ function ExpCard({ item }) {
             <div className={styles.cardBody}>
                 <h3 className={styles.cardTitle}>{item.name}</h3>
 
+                {/* Rating */}
+                {item.rating != null && (
+                    <StarRating rating={item.rating} count={item.reviewCount} />
+                )}
+
+                {/* Address + map */}
+                <AddressRow address={item.address} mapUrl={item.mapUrl} />
+
+                {/* Hours */}
+                <HoursRow hours={item.hours} />
+
+                {/* Description */}
                 {item.description && (
                     <p
                         className={clsx(styles.desc, {
@@ -257,7 +335,7 @@ function ExpCard({ item }) {
                     </button>
                 )}
 
-                {/* Service tags */}
+                {/* Services */}
                 <ServiceTags services={item.services ?? []} />
 
                 {/* Price */}
@@ -276,7 +354,6 @@ function ExpCard({ item }) {
                     </div>
                 )}
 
-                {/* Contact */}
                 <ContactCard contact={item.contact} />
 
                 <button className={styles.bookBtn}>Đặt trải nghiệm</button>
@@ -285,7 +362,7 @@ function ExpCard({ item }) {
     );
 }
 
-/* ── Page ── */
+// ── Page ──────────────────────────────────────────────────────
 export default function Exp() {
     const [data, setData] = useState([]);
     const [keyword, setKeyword] = useState("");
@@ -293,20 +370,20 @@ export default function Exp() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const fetch = async () => {
+        const load = async () => {
             try {
                 setLoading(true);
                 const res = await axios.get(
                     `${import.meta.env.VITE_BE_URL}/v1/api/play/getAll`,
                 );
                 setData(res.data);
-            } catch (err) {
-                console.error("Fetch play error", err);
+            } catch {
+                setData(MOCK_EXP); // fallback mock
             } finally {
                 setLoading(false);
             }
         };
-        fetch();
+        load();
     }, []);
 
     const normalize = (str = "") =>
@@ -319,7 +396,8 @@ export default function Exp() {
         const key = normalize(keyword);
         const matchKeyword =
             normalize(item.name).includes(key) ||
-            normalize(item.description).includes(key);
+            normalize(item.description ?? "").includes(key) ||
+            normalize(item.address ?? "").includes(key);
         const matchType =
             type === "all" || normalize(item.category) === normalize(type);
         return matchKeyword && matchType;
@@ -327,7 +405,6 @@ export default function Exp() {
 
     return (
         <div className={styles.page}>
-            {/* Header */}
             <div className={styles.hero}>
                 <h1 className={styles.heroTitle}>Trải nghiệm</h1>
                 <p className={styles.heroSub}>
@@ -335,13 +412,12 @@ export default function Exp() {
                 </p>
             </div>
 
-            {/* Toolbar */}
             <div className={styles.toolbar}>
                 <div className={styles.searchWrap}>
                     <span className={styles.searchIcon}>🔍</span>
                     <input
                         className={styles.searchInput}
-                        placeholder="Tìm tour, hoạt động..."
+                        placeholder="Tìm tour, hoạt động, địa chỉ..."
                         value={keyword}
                         onChange={(e) => setKeyword(e.target.value)}
                     />
@@ -376,7 +452,6 @@ export default function Exp() {
                 </div>
             </div>
 
-            {/* Content */}
             {loading ? (
                 <div className={styles.skeletonGrid}>
                     {[1, 2, 3, 4, 5, 6].map((i) => (
