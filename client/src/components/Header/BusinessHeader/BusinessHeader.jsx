@@ -30,11 +30,6 @@ export default function BusinessHeader() {
     const navigate = useNavigate();
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
     const { logout } = useAuth();
-    const handleLogout = () => {
-        localStorage.clear();
-        navigate("/");
-        window.location.reload();
-    };
 
     const handleLogoClick = () => navigate("/business");
     const toggleProfileDropdown = () => setShowProfileDropdown((prev) => !prev);

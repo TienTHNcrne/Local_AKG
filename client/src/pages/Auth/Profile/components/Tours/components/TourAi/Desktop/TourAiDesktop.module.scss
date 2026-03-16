@@ -1,240 +1,410 @@
 /** @format */
 
-// Variables - Green Theme
-$mobile-breakpoint: 768px;
-$primary-color: #10b981;
-$primary-dark: #059669;
-$primary-light: #d1fae5;
-$primary-lighter: #ecfdf5;
-$text-color: #1f2937;
-$light-gray: #f9fafb;
-$border-color: #e5e7eb;
-$success-color: #059669;
-$warning-color: #f59e0b;
-$shadow-light: 0 2px 10px rgba(16, 185, 129, 0.1);
-$shadow-medium: 0 8px 25px rgba(16, 185, 129, 0.15);
-$shadow-heavy: 0 15px 40px rgba(16, 185, 129, 0.2);
+// ── Tokens ───────────────────────────────────────────────────
+$green-400: #4ade80;
+$green-500: #22c55e;
+$green-600: #16a34a;
+$green-700: #15803d;
+$teal-400: #2dd4bf;
+$teal-500: #14b8a6;
 
-// Mixins
-@mixin mobile {
-    @media (max-width: #{$mobile-breakpoint}) {
-        @content;
-    }
+$surface: #ffffff;
+$surface-2: #f8fafc;
+$surface-3: #f1f5f9;
+$ink-200: #e2e8f0;
+$ink-300: #cbd5e1;
+$ink-400: #94a3b8;
+$ink-600: #475569;
+$ink-900: #0f172a;
+
+$r-xl: 20px;
+$r-lg: 14px;
+$r-md: 10px;
+$r-sm: 6px;
+
+$ease: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+$sidebar-w: 380px;
+$tabbar-h: 48px;
+
+@mixin card-shadow {
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.04),
+        0 4px 14px rgba(0, 0, 0, 0.06),
+        0 10px 28px rgba(0, 0, 0, 0.06);
 }
 
-.container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    z-index: 1002;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    padding: 10px;
-    box-sizing: border-box;
-
-    @include mobile {
-        align-items: flex-start;
-        padding: 0;
-    }
-}
-
-.box {
-    display: flex;
-    width: 85%;
-    height: 83%;
-    background-color: white;
-    border-radius: 20px;
-    padding: 1rem;
-    overflow: hidden;
-    gap: 1rem;
-    position: relative;
-}
-.close {
-    position: absolute;
-    top: 30px;
-    right: 50px;
-    background: white;
-    border: none;
-    font-size: 28px;
-    font-weight: bold;
-    color: $primary-dark;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    box-shadow: $shadow-light;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s;
-}
-
-// ======== SIDEBAR (COLUMN 1) =========
-.c1 {
-    width: 25%;
-    display: flex;
-    transform: translateX(0);
-    transition: all 0.3s ease;
-    z-index: 2;
-
-    &.show {
-        transform: translateX(-100%);
-        width: 0;
-        .col1 {
-            opacity: 0;
-        }
-    }
-}
-
-.col1 {
-    width: 100%;
-    height: 95%;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1rem;
-    border-radius: 16px;
-    background: white;
-    box-shadow: $shadow-medium;
-    overflow: auto;
-}
-
-.closePlace {
-    position: absolute;
-    right: -40px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 50px;
-    margin-right: 20px;
-    background-color: #059669;
-    color: white;
-    font-weight: bolder;
-    font-size: 1rem;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-// ======== MAIN CONTENT AREA =========
-.MiniBox {
-    margin-left: 20px;
-    flex: 1;
-    display: flex;
-    gap: 1rem;
-    transition: all 0.3s ease;
-    height: 100%;
-    position: relative;
-    display: flex;
-    &.show1 {
-        margin-left: 10px;
-        width: 100%;
-        .row2 {
-            width: 100%;
-        }
-    }
-}
-.icons {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-// ======== MAP SECTION =========
-.map {
-    flex: 0 0 40%;
-    height: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-
-    :global(.leaflet-container) {
-        height: 100%;
-        width: 100%;
-        border-radius: 12px;
-    }
-}
-
-// ======== SUGGEST TOUR SECTION =========
-.row2 {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 90%;
-    gap: 20px;
-}
-
-.ro1 {
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.125);
-    overflow: auto;
-}
-
-.ro2 {
-    display: flex;
-    flex-direction: column;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    padding: 1rem 2rem;
-    overflow: auto;
-    height: 55%;
-    &::-webkit-scrollbar {
-        width: 6px;
-        height: 10px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: #f1f5f9;
-        border-radius: 3px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 3px;
-
-        &:hover {
-            background: #94a3b8;
-        }
-    }
-}
-.loadingOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    border-radius: 15px;
-}
-
-.spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid #ccc;
-    border-top: 5px solid #3b82f6;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
 @keyframes spin {
-    from {
-        transform: rotate(0);
-    }
     to {
         transform: rotate(360deg);
     }
+}
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// ── Root container ───────────────────────────────────────────
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    background: $surface-2;
+    font-family: "DM Sans", "Noto Sans", system-ui, sans-serif;
+}
+
+// ── Tab bar ──────────────────────────────────────────────────
+.tabBar {
+    flex-shrink: 0;
+    height: $tabbar-h;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 0 1.25rem;
+    background: $surface;
+    border-bottom: 1.5px solid $ink-200;
+}
+
+.tabBtn {
+    position: relative;
+    padding: 0 1.25rem;
+    height: 38px;
+    border: none;
+    background: transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $ink-400;
+    cursor: pointer;
+    border-radius: $r-sm $r-sm 0 0;
+    transition:
+        color 0.2s $ease,
+        background 0.2s $ease;
+    white-space: nowrap;
+
+    &:hover {
+        color: $ink-600;
+        background: $surface-3;
+    }
+
+    &.tabActive {
+        color: $green-600;
+        font-weight: 700;
+        background: $surface-2;
+    }
+}
+
+// Underline indicator
+.tabIndicator {
+    position: absolute;
+    bottom: -1.5px;
+    left: 0;
+    right: 0;
+    height: 2.5px;
+    background: $green-500;
+    border-radius: 2px 2px 0 0;
+    animation: fadeUp 0.2s $ease both;
+}
+
+// ── Page body ────────────────────────────────────────────────
+.page {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    overflow: hidden;
+}
+
+// ── Sidebar ──────────────────────────────────────────────────
+.sidebar {
+    position: relative;
+    flex-shrink: 0;
+    width: $sidebar-w;
+    height: 100%;
+    display: flex;
+    transition:
+        width 0.32s $ease,
+        opacity 0.28s $ease;
+    overflow: visible;
+    z-index: 10;
+
+    &.sidebarClosed {
+        width: 0;
+
+        .sidebarScroll {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-12px);
+        }
+    }
+}
+
+.sidebarScroll {
+    width: $sidebar-w;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1rem;
+    background: $surface;
+    border-right: 1px solid $ink-200;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition:
+        opacity 0.28s $ease,
+        transform 0.32s $ease;
+
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $green-400;
+        border-radius: 2px;
+    }
+}
+
+.sidebarLabel {
+    margin: 0 0 0.25rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $ink-400;
+}
+
+.sidebarTab {
+    position: absolute;
+    top: 50%;
+    right: -16px;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 56px;
+    background: $green-600;
+    border: none;
+    border-radius: 0 $r-sm $r-sm 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 0 10px rgba($green-600, 0.3);
+    transition:
+        background 0.2s,
+        transform 0.2s $ease-spring;
+    padding: 0;
+
+    &:hover {
+        background: $green-700;
+        transform: translateY(-50%) scaleX(1.25);
+    }
+}
+
+.tabArrow {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    display: block;
+    transition: transform 0.25s $ease;
+
+    &.tabArrowFlipped {
+        transform: rotate(180deg);
+    }
+}
+
+// ── Content ──────────────────────────────────────────────────
+.content {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 38% 1fr;
+    gap: 12px;
+    padding: 12px;
+    overflow: hidden;
+    animation: fadeUp 0.25s $ease both;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 260px 1fr;
+        overflow-y: auto;
+    }
+}
+
+// ── Map ──────────────────────────────────────────────────────
+.mapWrap {
+    position: relative;
+    height: 100%;
+    border-radius: $r-lg;
+    overflow: hidden;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.08),
+        0 10px 40px rgba(0, 0, 0, 0.1);
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: $r-lg;
+        box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.45);
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    @media (max-width: 900px) {
+        height: 260px;
+    }
+}
+
+.leafletMap {
+    width: 100%;
+    height: 100%;
+}
+
+.mapBadge {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(8px);
+    border-radius: 99px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: $ink-600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.mapBadgeDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $green-500;
+    box-shadow: 0 0 0 2px rgba($green-500, 0.25);
+    flex-shrink: 0;
+}
+
+// ── Right panel ──────────────────────────────────────────────
+.panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.card {
+    background: $surface;
+    border-radius: $r-lg;
+    border: 1px solid $ink-200;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    @include card-shadow;
+}
+
+.cardGrow {
+    flex: 1;
+    min-height: 0;
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-bottom: 1px solid $surface-3;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: $ink-600;
+    text-transform: uppercase;
+    background: $surface-2;
+    flex-shrink: 0;
+}
+
+.cardDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $green-500;
+    flex-shrink: 0;
+}
+
+.chatBody {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 0.75rem 1rem;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        background: $surface-3;
+        border-radius: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, $green-400, $teal-500);
+        border-radius: 2px;
+    }
+}
+
+// ── Historic tour tab ─────────────────────────────────────────
+.historicWrap {
+    grid-column: 1 / -1; // chiếm toàn bộ content khi không có map
+    height: 100%;
+    overflow: hidden;
+    border-radius: $r-lg;
+    background: $surface;
+    border: 1px solid $ink-200;
+    @include card-shadow;
+}
+
+// ── Loading overlay ───────────────────────────────────────────
+.loadingOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: rgba(248, 250, 252, 0.82);
+    backdrop-filter: blur(10px);
+    border-radius: $r-lg;
+}
+
+.spinnerRing {
+    width: 38px;
+    height: 38px;
+    border: 3px solid rgba($green-500, 0.15);
+    border-top-color: $green-500;
+    border-right-color: $teal-400;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+.loadingText {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: $ink-600;
+    letter-spacing: 0.03em;
 }

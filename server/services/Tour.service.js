@@ -2,18 +2,18 @@
 import Groq from "groq-sdk";
 import dotenv from "dotenv";
 import fs from "fs";
-
+import TourModel from "../Models/Tour.model.js";
 dotenv.config();
 const placesPath = new URL("../data/places.json", import.meta.url);
 const places = JSON.parse(fs.readFileSync(placesPath, "utf8"));
 
 const Tours = async (data) => {
     try {
+        console.log(process.env.OPENAI_API_KEY);
         const groq = new Groq({
             apiKey: process.env.OPENAI_API_KEY,
         });
         console.log(data);
-        // Chuyển danh sách thành chuỗi văn bản chi tiết để làm "não" cho AI
         const knowledgeBase = places
             .map(
                 (p) =>
@@ -52,7 +52,7 @@ const Tours = async (data) => {
             temperature: 0.1,
             max_tokens: 2000,
         });
-        console.log("okw", result);
+        console.log("okwaassasasasasa", result);
         return {
             status: 200,
             data: result.choices[0].message.content,
@@ -67,7 +67,7 @@ const Tours = async (data) => {
 //saving chat box when logged in
 const historyTour = async ({ userId, prompt, response }) => {
     try {
-        await Tour.findOneAndUpdate(
+        await TourModel.findOneAndUpdate(
             { userId },
             {
                 $push: {
@@ -90,7 +90,8 @@ const historyTour = async ({ userId, prompt, response }) => {
 //
 const getHistoryTour = async ({ userId }) => {
     try {
-        const result = await Tour.findOne({ userId: userId });
+        const result = await TourModel.findOne({ userId: userId });
+
         return {
             status: 200,
             result,

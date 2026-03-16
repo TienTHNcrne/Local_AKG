@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import { useTour } from "../../../Contexts/useTour";
 import clsx from "clsx";
 
-export default function BoxChat({ className }) {
+export default React.memo(function BoxChat({ className }) {
     const { chatPresent } = useTour();
     const contentRef = useRef(null);
 
@@ -50,4 +50,4 @@ export default function BoxChat({ className }) {
             </div>
         </div>
     );
-}
+});

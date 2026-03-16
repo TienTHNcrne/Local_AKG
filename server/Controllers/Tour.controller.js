@@ -9,7 +9,7 @@ const Tour = async (req, res) => {
     try {
         const prompt = req.body.prompt;
         const bruh = await Tours(prompt);
-        console.log(bruh.data);
+        console.log("opke", bruh);
         const id = req.headers.userid;
         await historyTour({
             userId: id,
@@ -25,6 +25,7 @@ const Tour = async (req, res) => {
 const getHic = async (req, res) => {
     try {
         const result = await getHistoryTour({ userId: req.body.userId });
+        console.log(result);
         return res.status(result.status).json(result.result.content);
     } catch (err) {
         return res.status(500).json({ error: "Lỗi server" });

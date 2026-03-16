@@ -1,0 +1,260 @@
+/* ====== MIXINS ====== */
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+}
+
+/* ====== VARIABLES ====== */
+$space-xxs: 4px;
+$space-xs: 8px;
+$space-sm: 12px;
+$space-md: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+
+/* Theme - Refined for a modern look */
+$primary: #059669;
+$primary-hover: #047857;
+$text-main: #1f2937;
+$text-muted: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+
+.toolbarContainer {
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+    width: 100%;
+    padding: $space-lg;
+    border-radius: 20px;
+    margin: 0 auto;
+}
+
+/* --- PRIMARY SEARCH PILL --- */
+.mainSearchPill {
+    @include flex-center;
+    background: #ffffff;
+    border: 1px solid $border-color;
+    border-radius: 60px; /* Pill shape */
+    padding: $space-xs $space-xs $space-xs $space-xl;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    }
+}
+
+.searchBlock {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: $space-xs $space-sm;
+    position: relative;
+    border-radius: 30px;
+    transition: background 0.2s ease;
+
+    &:hover {
+        background: $bg-light;
+    }
+
+    label {
+        font-size: 1rem;
+        font-weight: 700;
+        color: $text-main;
+        margin-bottom: $space-xxs;
+        letter-spacing: 0.5px;
+
+        .highlight {
+            color: $primary;
+        }
+    }
+}
+
+.inputWrapper {
+    @include flex-center;
+    gap: $space-xs;
+
+    .icon {
+        color: $primary;
+        font-size: 1.1rem;
+    }
+}
+
+.multiInputWrapper {
+    @include flex-center;
+    gap: $space-sm;
+
+    .miniInput {
+        @include flex-center;
+        gap: $space-xxs;
+        flex: 1;
+
+        .icon {
+            color: $primary;
+            font-size: 1.1rem;
+        }
+
+        /* Override AntD Input default padding */
+        :global(.ant-input) {
+            padding: 0;
+            font-size: 0.95rem;
+            color: $text-muted;
+            &::placeholder {
+                color: #9ca3af;
+            }
+        }
+    }
+}
+
+/* Hide default arrow on native select to make it look cleaner */
+.nativeSelect {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.95rem;
+    color: $text-muted;
+    width: 100%;
+    cursor: pointer;
+    appearance: none; /* removes default arrow */
+    font-weight: 500;
+
+    &:invalid {
+        color: #9ca3af;
+    }
+}
+
+/* Adjusting AntD DatePicker to blend in */
+.datePicker {
+    padding: 0 !important;
+    width: 100%;
+
+    :global(.ant-picker-input > input) {
+        font-size: 0.95rem;
+        color: $text-muted;
+        font-weight: 500;
+    }
+}
+
+.divider {
+    width: 1px;
+    height: 40px;
+    background-color: $border-color;
+    margin: 0 $space-sm;
+}
+
+.searchButton {
+    @include flex-center;
+    justify-content: center;
+    gap: $space-xs;
+    background: linear-gradient(135deg, $primary 0%, $primary-hover 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 14px $space-xl;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    height: 100%;
+    min-height: 54px;
+
+    .searchIcon {
+        font-size: 1.2rem;
+    }
+
+    &:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+    }
+}
+
+/* --- SECONDARY FILTERS --- */
+.secondaryFilters {
+    @include flex-center;
+    justify-content: space-between;
+    gap: $space-lg;
+    padding: 0 $space-sm;
+    flex-wrap: wrap;
+}
+
+.filterCard {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    flex: 1;
+    min-width: 250px;
+}
+
+.filterHeader {
+    @include flex-center;
+    gap: $space-xs;
+    font-size: 1rem;
+    font-weight: 600;
+    color: $text-main;
+
+    .filterIcon {
+        color: $text-muted;
+    }
+}
+
+.sortSelect {
+    padding: 8px $space-sm;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    outline: none;
+    color: $text-main;
+    font-weight: 500;
+    cursor: pointer;
+    background: white;
+    transition: border-color 0.2s ease;
+
+    &:hover {
+        border-color: $primary;
+    }
+}
+
+/* Compact helpers for DecimalStep */
+.slideBox {
+    @include flex-center;
+    gap: $space-md;
+    background: white;
+    padding: 4px 16px;
+    border-radius: 8px;
+    border: 1px solid $border-color;
+}
+.slide {
+    flex: 1;
+}
+.boxValue {
+    width: 70px;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 900px) {
+    .mainSearchPill {
+        flex-direction: column;
+        border-radius: 20px;
+        padding: $space-sm;
+        gap: $space-xs;
+    }
+
+    .divider {
+        width: 100%;
+        height: 1px;
+        margin: $space-xs 0;
+    }
+
+    .searchBlock {
+        width: 100%;
+        padding: $space-xs;
+    }
+
+    .searchButton {
+        width: 100%;
+        margin-top: $space-sm;
+        border-radius: 12px;
+    }
+}

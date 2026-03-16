@@ -6,11 +6,11 @@ import { ConfigProvider } from "antd";
 import "leaflet/dist/leaflet.css";
 import "./index.css";
 
-// Layouts & Auth
+// Core Components
 import App from "./App";
 import Auth from "./Contexts/Auth/Auth";
 
-// Home Pages
+// Pages - Home & Info
 import Home from "./pages/Home/Home";
 import Climate from "./pages/Home/Climate/Climate";
 import Location from "./pages/Home/Location/Location";
@@ -19,30 +19,39 @@ import CulSoc from "./pages/Home/CulSoc/CulSoc";
 import Religion from "./pages/Home/religon/Religion";
 import Food from "./pages/Home/Food/Food";
 import About from "./pages/About/About";
+import InforProvide from "./pages/Home/InforProvide/InforProvide.jsx";
 
-// Explore Pages
-import Map from "./pages/Traveler/Explore/Map/Map";
-import TinhHoa from "./pages/Traveler/Explore/TinhHoa/TinhHoa";
-import MapBusiness from "./pages/Business/MapBusiness/MapBusiness.jsx";
-
-// Auth Pages
+// Pages - Auth
 import Login from "./pages/Auth/Login/Login";
 import Register from "./pages/Auth/Register/Register";
 import LoginSuccess from "./pages/Auth/Login/LoginSuccess.jsx";
-//import OAuthGoogleCallback from "./pages/Auth/Login/OAuthGoogleCallback";
 
-// User Pages
+// Pages - User
 import Profile from "./pages/Auth/Profile/Profile";
 import Guide from "./pages/Guide/Guide";
+
+// Pages - Explore & Travel
+import Map from "./pages/Traveler/Explore/Map/Map";
+import TinhHoa from "./pages/Traveler/Explore/TinhHoa/TinhHoa";
 import Game3D from "./pages/Traveler/Game3D/Game3D";
 
-// Business Pages
+// Pages - Business
 import Dashboard from "./pages/Business/dashboard/dashboard";
 import Services from "./pages/Business/Services/Services";
 import Managers from "./pages/Business/Managers/Managers";
 import Analytics from "./pages/Business/Analytics/Analytics";
+import MapBusiness from "./pages/Business/MapBusiness/MapBusiness.jsx";
 
-// Admin Pages
+// Pages - Bookings
+import Stays from "./pages/Bookings/Stays/Stays.jsx";
+import Eats from "./pages/Bookings/Eats/Eats.jsx";
+import EXP from "./pages/Bookings/EXP/EXP.jsx";
+
+// Pages - AI & Tours
+import TourAi from "./pages/Auth/Profile/components/Tours/components/TourAi/TourAi.jsx";
+import HistoricTour from "./pages/Auth/Profile/components/Tours/components/TourAi/Desktop/components/TourHistory/TourHistory.jsx";
+
+// Pages - Admin & Testing
 import Admin from "./pages/Admin/Admin";
 import Test from "./pages/Test/Test";
 
@@ -86,19 +95,23 @@ const router = createBrowserRouter([
         path: ROUTES.HOME,
         element: <App />,
         children: [
-            // Home
+            // Home & Landing
             { index: true, element: <Home /> },
+            { path: "provides", element: <InforProvide /> },
 
-            // Auth
+            // AI & Tours
+            { path: "ai/suggest", element: <TourAi /> },
+            { path: "ai/historic-tour", element: <HistoricTour /> },
+
+            // Authentication
             { path: ROUTES.LOGIN, element: <Login /> },
             { path: ROUTES.REGISTER, element: <Register /> },
-            //  { path: "/auth/google/callback", element: <OAuthGoogleCallback /> },
 
             // User Profile
             { path: ROUTES.PROFILE, element: <Profile /> },
             { path: ROUTES.GUIDE, element: <Guide /> },
 
-            // Info Pages
+            // Information Pages
             { path: INFO_ROUTES.CLIMATE, element: <Climate /> },
             { path: INFO_ROUTES.LOCATION, element: <Location /> },
             { path: INFO_ROUTES.HISTORY, element: <History /> },
@@ -111,6 +124,11 @@ const router = createBrowserRouter([
             { path: EXPLORE_ROUTES.MAP, element: <Map /> },
             { path: `${EXPLORE_ROUTES.TINH_HOA}/:tab`, element: <TinhHoa /> },
             { path: EXPLORE_ROUTES.TINH_HOA, element: <TinhHoa /> },
+
+            // Bookings
+            { path: "booking/stays", element: <Stays /> },
+            { path: "booking/eat", element: <Eats /> },
+            { path: "booking/EXP", element: <EXP /> },
 
             // Business Portal
             { path: BUSINESS_ROUTES.DASHBOARD, element: <Dashboard /> },
@@ -127,11 +145,15 @@ const router = createBrowserRouter([
             { path: ROUTES.TEST, element: <Test /> },
         ],
     },
+    // Standalone Routes
     {
         path: ROUTES.REGISTER,
         element: <Register />,
     },
-    { path: "/login/success", element: <LoginSuccess /> },
+    {
+        path: "/login/success",
+        element: <LoginSuccess />,
+    },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

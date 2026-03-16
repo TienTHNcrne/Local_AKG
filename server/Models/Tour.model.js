@@ -1,7 +1,6 @@
 /** @format */
 
 import mongoose, { Schema } from "mongoose";
-
 const messageSchema = new Schema({
 	role: {
 		type: String,

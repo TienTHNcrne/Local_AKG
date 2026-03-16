@@ -101,7 +101,7 @@ export default function TinhHoa() {
         return matchKeyword && matchFilter;
     });
 
-    const handleTabChange = (t) => navigate(`/Explore/TinhHoa/${t}`);
+    const handleTabChange = (t) => navigate(`/explore/tinh-hoa/${t}`);
 
     const CurrentComponent = TAB_CONFIG[currentTab]?.component || Place;
     const isLoading = loading[currentTab];

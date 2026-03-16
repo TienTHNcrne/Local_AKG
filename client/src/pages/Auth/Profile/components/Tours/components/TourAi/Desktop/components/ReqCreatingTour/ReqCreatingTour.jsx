@@ -1,12 +1,12 @@
 /** @format */
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import styles from "./ReqCreatingTour.module.scss";
 import { useTour } from "../../../Contexts/useTour";
 import axios from "axios";
 import { toast } from "react-toastify";
-
-export default function ReqCreatingTour({ className }) {
+import { useAuth } from "../../../../../../../../../../Contexts/Auth/Auth";
+export default React.memo(function ReqCreatingTour({ className }) {
     const {
         days,
         setDays,
@@ -21,56 +21,53 @@ export default function ReqCreatingTour({ className }) {
         loading,
     } = useTour();
 
-    // ================= BUILD PROMPT AN TOÀN =================
+    const [customPrompt, setCustomPrompt] = useState("");
+    const { user } = useAuth();
     const buildPrompt = () => {
+        if (customPrompt.trim()) return customPrompt.trim();
+
         let prompt = "";
-        console.log(lovePlaces);
         if (lovePlaces.size > 0) {
             const places = [...lovePlaces.keys()]
                 .map((v) => v.split(",")[0])
                 .join(", ");
-
-            console.log("oke", places);
-            if (places.length > 0) {
-                prompt = `Tôi muốn đi du lịch các địa điểm: ${places}. `;
-            } else {
-                prompt = "Tạo tôi 1 hành trình du lịch An Giang. ";
-            }
+            prompt =
+                places.length > 0
+                    ? `Tôi muốn đi du lịch các địa điểm: ${places}. `
+                    : "Tạo tôi 1 hành trình du lịch An Giang. ";
         } else {
             prompt = "Tạo tôi 1 hành trình du lịch An Giang. ";
         }
 
         prompt += `| Số ngày: ${days} ngày | Ngân sách: ${budget} triệu đồng | Xuất phát từ: ${startPlace}`;
-
         return prompt;
     };
 
-    // ================= SUBMIT =================
     const onSubmit = async () => {
         try {
-            // Validate
-            if (!days || !budget || !startPlace) {
-                toast.error("Vui lòng nhập đầy đủ thông tin");
+            console.log(days, budget, startPlace);
+            if (!customPrompt.trim() && (!days || !budget || !startPlace)) {
+                console.log("ple");
+                toast.error(
+                    "Vui lòng nhập đầy đủ thông tin hoặc viết prompt tùy chỉnh",
+                );
                 return;
             }
 
-            const userId = localStorage.getItem("userid");
-            if (!userId) {
+            if (!user.userId) {
                 toast.error("Bạn chưa đăng nhập");
                 return;
             }
 
             const prompt = buildPrompt();
-            console.log("PROMPT:", prompt);
-
             setLoading(true);
+            console.log(prompt);
 
             const res = await axios.post(
                 `${import.meta.env.VITE_BE_URL}/v1/api/tour`,
                 { prompt },
-                { headers: { UserId: userId } },
+                { headers: { UserId: user.userId } },
             );
-
             setChatPresent((prev) => [
                 ...prev,
                 { role: "assistant", text: res.data, isNew: true },
@@ -84,68 +81,81 @@ export default function ReqCreatingTour({ className }) {
             setLoading(false);
         }
     };
+
     const isFormValid = useMemo(() => {
         return (
-            Number(days) > 0 &&
-            Number(budget) > 0 &&
-            typeof startPlace === "string" &&
-            startPlace.trim().length > 0
+            customPrompt.trim() ||
+            (Number(days) > 0 &&
+                Number(budget) > 0 &&
+                typeof startPlace === "string" &&
+                startPlace.trim().length > 0)
         );
-    }, [days, budget, startPlace]);
-    // ================= UI =================
+    }, [days, budget, startPlace, customPrompt]);
+
     return (
         <div className={className}>
-            <div className={styles.row1}>
-                <div className={styles.form}>
-                    <div className={styles.field}>
-                        <label>Số ngày bạn muốn đi</label>
-                        <input
-                            type="number"
-                            min="1"
-                            value={days}
-                            onChange={(e) => setDays(Number(e.target.value))}
-                            disabled={isLoading}
-                        />
-                    </div>
-
-                    <div className={styles.field}>
-                        <label>Số tiền bạn muốn chi (triệu đồng)</label>
-                        <input
-                            type="number"
-                            min="1"
-                            value={budget}
-                            onChange={(e) => setBudget(Number(e.target.value))}
-                            disabled={isLoading}
-                        />
-                    </div>
-
-                    <div className={styles.field}>
-                        <label>Nơi bạn bắt đầu</label>
-                        <input
-                            type="text"
-                            value={startPlace}
-                            onChange={(e) => setStartPlace(e.target.value)}
-                            disabled={isLoading}
-                        />
-                    </div>
-
-                    <button
-                        type="button"
-                        onClick={onSubmit}
-                        className={styles.ReqCreating}
-                        disabled={!isFormValid || loading}
-                    >
-                        {isLoading ? (
-                            <>
-                                <span className={styles.spinner}></span>
-                                Đang tạo tour...
-                            </>
-                        ) : (
-                            "Tạo hành trình"
-                        )}
-                    </button>
+            <div className={styles.form}>
+                <div className={styles.field}>
+                    <label>Số ngày muốn đi</label>
+                    <input
+                        type="number"
+                        min="1"
+                        value={days}
+                        onChange={(e) => setDays(Number(e.target.value))}
+                        disabled={isLoading}
+                    />
                 </div>
+
+                <div className={styles.field}>
+                    <label>Ngân sách (triệu đồng)</label>
+                    <input
+                        type="number"
+                        min="1"
+                        value={budget}
+                        onChange={(e) => setBudget(Number(e.target.value))}
+                        disabled={isLoading}
+                    />
+                </div>
+
+                <div className={styles.field}>
+                    <label>Nơi bắt đầu</label>
+                    <input
+                        type="text"
+                        value={startPlace}
+                        onChange={(e) => setStartPlace(e.target.value)}
+                        disabled={isLoading}
+                    />
+                </div>
+
+                <hr className={styles.divider} />
+
+                <div className={`${styles.field} ${styles.fieldTextarea}`}>
+                    <label>Prompt tùy chỉnh (tùy chọn)</label>
+                    <textarea
+                        value={customPrompt}
+                        onChange={(e) => setCustomPrompt(e.target.value)}
+                        placeholder="Viết prompt của bạn để tạo hành trình du lịch..."
+                        disabled={isLoading}
+                        rows={4}
+                    />
+                </div>
+
+                <button
+                    type="button"
+                    onClick={onSubmit}
+                    className={styles.ReqCreating}
+                    disabled={!isFormValid || loading}
+                >
+                    {isLoading ? (
+                        <>
+                            <span className={styles.spinner} />
+                            Đang tạo tour...
+                        </>
+                    ) : (
+                        "Tạo hành trình"
+                    )}
+                </button>
             </div>
         </div>
     );
-}
+});

@@ -1,0 +1,47 @@
+export function data() {
+    const ListProvinces = [
+        "Hà Nội",
+        "Hải Phòng",
+        "Đà Nẵng",
+        "Hồ Chí Minh",
+        "Cần Thơ",
+        "An Giang",
+        "Bà Rịa - Vũng Tàu",
+        "Bạc Liêu",
+        "Bắc Giang",
+        "Bắc Ninh",
+        "Bến Tre",
+        "Bình Định",
+        "Bình Dương",
+        "Bình Phước",
+        "Cà Mau",
+        "Cao Bằng",
+        "Đắk Lắk",
+        "Đắk Nông",
+        "Điện Biên",
+        "Đồng Nai",
+        "Đồng Tháp",
+        "Gia Lai",
+        "Hà Giang",
+        "Hòa Bình",
+        "Hưng Yên",
+        "Khánh Hòa",
+        "Kiên Giang",
+        "Kon Tum",
+        "Lạng Sơn",
+        "Lào Cai",
+        "Long An",
+        "Nam Định",
+        "Nghệ An",
+        "Ninh Bình",
+    ];
+    const SortBy = [
+        {
+            key: "DecreasePricing",
+            value: "Từ Cao đến Thấp",
+        },
+        { key: "IncreasePricing", value: "Từ Thấp tới Cao" },
+        { key: "DecreaseRating", value: "Đánh giá từ cao tới thấp" },
+    ];
+    return { ListProvinces, SortBy };
+}

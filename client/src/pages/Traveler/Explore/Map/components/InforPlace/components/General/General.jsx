@@ -21,7 +21,7 @@ export default function General({
     setPopup,
 }) {
     const { setInFor } = useMapContext();
-    const { userId } = useAuth();
+    const { user } = useAuth();
     const [lovePlace, setLovePlace] = useState(false);
     const aress = address ? address.split(",") : [];
     let addres = "";
@@ -33,7 +33,7 @@ export default function General({
         if (!center) return;
         axios
             .post(`${import.meta.env.VITE_BE_URL}/v1/api/place/FindPlace`, {
-                UserId: userId,
+                UserId: user.userId,
                 lat: center.lat,
                 lng: center.lng,
                 name: address,
@@ -47,14 +47,14 @@ export default function General({
             .catch((err) => console.log(err.message));
     }, [center]);
     const GetPlace = () => {
-        if (!userId) {
+        if (!user.userId) {
             alert("Bạn chưa đăng nhập, Hãy đăng nhập để dùng chức năng này!");
             return;
         }
         if (lovePlace) {
             axios
                 .post(`${import.meta.env.VITE_BE_URL}/v1/api/place/remove`, {
-                    UserId: userId,
+                    UserId: user.userId,
                     lat: center.lat,
                     lng: center.lng,
                     name: address,
@@ -70,7 +70,7 @@ export default function General({
                     `${import.meta.env.VITE_BE_URL}/v1/api/place/CreatePlace`,
                     {
                         img: img,
-                        UserId: userId,
+                        UserId: user.userId,
                         lat: center.lat,
                         lng: center.lng,
                         name: address,

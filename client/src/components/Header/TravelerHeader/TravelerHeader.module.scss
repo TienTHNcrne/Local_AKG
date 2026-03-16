@@ -1,172 +1,51 @@
-/* ====== MIXIN ======= */
+/** @format */
+
+// ── Tokens ───────────────────────────────────────────────────
+$primary: #1da578;
+$secondary: #0c4a6e;
+$accent: #a7f3d0;
+$text-main: #ffffff;
+$text-sub: #d1fae5;
+$glass-border: rgba(167, 243, 208, 0.2);
+$dropdown-bg: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.96) 0%,
+    rgba(12, 74, 110, 0.96) 100%
+);
+
+$header-h: 64px;
+$drawer-w: 300px;
+$mobile: 768px;
+
 @mixin flex-center {
     display: flex;
     align-items: center;
 }
-
-/* ======   SPACING VARIABLE ====== */
-$space-xxs: 4px; // viền mỏng, icon
-$space-xs: 8px; // khoảng nhỏ
-$space-sm: 12px; // text - icon
-$space-md: 16px; // padding chuẩn
-$space-lg: 24px; // block cách block
-$space-xl: 32px; // section
-$space-xxl: 48px; // page section
-/* ======   COLOR VARIABLE ====== */
-$color-primary: #1da578;
-$color-secondary: #0c4a6e;
-$color-accent: #a7f3d0;
-$color-text-main: #ffffff;
-$color-text-sub: #d1fae5;
-$color-border-glass: rgba(167, 243, 208, 0.15);
-/* ======   HEADER LAYOUT ====== */
-
-.header {
-    /* Layout */
-    @include flex-center;
-    justify-content: space-between;
-    height: 70px;
-    padding: 0 $space-md;
-    z-index: 1000;
-
-    /* Visual */
-    background: linear-gradient(
-        135deg,
-        $color-secondary 0%,
-        $color-primary 100%
-    );
-    filter: brightness(0.9) contrast(1.2);
-    box-shadow: 0 4px 20px rgba(5, 150, 105, 0.15);
-    border-bottom: 1px solid rgba(167, 243, 208, 0.1);
-    backdrop-filter: blur(10px);
-}
-
-/* ======  LOGO  ====== */
-.logoContainer {
-    /* Layout */
-    @include flex-center;
-    gap: $space-sm;
-    cursor: pointer;
-
-    /* Effect */
-    transition: transform 0.3s ease;
-
-    &:hover {
-        transform: scale(1.02);
+@mixin mobile {
+    @media (max-width: #{$mobile}) {
+        @content;
     }
 }
 
-.logoIcon {
-    /* Box */
-    width: 200px;
-    padding: $space-xxs;
-    border-radius: 4px;
-
-    /* Image */
-    height: auto;
-    object-fit: contain;
-
-    /* Visual */
-    filter: brightness(1.3) contrast(1.2)
-        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-    background: none;
-
-    /* Effect */
-    transition: all 0.2s ease;
-}
-
-.logoText {
-    @include flex-center;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.logoMain {
-    /* Text */
-    font-size: 1.4rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    margin: 0;
-
-    /* Gradient text */
-    background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.logoSub {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #a7f3d0;
-    opacity: 0.9;
-}
-
-/* ======
-   MENU
-====== */
-/* Mobile button */
-.menuIcon {
-    display: block;
-    cursor: pointer;
-}
-
-.menuIconHidden {
-    display: none;
-}
-
-/* Desktop nav */
-.navMenu {
-    display: flex;
-    gap: $space-xxs;
-    padding: $space-xxs;
-    border-radius: 12px;
-
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(167, 243, 208, 0.678);
-}
-
-.navItem {
-    /* Layout */
-    @include flex-center;
-    flex-direction: column;
-    gap: $space-xs;
-    padding: $space-sm $space-lg;
-    position: relative;
-
-    /* Text */
-    color: $color-text-main;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1rem;
-
-    /* Visual */
-    border-radius: 8px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-    &::before {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        transform: translateX(-50%);
-        background: linear-gradient(90deg, #10b981, #a7f3d0);
-        transition: all 0.3s ease;
-    }
-
-    &:hover,
-    &.activeNav {
-        background: rgba(167, 243, 208, 0.1);
-
-        &::before {
-            width: 80%;
-        }
-    }
-}
 @keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes drawerIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+@keyframes fadeIn {
     from {
         opacity: 0;
     }
@@ -174,262 +53,664 @@ $color-border-glass: rgba(167, 243, 208, 0.15);
         opacity: 1;
     }
 }
-.dropdownToggle {
-    /* Layout */
+
+// ── Header ───────────────────────────────────────────────────
+.header {
     @include flex-center;
-    gap: $space-xs;
+    justify-content: space-between;
+    height: $header-h;
+    padding: 0 1.25rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: linear-gradient(135deg, $secondary 0%, $primary 100%);
+    box-shadow: 0 4px 20px rgba(5, 150, 105, 0.18);
+    border-bottom: 1px solid $glass-border;
 }
 
-/* Dropdown animation */
-.dropdownMenu {
-    /* Layout */
+// ── Logo ─────────────────────────────────────────────────────
+.logoContainer {
+    @include flex-center;
+    gap: 10px;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+.logoIcon {
+    width: 160px;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(1.3) contrast(1.2)
+        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+
+    @include mobile {
+        width: 120px;
+    }
+}
+
+.logoText {
     display: flex;
     flex-direction: column;
-    gap: 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
+    gap: 1px;
+    @include mobile {
+        display: none;
+    }
+}
 
-    min-width: 150px;
-    z-index: 1000;
-    width: 130%;
-    /* Box */
-    margin-top: 12px;
-    /* Visual */
-    background: linear-gradient(
-        135deg,
-        rgba(16, 185, 129, 0.95) 0%,
-        rgba(12, 74, 110, 0.95) 100%
-    );
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(167, 243, 208, 0.516);
+.logoMain {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #fff 0%, $accent 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logoSub {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: $accent;
+    opacity: 0.9;
+}
+
+// ── Desktop nav ──────────────────────────────────────────────
+.navMenu {
+    @include flex-center;
+    gap: 2px;
+    padding: 4px;
     border-radius: 12px;
-    padding: $space-xs 0;
-    box-shadow:
-        0 20px 50px rgba(16, 185, 129, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid $glass-border;
 
-    /* Effect */
+    @include mobile {
+        display: none;
+    } // hidden on mobile
+}
+
+.navItem {
+    @include flex-center;
+    flex-direction: column;
+    position: relative;
+    padding: 8px 18px;
+    border-radius: 8px;
+    color: $text-main;
+    font-size: 0.92rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.25s ease;
+    user-select: none;
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #10b981, $accent);
+        transition: width 0.3s ease;
+        border-radius: 1px;
+    }
+
+    &:hover,
+    &.activeNav {
+        background: rgba(167, 243, 208, 0.1);
+        &::after {
+            width: 70%;
+        }
+    }
+}
+
+.dropdownToggle {
+    @include flex-center;
+    gap: 6px;
+    pointer-events: none;
+}
+
+.chevron {
+    font-size: 0.72rem;
+    transition: transform 0.25s ease;
+    &.chevronOpen {
+        transform: rotate(180deg);
+    }
+}
+
+// Dropdown
+.dropdownMenu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 160px;
+    list-style: none;
+    margin: 0;
+    padding: 6px 0;
+    background: $dropdown-bg;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(167, 243, 208, 0.4);
+    border-radius: 12px;
+    box-shadow:
+        0 16px 48px rgba(16, 185, 129, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s;
+    z-index: 100;
+
+    &.dropdownVisible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    li {
+        list-style: none;
+    }
 
     a {
         display: flex;
         align-items: center;
-        gap: $space-sm;
-        width: 100%;
-        padding: $space-sm $space-lg;
-        color: $color-text-main;
+        gap: 8px;
+        padding: 9px 18px;
+        color: $text-main;
         text-decoration: none;
+        font-size: 0.88rem;
         font-weight: 500;
-        font-size: 0.95rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
+        transition:
+            background 0.2s,
+            padding-left 0.2s;
 
         &::before {
             content: "";
             position: absolute;
             left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 3px;
-            height: 0;
-            background: $color-accent;
-            transition: all 0.3s ease;
+            top: 20%;
+            bottom: 20%;
+            width: 2px;
+            background: $accent;
+            border-radius: 1px;
+            transform: scaleY(0);
+            transition: transform 0.2s ease;
         }
 
         &:hover {
-            background: rgba(167, 243, 208, 0.2);
-            padding-left: calc($space-lg + 6px);
-
+            background: rgba(167, 243, 208, 0.15);
+            padding-left: 24px;
             &::before {
-                height: 70%;
+                transform: scaleY(1);
             }
         }
     }
 }
-/* ====== ACCOUNT ====== */
-.accountMenu {
-    /* Layout */
+
+// ── Right actions ─────────────────────────────────────────────
+.actions {
     @include flex-center;
-    gap: $space-sm;
+    gap: 8px;
+    flex-shrink: 0;
+}
 
-    button {
-        /* Layout */
-        @include flex-center;
-        padding: $space-sm;
-        border-radius: 50%;
+.iconBtn {
+    @include flex-center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: $text-main;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition:
+        background 0.2s,
+        transform 0.2s,
+        box-shadow 0.2s;
 
-        /* Visual */
-        background: linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.1) 0%,
-            rgba(167, 243, 208, 0.05) 100%
-        );
-        border: 1px solid rgba(253, 255, 254, 0.926);
-        backdrop-filter: blur(10px);
-
-        /* Text */
-        color: $color-text-main;
-        font-size: 1.3rem;
-        cursor: pointer;
-
-        /* Effect */
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-
-        &::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(
-                circle at center,
-                rgba(167, 243, 208, 0.2) 0%,
-                transparent 70%
-            );
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        &:hover {
-            background: linear-gradient(
-                135deg,
-                rgba(167, 243, 208, 0.2) 0%,
-                rgba(16, 185, 129, 0.15) 100%
-            );
-            border-color: rgba(167, 243, 208, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.2);
-
-            &::before {
-                opacity: 1;
-            }
-        }
-
-        &:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
-        }
-        svg {
-            transform: scale(1.2);
-        }
+    &:hover {
+        background: rgba(167, 243, 208, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
     }
+}
+
+.avatarIcon {
+    font-size: 1.4rem;
 }
 
 .account {
     position: relative;
-    button {
-        svg {
-            transform: scale(1.6);
-        }
-    }
 }
 
 .accountDropdown {
-    /* Layout */
-
     position: absolute;
-    top: 100%;
+    top: calc(100% + 8px);
     right: 0;
-    margin-top: $space-xs;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    min-width: 200px;
-
-    /* Visual */
-    background: linear-gradient(
-        135deg,
-        rgba(16, 185, 129, 0.95) 0%,
-        rgba(12, 74, 110, 0.95) 100%
-    );
+    min-width: 180px;
+    background: $dropdown-bg;
     backdrop-filter: blur(20px);
     border: 1px solid rgba(167, 243, 208, 0.3);
     border-radius: 12px;
-    padding: $space-xs 0;
-    box-shadow:
-        0 20px 50px rgba(16, 185, 129, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    overflow: hidden;
+    padding: 6px 0;
+    box-shadow: 0 16px 40px rgba(16, 185, 129, 0.25);
+    animation: slideDown 0.2s ease both;
+    z-index: 101;
 
-    /* Effect */
-    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    z-index: 1001;
     button {
-        border-radius: 12px;
-    }
-    a,
-    button {
-        display: flex;
-        align-items: center;
-        gap: $space-sm;
+        @include flex-center;
+        gap: 8px;
         width: 100%;
-        padding: $space-sm;
-
-        /* Text */
-        a {
-            color: $color-text-main;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        color: $color-text-main;
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.9rem;
-
-        /* Visual */
+        padding: 10px 16px;
         background: transparent;
         border: none;
+        color: $text-main;
+        font-size: 0.88rem;
+        font-weight: 500;
         cursor: pointer;
-
-        /* Effect */
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-
-        &::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 3px;
-            height: 0;
-            background: $color-accent;
-            transition: all 0.3s ease;
-        }
+        text-align: left;
+        transition: background 0.2s;
 
         &:hover {
-            &::before {
-                height: 70%;
-            }
-        }
-
-        &:active {
-            transform: scale(0.98);
+            background: rgba(167, 243, 208, 0.15);
         }
     }
 }
-/* ====== AUTH LINKS ====== */
+
 .authLinks {
     @include flex-center;
-    gap: $space-md;
+    gap: 8px;
+
     a {
-        border: 2px solid rgba(167, 243, 208, 0.1);
-        color: $color-text-main;
-        text-decoration: none;
-        font-weight: 500;
-        padding: $space-sm $space-lg;
+        padding: 6px 14px;
         border-radius: 8px;
-        transition: all 0.3s ease;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        color: $text-main;
+        border: 1.5px solid rgba(167, 243, 208, 0.3);
+        transition:
+            background 0.2s,
+            border-color 0.2s;
 
         &:hover {
             background: rgba(167, 243, 208, 0.1);
         }
+
         &:last-child {
-            background-color: $color-text-main;
-            color: $color-secondary;
+            background: $text-main;
+            color: $secondary;
+            border-color: transparent;
+            &:hover {
+                background: $accent;
+            }
         }
+    }
+
+    @include mobile {
+        display: none; // handled in drawer footer
+    }
+}
+
+// Hamburger
+.hamburger {
+    display: none;
+    @include flex-center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: $text-main;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: rgba(167, 243, 208, 0.2);
+    }
+
+    @include mobile {
+        display: flex;
+    }
+}
+
+// ── Backdrop ─────────────────────────────────────────────────
+.backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1100;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &.backdropVisible {
+        opacity: 1;
+    }
+
+    @include mobile {
+        display: block;
+        pointer-events: none;
+    }
+    &.backdropVisible {
+        pointer-events: all;
+    }
+}
+
+// ── Mobile Drawer ─────────────────────────────────────────────
+.drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: $drawer-w;
+    max-width: 85vw;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(
+        160deg,
+        $secondary 0%,
+        darken($secondary, 6%) 100%
+    );
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.35);
+    transform: translateX(-100%);
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+
+    &.drawerOpen {
+        transform: translateX(0);
+    }
+}
+
+// Drawer header
+.drawerHeader {
+    @include flex-center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid $glass-border;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.drawerLogo {
+    width: 110px;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(1.2) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+.drawerClose {
+    @include flex-center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: $text-main;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    &:hover {
+        background: rgba(255, 255, 255, 0.16);
+    }
+}
+
+// User strip
+.drawerUser {
+    @include flex-center;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid $glass-border;
+    flex-shrink: 0;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.drawerAvatar {
+    font-size: 2.4rem;
+    color: $accent;
+    flex-shrink: 0;
+}
+
+.drawerUserName {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: $text-main;
+}
+
+.drawerUserSub {
+    margin: 2px 0 0;
+    font-size: 0.75rem;
+    color: $accent;
+    opacity: 0.8;
+}
+
+// Drawer nav
+.drawerNav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 0;
+
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(167, 243, 208, 0.3);
+        border-radius: 2px;
+    }
+}
+
+// Direct link
+.drawerLink {
+    @include flex-center;
+    gap: 10px;
+    padding: 13px 20px;
+    color: $text-sub;
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition:
+        background 0.2s,
+        color 0.2s;
+    border-left: 3px solid transparent;
+
+    &:hover {
+        background: rgba(167, 243, 208, 0.08);
+        color: $text-main;
+    }
+
+    &.drawerLinkActive {
+        background: rgba(16, 185, 129, 0.15);
+        color: $text-main;
+        font-weight: 700;
+        border-left-color: #10b981;
+    }
+}
+
+.drawerIcon {
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    opacity: 0.85;
+}
+
+// Accordion group
+.drawerGroup {
+    border-bottom: 1px solid rgba(167, 243, 208, 0.07);
+}
+
+.drawerGroupBtn {
+    @include flex-center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 13px 20px;
+    background: transparent;
+    border: none;
+    color: $text-sub;
+    font-size: 0.92rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+        background 0.2s,
+        color 0.2s;
+
+    &:hover {
+        background: rgba(167, 243, 208, 0.08);
+        color: $text-main;
+    }
+}
+
+.drawerGroupLeft {
+    @include flex-center;
+    gap: 10px;
+}
+
+.drawerChevron {
+    font-size: 0.72rem;
+    color: $accent;
+    opacity: 0.7;
+    transition: transform 0.25s ease;
+    &.drawerChevronOpen {
+        transform: rotate(180deg);
+    }
+}
+
+// Submenu
+.drawerSub {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.15);
+    transition: max-height 0.3s ease;
+
+    &.drawerSubOpen {
+        max-height: 300px;
+    }
+}
+
+.drawerSubLink {
+    display: block;
+    padding: 11px 20px 11px 42px;
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    transition:
+        background 0.2s,
+        color 0.2s,
+        padding-left 0.2s;
+    border-left: 2px solid transparent;
+    position: relative;
+
+    &::before {
+        content: "·";
+        position: absolute;
+        left: 28px;
+        color: $accent;
+        opacity: 0.5;
+    }
+
+    &:hover {
+        background: rgba(167, 243, 208, 0.07);
+        color: $text-main;
+        padding-left: 48px;
+    }
+
+    &.drawerSubActive {
+        color: $accent;
+        font-weight: 600;
+        border-left-color: $accent;
+    }
+}
+
+// Drawer footer
+.drawerFooter {
+    flex-shrink: 0;
+    padding: 14px 16px;
+    border-top: 1px solid $glass-border;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.drawerFooterBtn {
+    @include flex-center;
+    gap: 8px;
+    width: 100%;
+    padding: 11px 16px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: $text-main;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: rgba(167, 243, 208, 0.15);
+    }
+}
+
+.drawerLogout {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+
+    &:hover {
+        background: rgba(239, 68, 68, 0.22);
+    }
+}
+
+.drawerAuth {
+    display: flex;
+    gap: 8px;
+}
+
+.drawerAuthOutline {
+    flex: 1;
+    text-align: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(167, 243, 208, 0.3);
+    color: $text-main;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: background 0.2s;
+    &:hover {
+        background: rgba(167, 243, 208, 0.1);
+    }
+}
+
+.drawerAuthFill {
+    flex: 1;
+    text-align: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: $text-main;
+    color: $secondary;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border: none;
+    transition: background 0.2s;
+    &:hover {
+        background: $accent;
     }
 }
