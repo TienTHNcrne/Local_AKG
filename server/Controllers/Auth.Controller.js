@@ -40,7 +40,7 @@ const loginLocalCtrl = async (req, res) => {
 
     res.cookie("token", result.accessToken, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "lax",
         path: "/",
         maxAge: 7 * 86400000,
@@ -65,7 +65,7 @@ const loginGoogleCtrl = async (req, res) => {
     // Set cookie thay vì gửi token qua URL
     res.cookie("token", result.accessToken, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "lax",
         path: "/",
         maxAge: 7 * 86400000,

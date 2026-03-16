@@ -1,76 +1,47 @@
 /** @format */
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import styles from "./InforProvide.module.scss";
 import clsx from "clsx";
 
-// ── Danh sách tỉnh thành Việt Nam ──────────────────────────
+// ── Danh sách 34 tỉnh thành SAU SÁP NHẬP ───────────────────
 const PROVINCES = [
-    "An Giang",
-    "Bà Rịa - Vũng Tàu",
-    "Bắc Giang",
-    "Bắc Kạn",
-    "Bạc Liêu",
-    "Bắc Ninh",
-    "Bến Tre",
-    "Bình Định",
-    "Bình Dương",
-    "Bình Phước",
-    "Bình Thuận",
-    "Cà Mau",
-    "Cần Thơ",
-    "Cao Bằng",
-    "Đà Nẵng",
-    "Đắk Lắk",
-    "Đắk Nông",
-    "Điện Biên",
-    "Đồng Nai",
-    "Đồng Tháp",
-    "Gia Lai",
-    "Hà Giang",
-    "Hà Nam",
     "Hà Nội",
-    "Hà Tĩnh",
-    "Hải Dương",
-    "Hải Phòng",
-    "Hậu Giang",
-    "Hòa Bình",
-    "Hưng Yên",
-    "Khánh Hòa",
-    "Kiên Giang",
-    "Kon Tum",
+    "Huế",
     "Lai Châu",
-    "Lạng Sơn",
-    "Lào Cai",
-    "Lâm Đồng",
-    "Long An",
-    "Nam Định",
-    "Nghệ An",
-    "Ninh Bình",
-    "Ninh Thuận",
-    "Phú Thọ",
-    "Phú Yên",
-    "Quảng Bình",
-    "Quảng Nam",
-    "Quảng Ngãi",
-    "Quảng Ninh",
-    "Quảng Trị",
-    "Sóc Trăng",
+    "Điện Biên",
     "Sơn La",
-    "Tây Ninh",
-    "Thái Bình",
-    "Thái Nguyên",
-    "Thanh Hóa",
-    "Thừa Thiên Huế",
-    "Tiền Giang",
-    "TP. Hồ Chí Minh",
-    "Trà Vinh",
+    "Lạng Sơn",
+    "Quảng Ninh",
+    "Thanh Hoá",
+    "Nghệ An",
+    "Hà Tĩnh",
+    "Cao Bằng",
     "Tuyên Quang",
+    "Lào Cai",
+    "Thái Nguyên",
+    "Phú Thọ",
+    "Bắc Ninh",
+    "Hưng Yên",
+    "Hải Phòng",
+    "Ninh Bình",
+    "Quảng Trị",
+    "Đà Nẵng",
+    "Quảng Ngãi",
+    "Gia Lai",
+    "Khánh Hoà",
+    "Lâm Đồng",
+    "Đắk Lắk",
+    "TP.HCM",
+    "Đồng Nai",
+    "Tây Ninh",
+    "Cần Thơ",
     "Vĩnh Long",
-    "Vĩnh Phúc",
-    "Yên Bái",
+    "Đồng Tháp",
+    "Cà Mau",
+    "An Giang",
 ];
 
-// ── Tab config ────────────────────────────────────────────
+// ── Tab config với icon ─────────────────────────────────────
 const TABS = [
     { key: "overview", label: "Tổng quan" },
     { key: "climate", label: "Khí hậu" },
@@ -81,139 +52,153 @@ const TABS = [
     { key: "festivals", label: "Lễ hội" },
 ];
 
-const SYSTEM_PROMPT = `Bạn là chuyên gia du lịch và văn hóa Việt Nam.
-Trả lời bằng tiếng Việt, văn phong sinh động, dễ đọc như tạp chí du lịch.
-Mỗi phần nên có 3-5 đoạn chi tiết, phong phú, hấp dẫn.
-Không dùng markdown heading (##). Có thể dùng emoji để làm nổi bật.
-Trả lời trực tiếp nội dung, không cần lời mở đầu.`;
+const STATIC_CONTENT = {
+    // AN GIANG (Hợp nhất An Giang + Kiên Giang)
+    "An Giang:overview":
+        "Diện tích ~13.000 km², dân số ~4,2 triệu. Trung tâm: Rạch Giá. 🌊 Kết hợp núi Sam, chợ nổi Châu Đốc với Phú Quốc, Hà Tiên.",
 
-const TAB_PROMPTS = {
-    overview: (p) =>
-        `Viết tổng quan về tỉnh ${p}: vị trí địa lý, diện tích, dân số, đặc điểm nổi bật, điểm độc đáo so với các tỉnh khác.`,
-    climate: (p) =>
-        `Mô tả chi tiết khí hậu tỉnh ${p}: mùa mưa, mùa khô, nhiệt độ trung bình, những lưu ý thời tiết cho du khách, thời điểm lý tưởng để tham quan.`,
-    history: (p) =>
-        `Kể về lịch sử hình thành và phát triển tỉnh ${p}: từ thời khai hoang đến nay, các sự kiện quan trọng, nhân vật lịch sử nổi bật.`,
-    culture: (p) =>
-        `Mô tả văn hóa đặc sắc của tỉnh ${p}: các dân tộc sinh sống, phong tục tập quán, nghề thủ công truyền thống, trang phục, âm nhạc dân gian.`,
-    beliefs: (p) =>
-        `Giới thiệu về tín ngưỡng và tôn giáo tại tỉnh ${p}: các ngôi đền chùa nổi tiếng, lễ nghi quan trọng, tín ngưỡng dân gian đặc trưng.`,
-    food: (p) =>
-        `Giới thiệu ẩm thực đặc sản của tỉnh ${p}: các món ăn nổi tiếng nhất, nơi thưởng thức ngon, đặc sản mang về làm quà, văn hóa ăn uống địa phương.`,
-    attractions: (p) =>
-        `Liệt kê và mô tả chi tiết các địa điểm du lịch nổi bật tại tỉnh ${p}: cảnh quan thiên nhiên, di tích lịch sử, điểm check-in hot, kinh nghiệm tham quan.`,
-    festivals: (p) =>
-        `Mô tả các lễ hội và sự kiện văn hóa tiêu biểu của tỉnh ${p}: thời gian tổ chức, nghi thức đặc trưng, ý nghĩa, cách tham gia cho du khách.`,
-    economy: (p) =>
-        `Phân tích kinh tế tỉnh ${p}: các ngành kinh tế chủ lực, nông sản đặc trưng, khu công nghiệp, tiềm năng phát triển, thu nhập bình quân.`,
-    transport: (p) =>
-        `Hướng dẫn cách di chuyển đến và trong tỉnh ${p}: từ các thành phố lớn, phương tiện phổ biến, chi phí ước tính, mẹo di chuyển tiết kiệm.`,
+    "An Giang:climate":
+        "Khí hậu nhiệt đới gió mùa. Miền Tây: mưa tháng 5-11 (2.000mm). Phú Quốc: khô tháng 11-4. Nhiệt độ 25-32°C. Thời điểm đẹp: tháng 12-4.",
+
+    "An Giang:history":
+        "Lịch sử khai hoang Nam Bộ + kháng chiến biên giới Tây Nam. Phú Quốc: nhà tù lịch sử. Bà Chúa Xứ Núi Sam: 1.000 năm linh thiêng.",
+
+    "An Giang:culture":
+        "Giao thoa 5 dân tộc: Kinh, Khmer, Hoa, Chăm, Khmer Krom. Đờn ca tài tử + đờn bầu Chăm + lễ Ok Om Bok Khmer.",
+
+    "An Giang:beliefs":
+        "Bà Chúa Xứ Núi Sam (3 triệu lượt/năm). Chùa Xiêm Cán Khmer. Thiền viện Trúc Lâm + nhà thờ Hà Tiên.",
+
+    "An Giang:food":
+        "Bún cá lóc Châu Đốc + nước mắm Phú Quốc. Gỏi sầu đâu, mắm prohok, tiêu Phú Quốc, rượu sim biển.",
+
+    "An Giang:festivals":
+        "Lễ Bà Chúa Xứ (4/4 âm lịch). Chol Chnam Thmay Khmer (13-15/4). Lễ hội Nghinh Ông Hà Tiên (15/8 âm lịch).",
+
+    // CẦN THƠ (Hợp nhất Cần Thơ + Sóc Trăng + Hậu Giang)
+    "Cần Thơ:overview":
+        "Cần Thơ (mới) hợp nhất Cần Thơ + Sóc Trăng + Hậu Giang. Diện tích ~6.500 km², dân số ~4,8 triệu. Trung tâm: Cần Thơ. 🛶 Chợ nổi Cái Răng + rừng U Minh.",
+
+    "Cần Thơ:climate":
+        "Nhiệt đới gió mùa miền Tây. Mưa 1.800mm (tháng 6-11). Nhiệt độ 26-32°C. Đẹp nhất: tháng 12-4.",
+
+    "Cần Thơ:history":
+        "Khai phá Nam Kỳ Lục Tỉnh. Cần Thơ xưa: trung tâm thương mại sông Hậu. U Minh: căn cứ kháng chiến.",
+
+    "Cần Thơ:culture":
+        "Đờn ca tài tử + lễ hội Ok Om Bok. Khmer Sóc Trăng + chợ nổi Hậu Giang. Hò Huế trên sông.",
+
+    "Cần Thơ:beliefs":
+        "Chùa Dơi Sóc Trăng + chùa Ông (Khmer). Nhà thờ Cái Vồn. Miếu Bà Chúa Xứ Cần Thơ.",
+
+    "Cần Thơ:food":
+        "Lẩu mắm 7 loại + bánh cống. Bún nước lèo Sóc Trăng. Bánh xèo Hậu Giang + cá lóc nướng trui.",
+
+    "Cần Thơ:festivals":
+        "Chợ nổi Cái Răng (hàng ngày). Lễ Dolta Khmer (7/10 âm lịch). Tết Đoan Ngọ miền Tây (5/5).",
+
+    // ĐÀ NẴNG (Hợp nhất Quảng Nam + Đà Nẵng)
+    "Đà Nẵng:overview":
+        "Diện tích ~11.500 km², dân số ~3,2 triệu. Trung tâm: Đà Nẵng. 🌉 Cầu Vàng + Hội An UNESCO.",
+
+    "Đà Nẵng:climate":
+        "Nhiệt đới gió mùa miền Trung. Mưa tháng 9-12 (2.500mm). Nhiệt độ 24-33°C. Đẹp: tháng 2-8.",
+
+    "Đà Nẵng:history":
+        "Cửa ngõ Đại Việt + cảng Tourane Pháp. Hội An: thương cảng 2.000 năm. Mỹ Sơn: thánh địa Chăm Pa.",
+
+    "Đà Nẵng:culture":
+        "Bài chòi Hội An + múa lân Đà Nẵng. Lễ hội pháo hoa quốc tế. Nghệ thuật điêu khắc Chăm.",
+
+    "Đà Nẵng:beliefs":
+        "Chùa Linh Ứng Bán Cầu. Hội Quán Phúc Kiến. Thánh địa Mỹ Sơn Chăm Pa.",
+
+    "Đà Nẵng:food":
+        "Mì Quảng + cao lầu Hội An. Bê thui Cầu Mống. Chè bắp Hội An + bánh tráng nướng.",
+
+    "Đà Nẵng:festivals":
+        "Festival Pháo hoa Quốc tế (tháng 6). Lễ hội Đèn lồng Hội An (14/1 âm lịch).",
+
+    // TP.HCM (Hợp nhất TP.HCM + Bình Dương + Bà Rịa-Vũng Tàu)
+    "TP.HCM:overview":
+        "Diện tích ~5.300 km², dân số ~15 triệu. Trung tâm: TP.HCM. 🏙️ Thủ phủ kinh tế + Vũng Tàu biển.",
+
+    "TP.HCM:climate":
+        "Nhiệt đới gió mùa Nam Bộ. Mưa tháng 5-11 (1.900mm). Nhiệt độ 27-35°C. Đẹp: tháng 12-4.",
+
+    "TP.HCM:history":
+        "Gia Định xưa + Sài Gòn thuộc địa. Bình Dương: làng gốm + kháng chiến. Vũng Tàu: căn cứ Mỹ.",
+
+    "TP.HCM:culture":
+        "Hòa quyện 54 dân tộc + quốc tế. Đờn ca tài tử + nhạc bolero. Lễ hội đường phố hiện đại.",
+
+    "TP.HCM:beliefs":
+        "Chùa Vĩnh Nghiêm + Nhà thờ Đức Bà. Địa Tạng Bồ Tát Bình Dương. Tượng Chúa Kitô Vũng Tàu.",
+
+    "TP.HCM:food":
+        "Phở + bánh mì Sài Gòn. Gốm sứ Bình Dương. Hải sản Vũng Tàu + bún nước mắm.",
+
+    "TP.HCM:festivals":
+        "Tết hoa mai Sài Gòn. Lễ hội đường chạy Vũng Tàu. Festival ẩm thực Bình Dương.",
+
+    // TUYÊN QUANG (Hợp nhất Tuyên Quang + Hà Giang)
+    "Tuyên Quang:overview":
+        "Diện tích ~13.000 km², dân số ~1,8 triệu. Trung tâm: Tuyên Quang. ⛰️ Cao nguyên đá Đồng Văn + Tân Trào cách mạng.",
+
+    "Tuyên Quang:climate":
+        "Nhiệt đới gió mùa núi. Mùa đông lạnh 10-15°C. Mưa 1.800mm (tháng 5-9). Đẹp: tháng 9-11.",
+
+    "Tuyên Quang:history":
+        "Tân Trào: Thủ đô kháng chiến 1945. Pác Bó: căn cứ Bác Hồ. Đồng Văn: biên giới lịch sử.",
+
+    "Tuyên Quang:culture":
+        "22 dân tộc: Tày, Dao, H'Mông, Nùng. Lồng bè Tày + then Dao + khèn H'Mông.",
+
+    "Tuyên Quang:beliefs":
+        "Pác Bó + Tân Trào cách mạng. Đền Hùng Tuyên Quang. Công viên địa chất Đồng Văn.",
+
+    "Tuyên Quang:food":
+        "Xôi ngũ sắc + thắng cố H'Mông. Cá hồi Na Hang + mèn mén Tày.",
+
+    "Tuyên Quang:festivals":
+        "Lễ hội Lồng Tồng (6/6 âm lịch). Chợ tình Khâu Vai. Lễ hội Then Tày.",
 };
 
-// ── Component ─────────────────────────────────────────────
-export default function InforProvide() {
+const InforProvide = () => {
     const [province, setProvince] = useState("An Giang");
     const [activeTab, setActiveTab] = useState("overview");
-    const [content, setContent] = useState({}); // { "An Giang:overview": "...", ... }
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const abortRef = useRef(null);
+    const [content, setContent] = useState(STATIC_CONTENT);
 
-    // ── Fetch từ Anthropic API (streaming) ──────────────────
-    const fetchContent = useCallback(
-        async (prov, tab) => {
-            const cacheKey = `${prov}:${tab}`;
-            if (content[cacheKey]) return; // đã có cache
+    useEffect(() => {
+        const cacheKey = `${province}:${activeTab}`;
+        if (STATIC_CONTENT[cacheKey]) {
+            setContent((prev) => ({
+                ...prev,
+                [cacheKey]: STATIC_CONTENT[cacheKey],
+            }));
+        }
+    }, [province, activeTab]);
 
-            // Hủy request cũ nếu đang chạy
-            if (abortRef.current) abortRef.current.abort();
-            const controller = new AbortController();
-            abortRef.current = controller;
-
-            setLoading(true);
-            setError(null);
-            // okekeekekek
-            try {
-                const res = await fetch(
-                    "https://api.anthropic.com/v1/messages",
-                    {
-                        method: "POST",
-                        signal: controller.signal,
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            model: "claude-sonnet-4-20250514",
-                            max_tokens: 1000,
-                            system: SYSTEM_PROMPT,
-                            messages: [
-                                {
-                                    role: "user",
-                                    content: TAB_PROMPTS[tab](prov),
-                                },
-                            ],
-                            stream: true,
-                        }),
-                    },
-                );
-
-                if (!res.ok) throw new Error(`API error ${res.status}`);
-
-                const reader = res.body.getReader();
-                const decoder = new TextDecoder();
-                let accumulated = "";
-
-                // stream SSE
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
-
-                    const chunk = decoder.decode(value, { stream: true });
-                    const lines = chunk.split("\n");
-
-                    for (const line of lines) {
-                        if (!line.startsWith("data:")) continue;
-                        const raw = line.slice(5).trim();
-                        if (raw === "[DONE]") break;
-                        try {
-                            const json = JSON.parse(raw);
-                            if (
-                                json.type === "content_block_delta" &&
-                                json.delta?.text
-                            ) {
-                                accumulated += json.delta.text;
-                                // update realtime
-                                setContent((prev) => ({
-                                    ...prev,
-                                    [cacheKey]: accumulated,
-                                }));
-                            }
-                        } catch {
-                            /* ignore parse errors */
-                        }
-                    }
-                }
-            } catch (err) {
-                if (err.name !== "AbortError") {
-                    setError("Không thể tải nội dung. Vui lòng thử lại.");
-                    console.error(err);
-                }
-            } finally {
-                setLoading(false);
-            }
-        },
-        [content],
-    );
-
-    // ── Handlers ─────────────────────────────────────────────
     const handleProvince = (prov) => {
         setProvince(prov);
         const cacheKey = `${prov}:${activeTab}`;
-        if (!content[cacheKey]) fetchContent(prov, activeTab);
+        if (STATIC_CONTENT[cacheKey]) {
+            setContent((prev) => ({
+                ...prev,
+                [cacheKey]: STATIC_CONTENT[cacheKey],
+            }));
+        }
     };
 
     const handleTab = (tab) => {
         setActiveTab(tab);
         const cacheKey = `${province}:${tab}`;
-        if (!content[cacheKey]) fetchContent(province, tab);
+        if (STATIC_CONTENT[cacheKey]) {
+            setContent((prev) => ({
+                ...prev,
+                [cacheKey]: STATIC_CONTENT[cacheKey],
+            }));
+        }
     };
 
     const currentKey = `${province}:${activeTab}`;
@@ -227,9 +212,9 @@ export default function InforProvide() {
                 <div className={styles.headerLeft}>
                     <span className={styles.logo}>🇻🇳</span>
                     <div>
-                        <h1 className={styles.title}>Khám phá Việt Nam</h1>
+                        <h1 className={styles.title}>34 Tỉnh Thành Mới</h1>
                         <p className={styles.subtitle}>
-                            Thông tin chi tiết từng tỉnh thành
+                            Cập nhật sáp nhập hành chính 2026
                         </p>
                     </div>
                 </div>
@@ -242,7 +227,7 @@ export default function InforProvide() {
                     >
                         {PROVINCES.map((p) => (
                             <option key={p} value={p}>
-                                {p}
+                                {p}{" "}
                             </option>
                         ))}
                     </select>
@@ -273,81 +258,42 @@ export default function InforProvide() {
 
                 {/* CONTENT AREA */}
                 <main className={styles.contentArea}>
-                    {/* Section title */}
+                    {/* Section title + thông tin sáp nhập */}
                     <div className={styles.sectionHeader}>
                         <span className={styles.sectionIcon}>
                             {currentTab?.icon}
                         </span>
-                        <h2 className={styles.sectionTitle}>
-                            {currentTab?.label} — {province}
-                        </h2>
+                        <div>
+                            <h2 className={styles.sectionTitle}>
+                                {currentTab?.label} — {province}
+                            </h2>
+                        </div>
                     </div>
 
-                    {/* States */}
-                    {!currentContent && !loading && !error && (
-                        <div className={styles.emptyState}>
-                            <p>
-                                Nhấn để tải thông tin về{" "}
-                                <strong>{currentTab?.label}</strong> của{" "}
-                                <strong>{province}</strong>
-                            </p>
-                            <button
-                                className={styles.loadBtn}
-                                onClick={() =>
-                                    fetchContent(province, activeTab)
-                                }
-                            >
-                                Tải nội dung
-                            </button>
-                        </div>
-                    )}
-
-                    {error && (
-                        <div className={styles.errorState}>
-                            {error}
-                            <button
-                                onClick={() =>
-                                    fetchContent(province, activeTab)
-                                }
-                            >
-                                Thử lại
-                            </button>
-                        </div>
-                    )}
-
-                    {/* Text content — hiện dần khi streaming */}
-                    {currentContent && (
+                    {/* Nội dung */}
+                    {currentContent ? (
                         <div className={styles.article}>
                             {currentContent.split("\n\n").map((para, i) => (
                                 <p
                                     key={i}
                                     className={styles.paragraph}
                                     style={{ animationDelay: `${i * 0.04}s` }}
-                                >
-                                    {para}
-                                </p>
-                            ))}
-                            {loading && <span className={styles.cursor} />}
-                        </div>
-                    )}
-
-                    {/* Skeleton khi đang load lần đầu */}
-                    {loading && !currentContent && (
-                        <div className={styles.skeleton}>
-                            {[100, 90, 95, 80, 100, 70].map((w, i) => (
-                                <div
-                                    key={i}
-                                    className={styles.skeletonLine}
-                                    style={{
-                                        width: `${w}%`,
-                                        animationDelay: `${i * 0.1}s`,
-                                    }}
+                                    dangerouslySetInnerHTML={{ __html: para }}
                                 />
                             ))}
+                        </div>
+                    ) : (
+                        <div className={styles.emptyState}>
+                            <p>
+                                Nội dung <strong>{currentTab?.label}</strong>{" "}
+                                của <strong>{province}</strong> đang cập nhật
+                            </p>
                         </div>
                     )}
                 </main>
             </div>
         </div>
     );
-}
+};
+
+export default InforProvide;
