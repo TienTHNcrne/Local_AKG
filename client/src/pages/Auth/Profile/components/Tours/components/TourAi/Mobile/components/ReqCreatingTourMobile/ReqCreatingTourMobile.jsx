@@ -1,12 +1,12 @@
 /** @format */
-
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import styles from "./ReqCreatingTourMobile.module.scss";
 import { useTour } from "../../../Contexts/useTour";
+import { useAuth } from "../../../../../../../../../../Contexts/Auth/Auth";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export default function ReqCreatingTourMobile() {
+export default React.memo(function ReqCreatingTourMobile({ className }) {
     const {
         days,
         setDays,
@@ -16,67 +16,65 @@ export default function ReqCreatingTourMobile() {
         setStartPlace,
         loading,
         setLoading,
-        setChatPresent,
         lovePlaces,
+        setChatPresent,
     } = useTour();
 
-    /* ================= CHECK FORM VALID ================= */
-    const isFormValid = useMemo(() => {
-        return (
-            Number(days) > 0 &&
-            Number(budget) > 0 &&
-            typeof startPlace === "string" &&
-            startPlace.trim().length > 0
-        );
-    }, [days, budget, startPlace]);
+    const [customPrompt, setCustomPrompt] = useState("");
+    const { user } = useAuth();
 
-    /* ================= BUILD PROMPT ================= */
     const buildPrompt = () => {
-        let prompt = "";
+        if (customPrompt.trim()) return customPrompt.trim();
 
-        if (lovePlaces && lovePlaces.size > 0) {
-            const places = Array.from(lovePlaces.keys())
-                .filter(Boolean)
-                .map((name) => name.split(",")[0])
-                .join(", ");
+        const places =
+            lovePlaces.size > 0
+                ? [...lovePlaces.keys()].map((v) => v.split(",")[0]).join(", ")
+                : null;
 
-            prompt = places.length
-                ? `Tôi muốn đi du lịch các địa điểm: ${places}. `
-                : "Tạo tôi 1 hành trình du lịch An Giang. ";
-        } else {
-            prompt = "Tạo tôi 1 hành trình du lịch An Giang. ";
-        }
+        const base = places
+            ? `Tôi muốn đi du lịch các địa điểm: ${places}. `
+            : "Tạo tôi 1 hành trình du lịch An Giang. ";
 
-        prompt += `| Số ngày: ${days} ngày | Ngân sách: ${budget} triệu đồng | Xuất phát từ: ${startPlace}`;
-
-        return prompt;
+        return (
+            base +
+            `| Số ngày: ${days} ngày | Ngân sách: ${budget} triệu đồng | Xuất phát từ: ${startPlace}`
+        );
     };
 
-    /* ================= SUBMIT ================= */
+    const isFormValid = useMemo(() => {
+        return (
+            customPrompt.trim() ||
+            (Number(days) > 0 &&
+                Number(budget) > 0 &&
+                typeof startPlace === "string" &&
+                startPlace.trim().length > 0)
+        );
+    }, [days, budget, startPlace, customPrompt]);
+
     const onSubmit = async () => {
-        if (!isFormValid || loading) return;
+        if (!isFormValid) {
+            toast.error(
+                "Vui lòng nhập đầy đủ thông tin hoặc viết prompt tùy chỉnh",
+            );
+            return;
+        }
+        if (!user?.userId) {
+            toast.error("Bạn chưa đăng nhập");
+            return;
+        }
 
         try {
-            const userId = localStorage.getItem("userid");
-            if (!userId) {
-                toast.error("Bạn chưa đăng nhập");
-                return;
-            }
-
-            const prompt = buildPrompt();
             setLoading(true);
-
+            const prompt = buildPrompt();
             const res = await axios.post(
                 `${import.meta.env.VITE_BE_URL}/v1/api/tour`,
                 { prompt },
-                { headers: { UserId: userId } },
+                { headers: { UserId: user.userId } },
             );
-
             setChatPresent((prev) => [
                 ...prev,
                 { role: "assistant", text: res.data, isNew: true },
             ]);
-
             toast.success("Tạo tour thành công!");
         } catch (err) {
             console.error("API ERROR:", err);
@@ -86,65 +84,90 @@ export default function ReqCreatingTourMobile() {
         }
     };
 
-    /* ================= UI ================= */
     return (
-        <div className={styles.container}>
+        <div className={className}>
             <div className={styles.form}>
-                {/* DAYS */}
-                <div className={styles.field}>
-                    <label>Số ngày bạn muốn đi</label>
-                    <input
-                        type="number"
-                        min="1"
-                        value={days}
-                        onChange={(e) => setDays(Number(e.target.value))}
-                        disabled={loading}
-                        required
-                    />
+                {/* Nhóm: thông tin cơ bản */}
+                <div className={styles.row}>
+                    <div className={styles.field}>
+                        <label className={styles.label}>Số ngày</label>
+                        <input
+                            type="number"
+                            min="1"
+                            value={days}
+                            onChange={(e) => setDays(Number(e.target.value))}
+                            disabled={loading}
+                            className={styles.input}
+                            placeholder="3"
+                        />
+                    </div>
+
+                    <div className={styles.field}>
+                        <label className={styles.label}>
+                            Ngân sách (triệu)
+                        </label>
+                        <input
+                            type="number"
+                            min="1"
+                            value={budget}
+                            onChange={(e) => setBudget(Number(e.target.value))}
+                            disabled={loading}
+                            className={styles.input}
+                            placeholder="5"
+                        />
+                    </div>
                 </div>
 
-                {/* BUDGET */}
                 <div className={styles.field}>
-                    <label>Số tiền bạn muốn chi (triệu đồng)</label>
-                    <input
-                        type="number"
-                        min="1"
-                        value={budget}
-                        onChange={(e) => setBudget(Number(e.target.value))}
-                        disabled={loading}
-                        required
-                    />
-                </div>
-
-                {/* START PLACE */}
-                <div className={styles.field}>
-                    <label>Nơi bạn bắt đầu</label>
+                    <label className={styles.label}>Nơi bắt đầu</label>
                     <input
                         type="text"
                         value={startPlace}
                         onChange={(e) => setStartPlace(e.target.value)}
                         disabled={loading}
-                        required
+                        className={styles.input}
+                        placeholder="Chọn điểm trên bản đồ hoặc nhập tay..."
                     />
                 </div>
 
-                {/* SUBMIT */}
+                <hr className={styles.divider} />
+
+                {/* Nhóm: prompt tùy chỉnh */}
+                <div className={styles.field}>
+                    <label className={styles.label}>
+                        Prompt tùy chỉnh
+                        <span className={styles.optional}>tùy chọn</span>
+                    </label>
+                    <textarea
+                        value={customPrompt}
+                        onChange={(e) => setCustomPrompt(e.target.value)}
+                        placeholder="Viết prompt của bạn để tạo hành trình du lịch..."
+                        disabled={loading}
+                        rows={3}
+                        className={styles.textarea}
+                    />
+                </div>
+
+                {/* Submit */}
                 <button
                     type="button"
                     onClick={onSubmit}
-                    className={styles.ReqCreating}
+                    className={styles.submitBtn}
                     disabled={!isFormValid || loading}
                 >
                     {loading ? (
                         <>
-                            <span className={styles.spinner}></span>
-                            Đang tạo tour...
+                            <span className={styles.spinner} />
+                            Đang tạo...
                         </>
                     ) : (
-                        "Tạo hành trình"
+                        <>
+                            <span className={styles.btnIcon}>✦</span>
+                            Tạo hành trình
+                        </>
                     )}
                 </button>
             </div>
         </div>
     );
-}
+});

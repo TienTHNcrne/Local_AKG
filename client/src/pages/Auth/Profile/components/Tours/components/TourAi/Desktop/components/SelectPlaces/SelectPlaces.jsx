@@ -5,82 +5,80 @@ import clsx from "clsx";
 import GetPlace from "../../../Hooks/GetPlace";
 import { useTour } from "../../../Contexts/useTour";
 
+// ── Component ─────────────────────────────────────────────────────────────────
 export default function SelectPlaces({ className }) {
-    const Places = GetPlace() ?? [];
-    const { setLovePlaces, lovePlaces } = useTour();
+    const places = GetPlace() ?? [];
+    const { lovePlaces, setLovePlaces } = useTour();
 
-    /* ===== checkbox ALL luôn đúng state ===== */
-    const isAllChecked = useMemo(() => {
-        if (!Places.length) return false;
-        return lovePlaces.size === Places.length;
-    }, [lovePlaces, Places.length]);
+    // true nếu tất cả địa điểm đã được chọn
+    const isAllChecked = useMemo(
+        () => places.length > 0 && lovePlaces.size === places.length,
+        [lovePlaces.size, places.length],
+    );
 
-    /* ===== chọn / bỏ chọn tất cả ===== */
+    // Chọn / bỏ chọn tất cả
     const toggleAll = (checked) => {
         if (!checked) {
             setLovePlaces(new Map());
             return;
         }
-
-        const newMap = new Map();
-        for (const p of Places) {
-            newMap.set(p.name, {
-                pos: { lat: p.lat, lng: p.lng },
-            });
+        const next = new Map();
+        for (const p of places) {
+            next.set(p.name, { pos: { lat: p.lat, lng: p.lng } });
         }
-        setLovePlaces(newMap);
+        setLovePlaces(next);
     };
 
-    /* ===== toggle 1 place ===== */
+    // Chọn / bỏ chọn 1 địa điểm
     const togglePlace = (place) => {
         setLovePlaces((prev) => {
             const next = new Map(prev);
-            if (next.has(place.name)) {
-                next.delete(place.name);
-            } else {
-                next.set(place.name, {
-                    pos: { lat: place.lat, lng: place.lng },
-                });
-            }
+            next.has(place.name)
+                ? next.delete(place.name)
+                : next.set(place.name, {
+                      pos: { lat: place.lat, lng: place.lng },
+                  });
             return next;
         });
     };
 
+    // ── Render ────────────────────────────────────────────────────────────────
     return (
-        <div className={className}>
-            <h2>Địa điểm muốn đi</h2>
+        <div className={clsx(styles.wrap, className)}>
+            {/* Chọn tất cả */}
+            <label className={styles.checkAll}>
+                <input
+                    type="checkbox"
+                    checked={isAllChecked}
+                    onChange={(e) => toggleAll(e.target.checked)}
+                />
+                <span>Chọn tất cả</span>
+                <span className={styles.count}>
+                    {lovePlaces.size}/{places.length}
+                </span>
+            </label>
 
-            <div className={styles.choosePlace}>
-                {/* ===== CHECK ALL ===== */}
-                <div className={styles.checkAll}>
-                    <input
-                        type="checkbox"
-                        id="All"
-                        checked={isAllChecked}
-                        onChange={(e) => toggleAll(e.target.checked)}
-                    />
-                    <label htmlFor="All">
-                        <h3>Đánh dấu tất cả</h3>
-                    </label>
-                </div>
+            {/* Danh sách địa điểm */}
+            <div className={styles.list}>
+                {places.map((place) => (
+                    <div
+                        key={place.name}
+                        className={clsx(styles.card, {
+                            [styles.selected]: lovePlaces.has(place.name),
+                        })}
+                        onClick={() => togglePlace(place)}
+                    >
+                        <img src={place.img} alt={place.name} />
 
-                {/* ===== PLACE CARDS ===== */}
-                <div className={styles.cards}>
-                    {Places.map((place) => (
-                        <div
-                            key={place.name}
-                            className={clsx(styles.card, {
-                                [styles.tick]: lovePlaces.has(place.name),
-                            })}
-                            onClick={() => togglePlace(place)}
-                        >
-                            <img src={place.img} alt={place.name} />
-                            <div className={styles.text}>
-                                <h3>{place.name.split(",")[0]}</h3>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                        <span className={styles.name}>
+                            {place.name.split(",")[0]}
+                        </span>
+
+                        {lovePlaces.has(place.name) && (
+                            <span className={styles.tick}>✓</span>
+                        )}
+                    </div>
+                ))}
             </div>
         </div>
     );

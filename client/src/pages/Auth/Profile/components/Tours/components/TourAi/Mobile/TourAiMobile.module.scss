@@ -52,24 +52,25 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
-    min-height: 0;
+    height: 100dvh; // dvh = dynamic viewport (hides mobile browser chrome correctly)
     overflow: hidden;
     background: $surface-2;
     font-family: "DM Sans", "Noto Sans", system-ui, sans-serif;
     color: $ink-900;
     padding-top: env(safe-area-inset-top);
+    box-sizing: border-box;
 }
 
-// ── TOP Tab Bar ──────────────────────────────────────────────
+// ── Tab Bar ──────────────────────────────────────────────────
 .tabBar {
-    flex-shrink: 0;
-    height: $tabbar-h;
+    flex: 0 0 $tabbar-h;
     display: flex;
     align-items: stretch;
     background: $surface;
     border-bottom: 1.5px solid $ink-200;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 20;
 }
 
 .tabBtn {
@@ -116,7 +117,6 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
 }
 
-// Active indicator — bottom line
 .tabDot {
     position: absolute;
     bottom: 0;
@@ -128,20 +128,27 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 // ── Body ─────────────────────────────────────────────────────
+// Takes all space below tab bar. Each view inside manages its own scroll.
 .body {
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
+    flex: 1 1 0; // grow + shrink, start at 0 so it fills exactly
+    min-height: 0; // required: flex children don't overflow by default
     position: relative;
     animation: fadeUp 0.25s $ease both;
+
+    // Each direct child view fills the body completely
+    > * {
+        position: absolute;
+        inset: 0;
+    }
 }
 
-// ── Shared: Map wrap ─────────────────────────────────────────
+// ── Map wrap ─────────────────────────────────────────────────
 .mapWrap {
     position: relative;
     height: $map-h;
     flex-shrink: 0;
     overflow: hidden;
+    z-index: 0;
 
     &::after {
         content: "";
@@ -190,15 +197,17 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 .placeView {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    overflow: hidden;
+    // inset: 0 via parent > *
 }
 
 .placeList {
-    flex: 1;
+    flex: 1 1 0;
     min-height: 0;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
     padding: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
 
     &::-webkit-scrollbar {
         width: 3px;
@@ -213,26 +222,26 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 .createView {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    overflow: hidden;
+    // inset: 0 via parent > *
 }
 
+// The scrollable area below the map
 .panel {
-    flex: 1;
+    flex: 1 1 0;
     min-height: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px 12px;
-    overflow-y: auto;
+    overflow-y: auto; // ← THIS is the scroll container
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
     position: relative;
 
-    &::-webkit-scrollbar {
-        width: 3px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: $ink-300;
-        border-radius: 2px;
+    // Inner wrapper grows naturally — creates the overflow the panel scrolls through
+    &Inner {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 12px;
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+        // NO height constraint — grows with content
     }
 }
 
@@ -242,15 +251,10 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: $r-lg;
     border: 1px solid $ink-200;
     overflow: hidden;
-    flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    // NO flex-shrink, NO height — natural block height
     @include card-shadow;
-}
-
-.cardGrow {
-    flex: 1;
-    min-height: 200px;
 }
 
 .cardHeader {
@@ -277,10 +281,8 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .chatBody {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
     padding: 0.625rem 0.875rem;
+    // natural height — no overflow clip, no fixed height
 
     &::-webkit-scrollbar {
         width: 3px;
@@ -297,15 +299,13 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 
 // ── HISTORY VIEW ─────────────────────────────────────────────
 .historyView {
-    height: 100%;
-    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
     padding: 10px 12px;
-    display: flex;
-    flex-direction: column;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
 
     > * {
-        flex: 1;
-        min-height: 0;
         border-radius: $r-lg;
         overflow: hidden;
         background: $surface;
@@ -326,7 +326,6 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     gap: 10px;
     background: rgba(248, 250, 252, 0.82);
     backdrop-filter: blur(8px);
-    border-radius: $r-lg;
 }
 
 .spinnerRing {
@@ -355,12 +354,12 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     .mapWrap {
         height: 100%;
         width: 42%;
-        flex-shrink: 0;
     }
 
     .placeList,
     .panel {
-        flex: 1;
+        flex: 1 1 0;
+        min-height: 0;
         height: 100%;
     }
 }

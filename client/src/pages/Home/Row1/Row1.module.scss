@@ -1,403 +1,39 @@
-// Row1.module.scss
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1rem 1rem;
-    font-family:
-        "Segoe UI",
-        system-ui,
-        -apple-system,
-        sans-serif;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    // Mobile first approach - from smallest to largest
-    @media (max-width: 575px) {
-        padding: 0.75rem 0.75rem;
-    }
+/** @format */
 
-    @media (min-width: 576px) and (max-width: 768px) {
-        padding: 1.5rem 1.5rem;
-    }
+// ── Tokens ────────────────────────────────────────────────────────────────────
+$green-400: #4ade80;
+$green-500: #22c55e;
+$green-600: #16a34a;
+$green-700: #15803d;
+$green-50: #f0fdf4;
 
-    @media (min-width: 769px) and (max-width: 1200px) {
-        padding: 2rem 2rem;
-    }
+$red-500: #ef4444;
+$red-600: #dc2626;
 
-    @media (min-width: 1201px) {
-        padding: 1rem 1rem;
-    }
-}
+$ink-200: #e2e8f0;
+$ink-400: #94a3b8;
+$ink-600: #475569;
+$ink-800: #1e293b;
+$ink-900: #0f172a;
 
-.top {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    @media (min-width: 769px) {
-        flex-direction: row;
-        gap: 2.5rem;
-    }
-}
+$r-xl: 20px;
+$r-lg: 16px;
 
-.left {
-    @media (min-width: 769px) and (max-width: 992px) {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+$ease: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    @media (min-width: 993px) {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    // Mobile order adjustment
-    @media (max-width: 768px) {
-        order: 2;
-    }
-    .VN {
-        color: #e63946;
-        background: linear-gradient(135deg, #c1121f 100%, #f1faee 30%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    h1 {
-        font-size: 2rem;
-        line-height: 1.2;
-        margin-bottom: 1rem;
-        color: #1a472a;
-
-        @media (min-width: 576px) {
-            font-size: 2.5rem;
-        }
-
-        @media (min-width: 769px) {
-            font-size: 2.8rem;
-        }
-
-        @media (min-width: 1201px) {
-            font-size: 3.5rem;
-        }
-
-        strong {
-            color: #2e7d32;
-            background: linear-gradient(135deg, #2e7d32, #4caf50);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    }
-
-    .lead {
-        font-size: 1.1rem;
-        line-height: 1.5;
-        color: #4a5568;
-        margin-bottom: 1rem;
-        font-weight: 500;
-
-        @media (min-width: 576px) {
-            font-size: 1.25rem;
-        }
-
-        @media (min-width: 769px) {
-            font-size: 1.3rem;
-        }
-
-        @media (min-width: 1201px) {
-            font-size: 1.4rem;
-        }
-    }
-
-    .description {
-        p {
-            line-height: 1.6;
-            margin-bottom: 0.75rem;
-            color: #5a6c7d;
-            font-size: 1rem;
-
-            @media (min-width: 769px) {
-                font-size: 1.05rem;
-                line-height: 1.7;
-            }
-
-            @media (min-width: 1201px) {
-                font-size: 1.1rem;
-            }
-        }
-    }
-
-    .stats {
-        display: flex;
-        gap: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid #e2e8f0;
-
-        @media (min-width: 576px) {
-            gap: 1.5rem;
-            padding-top: 1.25rem;
-        }
-
-        .statItem {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-            img {
-                width: 1.2rem;
-            }
-            .statNumber {
-                font-size: 1.5rem;
-                font-weight: 800;
-                color: #2e7d32;
-                line-height: 1;
-
-                @media (min-width: 576px) {
-                    font-size: 1.75rem;
-                }
-
-                @media (min-width: 769px) {
-                    font-size: 2rem;
-                }
-
-                @media (min-width: 1201px) {
-                    font-size: 2.2rem;
-                }
-            }
-
-            .statLabel {
-                font-size: 0.8rem;
-                color: #718096;
-                margin-top: 0.25rem;
-                text-align: center;
-
-                @media (min-width: 576px) {
-                    font-size: 0.85rem;
-                }
-
-                @media (min-width: 769px) {
-                    font-size: 0.9rem;
-                }
-            }
-        }
-    }
-}
-
-.right {
-    @media (max-width: 768px) {
-        order: 1;
-        margin-bottom: 1rem;
-    }
-
-    @media (min-width: 769px) {
-        position: relative;
-        flex: 0 0 55%;
-    }
-}
-
-/* ================= FIX CỨNG KÍCH THƯỚC ẢNH ================= */
-
-.slideshowContainer {
-    position: relative;
-    width: 100%;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-
-    /* 📱 MOBILE: CỐ ĐỊNH CHIỀU CAO */
-    @media (max-width: 768px) {
-        height: 240px; // 👈 đổi 220–280px tùy thích
-    }
-
-    @media (min-width: 769px) {
-        aspect-ratio: 16 / 9;
-        min-height: 450px;
-    }
-}
-
-.mainImageContainer,
-.mainImageWrapper {
-    width: 100%;
-    height: 100%;
-}
-
-.mainImage {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.bottom {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    @media (min-width: 576px) {
-        flex-direction: row;
-        gap: 1rem;
-    }
-
-    .button {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 1.25rem 1.5rem;
-        border-radius: 14px;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-align: left;
-        width: 100%;
-
-        @media (min-width: 769px) {
-            flex: 1;
-            max-width: 300px;
-            border-radius: 16px;
-            padding: 1.5rem 1.75rem;
-        }
-
-        @media (min-width: 993px) {
-            padding: 1.5rem 2rem;
-        }
-
-        .icon {
-            font-size: 1.5rem;
-            flex-shrink: 0;
-
-            @media (min-width: 769px) {
-                font-size: 1.6rem;
-            }
-
-            @media (min-width: 993px) {
-                font-size: 1.8rem;
-            }
-        }
-
-        .buttonContent {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            max-width: calc(100% - 2.5rem); // Fixed text overflow
-        }
-
-        .buttonTitle {
-            font-size: 1rem;
-            font-weight: 700;
-            line-height: 1.3;
-
-            @media (min-width: 576px) {
-                font-size: 1.05rem;
-            }
-
-            @media (min-width: 769px) {
-                font-size: 1.1rem;
-            }
-
-            @media (min-width: 993px) {
-                font-size: 1.2rem;
-            }
-        }
-
-        .buttonSubtitle {
-            font-size: 0.75rem;
-            opacity: 0.9;
-            margin-top: 0.2rem;
-            line-height: 1.4;
-
-            @media (min-width: 576px) {
-                font-size: 0.8rem;
-            }
-
-            @media (min-width: 769px) {
-                font-size: 0.85rem;
-            }
-
-            @media (min-width: 993px) {
-                font-size: 0.9rem;
-            }
-        }
-
-        &.primary {
-            background: linear-gradient(135deg, #2e7d32, #4caf50);
-            color: white;
-
-            &:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 15px 30px rgba(46, 125, 50, 0.4);
-            }
-
-            @media (max-width: 575px) {
-                &:active {
-                    transform: translateY(-2px);
-                }
-            }
-        }
-
-        &.secondary {
-            background: white;
-            color: #2d3748;
-            border: 2px solid #e2e8f0;
-
-            &:hover {
-                border-color: #4caf50;
-                transform: translateY(-5px);
-                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            }
-
-            @media (max-width: 575px) {
-                &:active {
-                    transform: translateY(-2px);
-                }
-            }
-        }
-
-        &.tertiary {
-            background: linear-gradient(135deg, #1a365d, #2d3748);
-            color: white;
-
-            &:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 15px 30px rgba(26, 54, 93, 0.4);
-            }
-
-            @media (max-width: 575px) {
-                &:active {
-                    transform: translateY(-2px);
-                }
-            }
-        }
-
-        // Disable hover effects on touch devices to prevent stuck states
-        @media (hover: none) and (pointer: coarse) {
-            &:hover {
-                transform: none;
-                box-shadow: none;
-            }
-        }
-    }
-}
-
-// Animations
+// ── Keyframes ─────────────────────────────────────────────────────────────────
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: scale(1.1);
+        transform: scale(1.04);
     }
     to {
         opacity: 1;
         transform: scale(1);
     }
 }
-
-.mainImage {
-    animation: fadeIn 1.2s ease-out;
-}
-
-@keyframes slideIn {
+@keyframes slideUp {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -407,11 +43,375 @@
         transform: translateY(0);
     }
 }
-
-.left {
-    animation: slideIn 0.8s ease-out 0.3s both;
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) skewX(-12deg);
+    }
+    100% {
+        transform: translateX(200%) skewX(-12deg);
+    }
+}
+@keyframes pulseGlow {
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
+// ── Container ─────────────────────────────────────────────────────────────────
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-family: "DM Sans", "Noto Sans", system-ui, sans-serif;
+    color: $ink-800;
+
+    @media (min-width: 769px) {
+        padding: 2rem 2rem 2.5rem;
+    }
+    @media (min-width: 1201px) {
+        padding: 2.5rem 2rem 3rem;
+    }
+}
+
+// ── Top ───────────────────────────────────────────────────────────────────────
+.top {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+
+    @media (min-width: 769px) {
+        flex-direction: row;
+        align-items: center;
+        gap: 3rem;
+    }
+}
+
+// ── Left ──────────────────────────────────────────────────────────────────────
+.left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    animation: slideUp 0.7s $ease 0.1s both;
+
+    @media (min-width: 769px) {
+        flex: 1;
+    }
+}
+
+.badge {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: 4px 12px;
+    border-radius: 99px;
+    border: 1px solid rgba($green-500, 0.3);
+    background: $green-50;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $green-700;
+}
+
+.heading {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: $ink-900;
+    letter-spacing: -0.02em;
+}
+
+.brand {
+    background: linear-gradient(135deg, $green-600, $green-500);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.vn {
+    background: linear-gradient(135deg, $red-600, $red-500);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.desc {
+    margin: 0;
+    font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+    line-height: 1.7;
+    color: $ink-600;
+    max-width: 480px;
+}
+
+.stats {
+    display: flex;
+    gap: 0;
+    padding-top: 1.1rem;
+    border-top: 1px solid $ink-200;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    padding: 0 0.5rem;
+    & + & {
+        border-left: 1px solid $ink-200;
+    }
+}
+
+.statNum {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: $green-600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.statLabel {
+    margin-top: 4px;
+    font-size: 0.78rem;
+    color: $ink-400;
+    font-weight: 500;
+}
+
+// ── Right: slideshow ──────────────────────────────────────────────────────────
 .right {
-    animation: slideIn 0.8s ease-out 0.5s both;
+    position: relative;
+    border-radius: $r-xl;
+    overflow: hidden;
+    flex-shrink: 0;
+    animation: slideUp 0.7s $ease 0.25s both;
+    height: 240px;
+
+    @media (min-width: 769px) {
+        flex: 0 0 55%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        min-height: 380px;
+    }
+    @media (min-width: 1201px) {
+        min-height: 460px;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: $r-xl;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+        pointer-events: none;
+        z-index: 2;
+    }
+}
+
+.slideImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    animation: fadeIn 0.8s $ease both;
+}
+
+.dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 3;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    padding: 0;
+    transition:
+        background 0.2s $ease,
+        transform 0.2s $ease;
+
+    &.dotActive {
+        background: #fff;
+        transform: scale(1.4);
+    }
+}
+
+// ── Bottom: CTA buttons ───────────────────────────────────────────────────────
+.bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    animation: slideUp 0.7s $ease 0.35s both;
+
+    @media (min-width: 576px) {
+        flex-direction: row;
+        gap: 1rem;
+    }
+}
+
+// ── Base button ───────────────────────────────────────────────────────────────
+.btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.6rem;
+    border-radius: $r-lg;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    overflow: hidden;
+    transition:
+        transform 0.25s $ease-spring,
+        box-shadow 0.25s $ease;
+
+    @media (min-width: 576px) {
+        flex: 1;
+        max-width: 320px;
+    }
+
+    // Shimmer sweep on hover
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 60%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.15);
+        transform: skewX(-12deg);
+        transition: none;
+    }
+
+    &:hover {
+        transform: translateY(-4px) scale(1.02);
+
+        &::before {
+            animation: shimmer 0.55s $ease forwards;
+        }
+    }
+
+    &:active {
+        transform: translateY(-1px) scale(1.005);
+    }
+}
+
+// Glow blob behind button — absolute, blurs out
+.btnGlow {
+    position: absolute;
+    inset: -8px;
+    border-radius: $r-lg;
+    opacity: 0;
+    filter: blur(16px);
+    transition: opacity 0.3s $ease;
+    pointer-events: none;
+    z-index: 0;
+
+    .btn:hover & {
+        opacity: 1;
+        animation: pulseGlow 1.6s ease infinite;
+    }
+}
+
+.btnIcon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.btnText {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+}
+
+.btnTitle {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+.btnSub {
+    font-size: 0.8rem;
+    opacity: 0.75;
+    line-height: 1.3;
+}
+
+// AI badge on tour button
+.btnBadge {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+// ── Map button — clean white với viền xanh ────────────────────────────────────
+.btnMap {
+    background: #fff;
+    color: $ink-800;
+    box-shadow:
+        0 2px 0 $ink-200,
+        0 4px 16px rgba(0, 0, 0, 0.08);
+    border: 1.5px solid $ink-200;
+
+    .btnGlow {
+        background: rgba($green-400, 0.4);
+    }
+    .btnSub {
+        color: $ink-600;
+    }
+
+    &:hover {
+        border-color: $green-500;
+        box-shadow:
+            0 2px 0 $green-400,
+            0 8px 28px rgba($green-500, 0.2);
+        color: $green-700;
+    }
+}
+
+// ── Tour button — gradient xanh đậm nổi bật ───────────────────────────────────
+.btnTour {
+    background: linear-gradient(135deg, $green-700 0%, $green-500 100%);
+    color: #fff;
+    box-shadow:
+        0 2px 0 $green-700,
+        0 6px 24px rgba($green-600, 0.45);
+
+    .btnGlow {
+        background: rgba($green-400, 0.5);
+    }
+
+    &:hover {
+        box-shadow:
+            0 2px 0 $green-700,
+            0 12px 36px rgba($green-500, 0.55);
+    }
 }

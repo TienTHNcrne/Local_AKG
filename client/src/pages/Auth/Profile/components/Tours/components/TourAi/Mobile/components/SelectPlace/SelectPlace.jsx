@@ -1,146 +1,77 @@
-import React, { useMemo, useState, useEffect } from "react";
+/** @format */
+import React, { useMemo } from "react";
 import styles from "./SelectPlace.module.scss";
 import clsx from "clsx";
-import { useTour } from "../../../Contexts/useTour";
 import GetPlace from "../../../Hooks/GetPlace";
+import { useTour } from "../../../Contexts/useTour";
 
 export default function SelectPlace({ className }) {
-    const Places = GetPlace() ?? [];
-    const { setLovePlaces, lovePlaces } = useTour();
-    const [isLoading, setIsLoading] = useState(true);
+    const places = GetPlace() ?? [];
+    const { lovePlaces, setLovePlaces } = useTour();
 
-    // Simulate loading for better UX
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 300);
-        return () => clearTimeout(timer);
-    }, []);
+    const isAllChecked = useMemo(
+        () => places.length > 0 && lovePlaces.size === places.length,
+        [lovePlaces.size, places.length],
+    );
 
-    /* ===== checkbox ALL luôn đúng state ===== */
-    const isAllChecked = useMemo(() => {
-        if (!Places.length) return false;
-        return lovePlaces.size === Places.length;
-    }, [lovePlaces, Places.length]);
-
-    /* ===== chọn / bỏ chọn tất cả ===== */
     const toggleAll = (checked) => {
         if (!checked) {
             setLovePlaces(new Map());
             return;
         }
-
-        const newMap = new Map();
-        for (const p of Places) {
-            newMap.set(p.name, {
-                pos: { lat: p.lat, lng: p.lng },
-            });
-        }
-        setLovePlaces(newMap);
+        const next = new Map();
+        for (const p of places)
+            next.set(p.name, { pos: { lat: p.lat, lng: p.lng } });
+        setLovePlaces(next);
     };
 
-    /* ===== toggle 1 place ===== */
     const togglePlace = (place) => {
         setLovePlaces((prev) => {
             const next = new Map(prev);
-            if (next.has(place.name)) {
-                next.delete(place.name);
-            } else {
-                next.set(place.name, {
-                    pos: { lat: place.lat, lng: place.lng },
-                });
-            }
+            next.has(place.name)
+                ? next.delete(place.name)
+                : next.set(place.name, {
+                      pos: { lat: place.lat, lng: place.lng },
+                  });
             return next;
         });
     };
 
-    /* ===== Thêm haptic feedback cho mobile ===== */
-    const handleToggleWithFeedback = (place) => {
-        // Vibrate on mobile if available
-        if (window.navigator.vibrate) {
-            window.navigator.vibrate(10);
-        }
-        togglePlace(place);
-    };
-
     return (
-        <div className={clsx(styles.container, className)}>
-            <h2 className={styles.title}>Địa điểm muốn đi</h2>
+        <div className={clsx(styles.wrap, className)}>
+            {/* Chọn tất cả */}
+            <label className={styles.checkAll}>
+                <input
+                    type="checkbox"
+                    checked={isAllChecked}
+                    onChange={(e) => toggleAll(e.target.checked)}
+                />
+                <span>Chọn tất cả</span>
+                <span className={styles.count}>
+                    {lovePlaces.size}/{places.length}
+                </span>
+            </label>
 
-            <div className={styles.choosePlace}>
-                {/* ===== CHECK ALL ===== */}
-                <div className={styles.checkAll}>
-                    <input
-                        type="checkbox"
-                        id="All"
-                        checked={isAllChecked}
-                        onChange={(e) => toggleAll(e.target.checked)}
-                        disabled={isLoading || !Places.length}
-                    />
-                    <label htmlFor="All">
-                        <h3>Đánh dấu tất cả</h3>
-                    </label>
-                </div>
-
-                {/* ===== PLACE CARDS ===== */}
-                <div className={styles.cards}>
-                    {isLoading ? (
-                        // Skeleton loading
-                        Array.from({ length: 3 }).map((_, index) => (
-                            <div
-                                key={`skeleton-${index}`}
-                                className={clsx(styles.card, styles.skeleton)}
-                            >
-                                <div className={styles.skeletonImage}></div>
-                                <div className={styles.text}>
-                                    <div className={styles.skeletonText}></div>
-                                    <div
-                                        className={styles.skeletonSubtext}
-                                    ></div>
-                                </div>
-                            </div>
-                        ))
-                    ) : Places.length > 0 ? (
-                        Places.map((place) => (
-                            <div
-                                key={place.name}
-                                className={clsx(styles.card, {
-                                    [styles.tick]: lovePlaces.has(place.name),
-                                })}
-                                onClick={() => handleToggleWithFeedback(place)}
-                                role="button"
-                                tabIndex={0}
-                                onKeyPress={(e) => {
-                                    if (e.key === "Enter" || e.key === " ") {
-                                        handleToggleWithFeedback(place);
-                                    }
-                                }}
-                                aria-label={`Chọn ${place.name}`}
-                            >
-                                <img
-                                    src={place.img}
-                                    alt={place.name}
-                                    loading="lazy"
-                                    onError={(e) => {
-                                        e.target.src =
-                                            "https://via.placeholder.com/160x120?text=No+Image";
-                                    }}
-                                />
-                                <div className={styles.text}>
-                                    <h3>{place.name.split(",")[0]}</h3>
-                                    {place.description && (
-                                        <p>{place.description}</p>
-                                    )}
-                                </div>
-                            </div>
-                        ))
-                    ) : (
-                        // Empty state
-                        <div className={styles.emptyState}>
-                            <p>Không có địa điểm nào</p>
+            {/* Danh sách */}
+            <div className={styles.list}>
+                {places.map((place) => {
+                    const selected = lovePlaces.has(place.name);
+                    return (
+                        <div
+                            key={place.name}
+                            className={clsx(styles.card, {
+                                [styles.selected]: selected,
+                            })}
+                            onClick={() => togglePlace(place)}
+                        >
+                            <img src={place.img} alt={place.name} />
+                            <span className={styles.name}>
+                                {place.name.split(",")[0]}
+                            </span>
+                            {selected && <span className={styles.tick}>✓</span>}
                         </div>
-                    )}
-                </div>
+                    );
+                })}
             </div>
         </div>
     );

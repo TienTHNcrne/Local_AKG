@@ -1,302 +1,540 @@
 /** @format */
 
-// Variables - Green Theme
-$primary-color: #10b981;
-$primary-dark: #059669;
-$primary-light: #d1fae5;
-$primary-lighter: #ecfdf5;
-$text-color: #1f2937;
-$text-muted: #6b7280;
-$border-color: #e5e7eb;
-$shadow-light: 0 2px 10px rgba(16, 185, 129, 0.1);
-$shadow-medium: 0 8px 25px rgba(16, 185, 129, 0.15);
-$shadow-heavy: 0 15px 40px rgba(16, 185, 129, 0.2);
+// ── Tokens ────────────────────────────────────────────────────────────────────
+$green-400: #4ade80;
+$green-500: #22c55e;
+$green-600: #16a34a;
+$green-700: #15803d;
+$green-50: #f0fdf4;
+$green-100: #dcfce7;
 
-.container {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    gap: 1.5rem;
-}
+$blue-400: #60a5fa;
+$blue-500: #3b82f6;
+$blue-50: #eff6ff;
+$blue-100: #dbeafe;
 
-.header {
-    text-align: center;
-    margin-bottom: 1rem;
+$surface: #ffffff;
+$surface-2: #f8fafc;
+$ink-200: #e2e8f0;
+$ink-400: #94a3b8;
+$ink-600: #475569;
+$ink-700: #334155;
+$ink-800: #1e293b;
+$ink-900: #0f172a;
 
-    h2 {
-        color: $text-color;
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin: 0 0 0.5rem 0;
-        background: linear-gradient(135deg, $primary-color, $primary-dark);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
+$r-lg: 12px;
+$r-md: 8px;
+$r-sm: 6px;
 
-    p {
-        color: $text-muted;
-        font-size: 1rem;
-        margin: 0;
-    }
-}
+$ease: cubic-bezier(0.4, 0, 0.2, 1);
+$spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-.loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 50vh;
-    gap: 1rem;
-
-    .spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid rgba(16, 185, 129, 0.2);
-        border-top: 4px solid $primary-color;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-
-    p {
-        color: $text-muted;
-        font-size: 1.1rem;
-    }
-}
-
-@keyframes spin {
+// ── Keyframes ─────────────────────────────────────────────────────────────────
+@keyframes fadeUp {
     from {
-        transform: rotate(0deg);
+        opacity: 0;
+        transform: translateY(14px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes spin {
     to {
         transform: rotate(360deg);
     }
 }
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.45;
+    }
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
 
-.empty {
+// ── Container ─────────────────────────────────────────────────────────────────
+.container {
+    height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    background: $surface-2;
+    font-family: "DM Sans", system-ui, sans-serif;
+    color: $ink-800;
+}
+
+// ── Filter bar ────────────────────────────────────────────────────────────────
+.filterBar {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    height: 50vh;
-    text-align: center;
-    gap: 1rem;
-
-    .emptyIcon {
-        font-size: 4rem;
-        opacity: 0.5;
-    }
-
-    h3 {
-        color: $text-color;
-        font-size: 1.5rem;
-        margin: 0;
-    }
-
-    p {
-        color: $text-muted;
-        font-size: 1.1rem;
-        margin: 0;
-    }
+    gap: 10px;
+    padding: 10px 16px;
+    background: $surface;
+    border-bottom: 1px solid $ink-200;
+    flex-shrink: 0;
+    flex-wrap: wrap;
 }
 
-.tourList {
+.filterTabs {
     display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    overflow-y: auto;
-    max-height: calc(100vh - 200px);
-    padding: 0.5rem;
-
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: rgba(16, 185, 129, 0.1);
-        border-radius: 3px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, $primary-color, $primary-dark);
-        border-radius: 3px;
-
-        &:hover {
-            background: linear-gradient(135deg, $primary-dark, $primary-color);
-        }
-    }
+    gap: 4px;
+    background: $surface-2;
+    border: 1px solid $ink-200;
+    border-radius: $r-md;
+    padding: 3px;
 }
 
-.tourCard {
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.95),
-        rgba(248, 250, 252, 0.9)
-    );
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: $shadow-medium;
-    border: 1px solid rgba(16, 185, 129, 0.1);
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
+.filterTab {
+    padding: 5px 14px;
+    border: none;
+    border-radius: $r-sm;
+    background: transparent;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: $ink-600;
+    cursor: pointer;
+    transition:
+        background 0.18s $ease,
+        color 0.18s $ease;
+    white-space: nowrap;
 
     &:hover {
-        transform: translateY(-2px);
-        box-shadow: $shadow-heavy;
-        border-color: rgba(16, 185, 129, 0.2);
+        background: $ink-200;
+        color: $ink-800;
     }
 }
 
-.tourHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(16, 185, 129, 0.1);
-}
-
-.tourMeta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-
-    .date {
-        font-size: 0.9rem;
-        color: $text-muted;
-        font-weight: 500;
-    }
-
-    .status {
-        font-size: 0.8rem;
-        color: $primary-color;
-        background: $primary-lighter;
-        padding: 0.25rem 0.75rem;
-        border-radius: 12px;
-        font-weight: 600;
-        width: fit-content;
+.filterTabActive {
+    background: $ink-900;
+    color: #fff;
+    &:hover {
+        background: $ink-900;
+        color: #fff;
     }
 }
 
-.tourActions {
-    display: flex;
-    gap: 0.75rem;
+.countBadge {
+    margin-left: auto;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: $ink-400;
+    background: $surface-2;
+    border: 1px solid $ink-200;
+    border-radius: 99px;
+    padding: 3px 10px;
+    white-space: nowrap;
+}
 
-    button {
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
+// ── Main ──────────────────────────────────────────────────────────────────────
+.main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
 
-        &.viewBtn {
-            background: linear-gradient(135deg, $primary-color, $primary-dark);
-            color: white;
-
-            &:hover {
-                transform: translateY(-1px);
-                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-            }
-        }
-
-        &.saveBtn {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: white;
-
-            &:hover {
-                transform: translateY(-1px);
-                box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-            }
-        }
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $green-400;
+        border-radius: 2px;
     }
 }
 
-.tourContent {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.tourInfo {
+.cardGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
 }
 
-.infoItem {
+// ── Card ──────────────────────────────────────────────────────────────────────
+.card {
+    background: $surface;
+    border-radius: $r-lg;
+    border: 1px solid $ink-200;
+    border-left-width: 3px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    animation: fadeUp 0.35s $ease both;
+    transition:
+        box-shadow 0.2s $ease,
+        transform 0.2s $ease;
 
-    .label {
-        font-size: 0.9rem;
-        color: $text-muted;
-        font-weight: 500;
-    }
-
-    .value {
-        font-size: 1rem;
-        color: $text-color;
-        font-weight: 600;
-        background: $primary-lighter;
-        padding: 0.5rem;
-        border-radius: 8px;
-        border: 1px solid rgba(16, 185, 129, 0.1);
+    &:hover {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
     }
 }
 
-.tourPreview {
-    h4 {
-        font-size: 1.1rem;
-        color: $text-color;
-        margin: 0 0 0.75rem 0;
-        font-weight: 600;
+.cardSaved {
+    border-left-color: $green-500;
+}
+.cardAi {
+    border-left-color: $blue-400;
+}
+
+// Card accent strip
+.cardAccent {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: $surface-2;
+    border-bottom: 1px solid $ink-200;
+}
+
+.cardIcon {
+    font-size: 1.2rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.cardMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex: 1;
+    min-width: 0;
+}
+
+.cardTitle {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: $ink-900;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cardTime {
+    font-size: 0.68rem;
+    color: $ink-400;
+}
+
+// Card body
+.cardBody {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.cardPreview {
+    margin: 0;
+    font-size: 0.83rem;
+    line-height: 1.65;
+    color: $ink-600;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.viewBtn {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    border-radius: $r-sm;
+    border: 1px solid $ink-200;
+    background: transparent;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: $ink-600;
+    cursor: pointer;
+    transition:
+        background 0.18s $ease,
+        border-color 0.18s $ease,
+        color 0.18s $ease;
+
+    span {
+        font-size: 0.7rem;
     }
 
-    .previewText {
-        background: rgba(16, 185, 129, 0.02);
-        border: 1px solid rgba(16, 185, 129, 0.1);
-        border-radius: 8px;
-        padding: 1rem;
-        max-height: 150px;
-        overflow-y: auto;
-
-        &::-webkit-scrollbar {
-            width: 4px;
+    .cardSaved & {
+        &:hover {
+            background: $green-50;
+            border-color: $green-500;
+            color: $green-700;
         }
-
-        &::-webkit-scrollbar-thumb {
-            background: rgba(16, 185, 129, 0.3);
-            border-radius: 2px;
+    }
+    .cardAi & {
+        &:hover {
+            background: $blue-50;
+            border-color: $blue-400;
+            color: $blue-500;
         }
+    }
+}
 
-        p {
-            margin: 0;
-            color: $text-color;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
+// ── Badge ─────────────────────────────────────────────────────────────────────
+.badge {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 3px 8px;
+    border-radius: 99px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            color: $text-color;
-            margin: 0.5rem 0;
-        }
+.badgeSaved {
+    background: $green-100;
+    color: $green-700;
+    border: 1px solid $green-400;
+}
+.badgeAi {
+    background: $blue-100;
+    color: $blue-500;
+    border: 1px solid $blue-400;
+}
 
-        ul,
-        ol {
-            margin: 0.5rem 0;
-            padding-left: 1.5rem;
-        }
+// ── States ────────────────────────────────────────────────────────────────────
+.loadingState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 4rem 0;
+    color: $ink-400;
+    font-size: 0.875rem;
 
-        li {
-            margin: 0.25rem 0;
+    p {
+        margin: 0;
+    }
+}
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    border: 2px solid $ink-200;
+    border-top-color: $green-500;
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 4rem 0;
+    text-align: center;
+
+    span:first-child {
+        font-size: 2.5rem;
+        animation: pulse 2s ease infinite;
+    }
+    p {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: $ink-700;
+    }
+    span:last-child {
+        font-size: 0.82rem;
+        color: $ink-400;
+    }
+}
+
+// ── Modal backdrop ────────────────────────────────────────────────────────────
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    animation: fadeIn 0.2s $ease;
+}
+
+// ── Modal window ──────────────────────────────────────────────────────────────
+.modal {
+    width: min(620px, 100%);
+    max-height: 82vh;
+    background: $surface;
+    border-radius: $r-lg;
+    border: 1px solid $ink-200;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: modalIn 0.25s $spring;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid $ink-200;
+    flex-shrink: 0;
+}
+
+.modalHeaderSaved {
+    background: $green-50;
+}
+.modalHeaderAi {
+    background: $blue-50;
+}
+
+.modalIcon {
+    font-size: 1.4rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.modalMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.modalTitle {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: $ink-900;
+}
+.modalTime {
+    font-size: 0.7rem;
+    color: $ink-400;
+}
+
+.modalCloseIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid $ink-200;
+    background: $surface;
+    color: $ink-600;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition:
+        background 0.18s $ease,
+        transform 0.2s $ease;
+
+    &:hover {
+        background: $ink-200;
+        transform: rotate(90deg);
+    }
+}
+
+.modalBody {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $green-400;
+        border-radius: 2px;
+    }
+}
+
+.modalContent {
+    font-size: 0.875rem;
+    line-height: 1.75;
+    color: $ink-600;
+
+    :global(p) {
+        margin: 0 0 8px;
+        &:last-child {
+            margin-bottom: 0;
         }
+    }
+    :global(h4) {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: $green-700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-left: 2px solid $green-500;
+        padding-left: 8px;
+        margin: 14px 0 5px;
+    }
+    :global(li) {
+        padding-left: 14px;
+        margin-bottom: 5px;
+        position: relative;
+        &::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: $green-400;
+            font-size: 10px;
+            top: 3px;
+        }
+    }
+    :global(strong) {
+        color: $ink-900;
+        font-weight: 700;
+    }
+}
+
+.modalFooter {
+    padding: 10px 16px;
+    border-top: 1px solid $ink-200;
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.closeBtn {
+    padding: 7px 18px;
+    border: none;
+    border-radius: $r-sm;
+    background: $ink-900;
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.18s $ease,
+        transform 0.15s $ease;
+
+    &:hover {
+        background: $ink-700;
+        transform: translateY(-1px);
+    }
+    &:active {
+        transform: translateY(0);
     }
 }

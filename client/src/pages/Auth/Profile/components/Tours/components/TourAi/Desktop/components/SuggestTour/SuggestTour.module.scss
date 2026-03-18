@@ -1,0 +1,188 @@
+// ── Tokens
+$green-400: #4ade80;
+$green-500: #22c55e;
+$teal-400: #2dd4bf;
+$teal-500: #14b8a6;
+
+$surface: #ffffff;
+$surface-2: #f8fafc;
+$surface-3: #f1f5f9;
+$ink-200: #e2e8f0;
+$ink-600: #475569;
+
+$r-lg: 14px;
+
+//  Mixins
+@mixin card-shadow {
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.04),
+        0 4px 14px rgba(0, 0, 0, 0.06),
+        0 10px 28px rgba(0, 0, 0, 0.06);
+}
+
+//  Keyframes
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+//  Map
+.mapWrap {
+    position: relative;
+    height: 100%;
+    border-radius: $r-lg;
+    overflow: hidden;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.08),
+        0 10px 40px rgba(0, 0, 0, 0.1);
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: $r-lg;
+        box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.45);
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    @media (max-width: 900px) {
+        height: 260px;
+    }
+}
+
+.leafletMap {
+    width: 100%;
+    height: 100%;
+}
+
+.mapBadge {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 99px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: $ink-600;
+    pointer-events: none;
+}
+
+.mapBadgeDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $green-500;
+    box-shadow: 0 0 0 2px rgba($green-500, 0.25);
+    flex-shrink: 0;
+}
+
+//  Panel
+.panel {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+//  Card
+.card {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: $r-lg;
+    border: 1px solid $ink-200;
+    background: $surface;
+    @include card-shadow;
+}
+
+.cardGrow {
+    flex: 1;
+    min-height: 0;
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-bottom: 1px solid $surface-3;
+    background: $surface-2;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: $ink-600;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.cardDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $green-500;
+    flex-shrink: 0;
+}
+
+.chatBody {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 0.75rem 1rem;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        background: $surface-3;
+        border-radius: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, $green-400, $teal-500);
+        border-radius: 2px;
+    }
+}
+
+//  Loading overlay
+.loadingOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border-radius: $r-lg;
+    background: rgba(248, 250, 252, 0.82);
+    backdrop-filter: blur(10px);
+}
+
+.spinnerRing {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 3px solid rgba($green-500, 0.15);
+    border-top-color: $green-500;
+    border-right-color: $teal-400;
+    animation: spin 0.7s linear infinite;
+}
+
+.loadingText {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: $ink-600;
+}

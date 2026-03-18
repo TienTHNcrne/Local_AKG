@@ -1,281 +1,165 @@
-.container {
-    flex: 1;
+/** @format */
+
+// ── Tokens ────────────────────────────────────────────────────
+$green-400: #4ade80;
+$green-500: #22c55e;
+$green-600: #16a34a;
+$green-50: #f0fdf4;
+
+$surface: #ffffff;
+$surface-2: #f8fafc;
+$ink-200: #e2e8f0;
+$ink-300: #cbd5e1;
+$ink-400: #94a3b8;
+$ink-600: #475569;
+$ink-800: #1e293b;
+
+$r-md: 10px;
+$ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+// ── Wrap — no padding, parent handles it ─────────────────────
+.wrap {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    animation: fadeIn 0.3s ease-out 0.1s both;
+    gap: 0.5rem;
+    width: 100%;
 }
 
-.title {
-    font-size: 22px;
-    font-weight: 700;
-    color: #1d1d1f;
-}
-
-.choosePlace {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    flex: 1;
-    overflow: hidden;
-}
-
-// Checkbox "Tất cả" cho mobile
+// ── Check-all row ─────────────────────────────────────────────
 .checkAll {
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    gap: 0.65rem;
+    padding: 0.65rem 0.875rem; // taller tap target
+    border-radius: $r-md;
+    border: 1.5px solid $ink-200;
+    background: $surface-2;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    width: 100%;
+    box-sizing: border-box;
+    transition:
+        border-color 0.18s $ease,
+        background 0.18s $ease;
+
+    &:active {
+        border-color: $green-500;
+        background: $green-50;
+    }
 
     input[type="checkbox"] {
-        width: 22px;
-        height: 22px;
-        border-radius: 6px;
-        accent-color: #059669; // Màu xanh lá từ design
+        width: 18px; // bigger for fingers
+        height: 18px;
+        accent-color: $green-500;
+        cursor: pointer;
         flex-shrink: 0;
-
-        &:disabled {
-            opacity: 0.5;
-        }
     }
 
-    h3 {
-        font-size: 16px;
-        font-weight: 600;
-        margin: 0;
-        color: #1d1d1f;
+    span:nth-child(2) {
         flex: 1;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: $ink-600;
     }
 }
 
-// Container cho cards
-.cards {
-    display: flex;
-    gap: 12px;
-    padding: 0 8px 16px;
-    flex: 1;
-
-    // Scroll horizontal cho mobile
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none; // Firefox
-    -webkit-overflow-scrolling: touch;
-
-    &::-webkit-scrollbar {
-        display: none; // Chrome, Safari
-    }
-
-    // Scroll indicator
-    position: relative;
-
-    &::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        width: 30px;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.8)
-        );
-        pointer-events: none;
-    }
+.count {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: $ink-400;
+    background: $surface;
+    border: 1px solid $ink-200;
+    border-radius: 99px;
+    padding: 2px 9px;
+    white-space: nowrap;
 }
 
-// Card item
-.card {
-    position: relative;
-    width: 160px;
-    height: 160px;
-    flex-shrink: 0;
-    border-radius: 16px;
-    cursor: pointer;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-    overflow: hidden;
-    border: 2px solid transparent;
-    padding-bottom: 10px;
-    // Touch optimization
-    min-height: 180px;
-
-    // Hiệu ứng khi chạm
-    &:active {
-        transform: scale(0.98);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    // Trạng thái selected
-    &.tick {
-        border-color: #059669;
-
-        &::after {
-            content: "✓";
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 26px;
-            height: 26px;
-            background: #059669;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-            z-index: 2;
-        }
-
-        .text h3 {
-            color: #059669;
-        }
-    }
-}
-
-// Ảnh trong card
-.card img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    display: block;
-    background: #f5f5f5;
-}
-
-// Text content
-.text {
-    padding: 12px;
-
-    h3 {
-        font-size: 15px;
-        font-weight: 600;
-        margin: 0 0 4px 0;
-        color: #1d1d1f;
-        line-height: 1.3;
-
-        // Giới hạn 2 dòng cho tên
-    }
-
-    p {
-        font-size: 13px;
-        color: #666;
-        margin: 0;
-        line-height: 1.2;
-
-        // Giới hạn 1 dòng cho mô tả
-        //  white-space: nowrap;
-        //overflow: hidden;
-        // text-overflow: ellipsis;
-    }
-}
-
-// Empty state
-.emptyState {
+// ── List — block flow, no fixed height (parent scroll handles it) ─
+.list {
     display: flex;
     flex-direction: column;
+    gap: 0.45rem;
+    width: 100%;
+}
+
+// ── Card — full width, taller tap area ───────────────────────
+.card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    min-height: 68px; // bigger tap target than desktop's 64px
+    border-radius: $r-md;
+    border: 1.5px solid $ink-200;
+    background: $surface;
+    overflow: hidden;
+    cursor: pointer;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        border-color 0.15s $ease,
+        background 0.15s $ease;
+
+    &:active {
+        border-color: rgba($green-500, 0.6);
+        background: $green-50;
+    }
+
+    img {
+        height: 68px;
+        width: 92px;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+}
+
+.name {
+    flex: 1;
+    font-size: 0.9rem; // slightly larger for readability on mobile
+    font-weight: 600;
+    color: $ink-800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 0.5rem;
+}
+
+// ── Selected state ────────────────────────────────────────────
+.selected {
+    border-color: $green-500;
+    background: $green-50;
+
+    img {
+        opacity: 0.82;
+    }
+
+    .name {
+        color: $green-600;
+    }
+
+    &:active {
+        border-color: $green-600;
+    }
+}
+
+// Tick badge
+.tick {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: $green-500;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 20px;
-    color: #86868b;
-    text-align: center;
-    width: 100%;
-
-    p {
-        font-size: 16px;
-        margin: 0;
-    }
-}
-
-// Skeleton loading
-.skeleton {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200px 100%;
-    animation: shimmer 1.5s infinite;
-    pointer-events: none;
-}
-
-.skeletonImage {
-    width: 100%;
-    height: 120px;
-    background: #f0f0f0;
-    border-radius: 12px 12px 0 0;
-}
-
-.skeletonText {
-    height: 16px;
-    width: 80%;
-    background: #f0f0f0;
-    border-radius: 4px;
-    margin-bottom: 8px;
-}
-
-.skeletonSubtext {
-    height: 12px;
-    width: 60%;
-    background: #f0f0f0;
-    border-radius: 4px;
-}
-
-@keyframes shimmer {
-    0% {
-        background-position: -200px 0;
-    }
-    100% {
-        background-position: calc(200px + 100%) 0;
-    }
-}
-
-// Touch improvements for iOS
-@media (hover: none) and (pointer: coarse) {
-    .card {
-        // Larger touch target
-        min-height: 190px;
-    }
-
-    .checkAll {
-        // Larger touch target
-        min-height: 52px;
-    }
-}
-
-// Small phone optimization
-@media (max-width: 360px) {
-    .card {
-        width: 145px;
-    }
-
-    .card img {
-        height: 110px;
-    }
-
-    .text {
-        padding: 10px;
-
-        h3 {
-            font-size: 14px;
-        }
-    }
-}
-
-// Landscape optimization
-@media (orientation: landscape) and (max-height: 500px) {
-    .cards {
-        padding-bottom: 8px;
-    }
-
-    .card {
-        width: 140px;
-
-        img {
-            height: 90px;
-        }
-    }
-
-    .text {
-        padding: 8px;
-    }
+    box-shadow: 0 1px 4px rgba($green-600, 0.35);
 }

@@ -24,6 +24,7 @@ const Tour = async (req, res) => {
 };
 const getHic = async (req, res) => {
     try {
+        console.log("his", req.body);
         const result = await getHistoryTour({ userId: req.body.userId });
         console.log(result);
         return res.status(result.status).json(result.result.content);
