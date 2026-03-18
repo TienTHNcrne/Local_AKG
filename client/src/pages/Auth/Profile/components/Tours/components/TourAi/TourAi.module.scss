@@ -1,0 +1,447 @@
+/* TourAi.module.scss */
+
+:root {
+    /* ── Green-first palette ── */
+    --green: #2e7d52;
+    --green-deep: #1f5c3a;
+    --green-light: #3fa06a;
+    --green-pale: #e6f4ec;
+    --green-mist: #d4eedd;
+
+    --leaf: #edf7f1;
+    --leaf-light: #f4fbf6;
+
+    --lime: #7ab648;
+    --lime-light: #9dd16a;
+
+    --forest: #0d2e1c;
+    --forest-soft: #1a4a2e;
+
+    --ink: #0d1f14;
+    --ink-soft: #385040;
+
+    --white: #ffffff;
+    --silver: #f0f8f3;
+}
+
+/* ── Container ─────────────────────────────────────────── */
+.container {
+    min-height: 100vh;
+    background: var(--leaf-light);
+    font-family: "DM Sans", sans-serif;
+    color: var(--ink);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+            radial-gradient(
+                ellipse 80% 60% at 15% 20%,
+                rgba(46, 125, 82, 0.09) 0%,
+                transparent 60%
+            ),
+            radial-gradient(
+                ellipse 60% 80% at 85% 75%,
+                rgba(122, 182, 72, 0.07) 0%,
+                transparent 60%
+            ),
+            radial-gradient(
+                ellipse 100% 50% at 50% 50%,
+                rgba(63, 160, 106, 0.04) 0%,
+                transparent 70%
+            );
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    &::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.35;
+    }
+
+    > * {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* ── Unauthenticated / Access Denied State ──────────────── */
+.unauthContainer {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--leaf-light);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+            radial-gradient(
+                ellipse 70% 70% at 30% 30%,
+                rgba(46, 125, 82, 0.11) 0%,
+                transparent 60%
+            ),
+            radial-gradient(
+                ellipse 60% 60% at 70% 70%,
+                rgba(122, 182, 72, 0.08) 0%,
+                transparent 60%
+            );
+        pointer-events: none;
+    }
+}
+
+.unauthCard {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(46, 125, 82, 0.14);
+    border-radius: 24px;
+    padding: 4rem 3.5rem;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow:
+        0 4px 6px rgba(13, 31, 20, 0.04),
+        0 20px 60px rgba(46, 125, 82, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+    animation: cardReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardReveal {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.unauthIcon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 2rem;
+    background: linear-gradient(135deg, var(--green), var(--green-deep));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(46, 125, 82, 0.35);
+    animation: iconPulse 3s ease-in-out infinite;
+
+    svg {
+        width: 32px;
+        height: 32px;
+        color: white;
+    }
+}
+
+@keyframes iconPulse {
+    0%,
+    100% {
+        box-shadow: 0 8px 24px rgba(46, 125, 82, 0.35);
+    }
+    50% {
+        box-shadow: 0 8px 36px rgba(46, 125, 82, 0.55);
+    }
+}
+
+.unauthTitle {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--ink);
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+
+    em {
+        font-style: italic;
+        color: var(--green);
+    }
+}
+
+.unauthSubtitle {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin: 0 0 2.5rem;
+    font-weight: 300;
+}
+
+.backButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 2rem;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+
+    &:hover {
+        background: var(--green-light);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(46, 125, 82, 0.38);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.3s ease;
+    }
+
+    &:hover svg {
+        transform: translateX(-3px);
+    }
+}
+
+/* ── Decorative Orbs ────────────────────────────────────── */
+.unauthOrb {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.55;
+
+    &:nth-child(1) {
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(
+            circle,
+            rgba(46, 125, 82, 0.14),
+            transparent 70%
+        );
+        top: -110px;
+        left: -110px;
+        animation: orbFloat1 8s ease-in-out infinite;
+    }
+
+    &:nth-child(2) {
+        width: 320px;
+        height: 320px;
+        background: radial-gradient(
+            circle,
+            rgba(122, 182, 72, 0.11),
+            transparent 70%
+        );
+        bottom: -60px;
+        right: -60px;
+        animation: orbFloat2 10s ease-in-out infinite;
+    }
+}
+
+@keyframes orbFloat1 {
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(30px, 20px);
+    }
+}
+
+@keyframes orbFloat2 {
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(-20px, -30px);
+    }
+}
+
+/* ── App Shell ──────────────────────────────────────────── */
+.appShell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ── Accent Bar ─────────────────────────────────────────── */
+.accentBar {
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        var(--lime) 0%,
+        var(--green) 40%,
+        var(--green-light) 75%,
+        var(--forest-soft) 100%
+    );
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.header {
+    position: fixed;
+    top: 3px;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    padding: 1rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(244, 251, 246, 0.84);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(46, 125, 82, 0.1);
+    animation: headerSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes headerSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logoMark {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+
+    .logoIcon {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, var(--green), var(--lime));
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(46, 125, 82, 0.32);
+
+        svg {
+            width: 18px;
+            height: 18px;
+            color: white;
+        }
+    }
+
+    .logoText {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.4rem;
+        font-weight: 400;
+        color: var(--ink);
+        letter-spacing: 0.02em;
+
+        span {
+            color: var(--green);
+        }
+    }
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.userBadge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem 0.4rem 0.5rem;
+    background: rgba(46, 125, 82, 0.08);
+    border: 1px solid rgba(46, 125, 82, 0.18);
+    border-radius: 100px;
+    font-size: 0.82rem;
+    color: var(--green-deep);
+    font-weight: 500;
+
+    .userDot {
+        width: 8px;
+        height: 8px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: dotPulse 2s ease-in-out infinite;
+    }
+}
+
+@keyframes dotPulse {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(0.85);
+    }
+}
+
+/* ── Main Content ───────────────────────────────────────── */
+.mainContent {
+    flex: 1;
+    padding-top: 72px;
+    animation: contentFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+@keyframes contentFade {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .header {
+        padding: 0.85rem 1.25rem;
+    }
+
+    .logoText {
+        font-size: 1.2rem !important;
+    }
+
+    .userBadge {
+        display: none;
+    }
+
+    .unauthCard {
+        padding: 3rem 2rem;
+        border-radius: 20px;
+    }
+
+    .unauthTitle {
+        font-size: 1.7rem;
+    }
+}

@@ -46,19 +46,6 @@ app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 app.use(cookieParser());
 
-app.get("/api/verify/login", auth, (req, res) => {
-    res.json(req.user);
-});
-app.get("/api/verify/logout", (req, res) => {
-    res.clearCookie("token", {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: false,
-        path: "/",
-    });
-
-    return res.json({ success: true });
-});
 // ===== SESSION + PASSPORT (PHẢI ĐẶT TRƯỚC ROUTES) =====
 app.use(
     session({

@@ -13,7 +13,7 @@ export default function Auth({ children }) {
 
     useEffect(() => {
         axios
-            .get(`${import.meta.env.VITE_BE_URL}/api/verify/login`, {
+            .get(`${import.meta.env.VITE_BE_URL}/v1/api/verify/login`, {
                 withCredentials: true,
             })
             .then((res) => setUser(res.data))
@@ -21,12 +21,13 @@ export default function Auth({ children }) {
             .finally(() => setLoading(false));
     }, []);
 
-    const logout = () => {
+    const logout = async () => {
         setUser({ role: "", name: "" });
-        axios.get(`${import.meta.env.VITE_BE_URL}/api/verify/logout`, {
+        await axios.get(`${import.meta.env.VITE_BE_URL}/v1/api/verify/logout`, {
             withCredentials: true,
         });
-        window.location.reload();
+        window.location.href = "/";
+        console.log("oke");
     };
 
     if (loading) return <div>Loading...</div>;

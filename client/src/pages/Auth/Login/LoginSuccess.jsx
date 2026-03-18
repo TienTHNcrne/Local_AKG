@@ -7,7 +7,7 @@ export default function LoginSuccess() {
     const { setUser } = useAuth();
     useEffect(() => {
         axios
-            .get(`${import.meta.env.VITE_BE_URL}/api/verify/login`, {
+            .get(`${import.meta.env.VITE_BE_URL}/v1/api/verify/login`, {
                 withCredentials: true,
             })
             .then((res) => {
