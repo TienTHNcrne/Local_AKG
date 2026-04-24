@@ -48,9 +48,11 @@ export default function Row1() {
                     </h1>
 
                     <p className={styles.desc}>
-                        Kết hợp Digital Twin và dữ liệu du lịch để xây dựng "bản
-                        sao số" cho địa phương — giúp du khách đi đúng chỗ,
-                        chính quyền ra quyết định đúng thời điểm.
+                        Nền tảng tạo ra “bản sao số” địa phương, giúp du khách
+                        khám phá đúng điểm đến, tối ưu hóa hành trình theo sở
+                        thích và ngân sách; đồng thời trở thành cầu nối để doanh
+                        nghiệp du lịch địa phương tiếp cận khách hàng tiềm năng
+                        .
                     </p>
 
                     <div className={styles.stats}>

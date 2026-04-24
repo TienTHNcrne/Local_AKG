@@ -26,7 +26,6 @@
 
 /* ── Container ─────────────────────────────────────────── */
 .container {
-    min-height: 100vh;
     background: var(--leaf-light);
     font-family: "DM Sans", sans-serif;
     color: var(--ink);
@@ -407,7 +406,6 @@
 /* ── Main Content ───────────────────────────────────────── */
 .mainContent {
     flex: 1;
-    padding-top: 72px;
     animation: contentFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
 }
 
