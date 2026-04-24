@@ -38,7 +38,7 @@ export function MapContent() {
     const [popup, setPopup] = useState(false);
     const [center, setCenter] = useState({ lat: null, lng: null });
     const [search, setSearch] = useState("");
-    const [territory, setTerritory] = useState(null);
+    //     const [territory, setTerritory] = useState(null);
     const [coordinates, setCoordinates] = useState([]);
     const [draw, setDraw] = useState(null);
     const [inFor, setInFor] = useState({});
@@ -50,9 +50,9 @@ export function MapContent() {
     const a = useFindPlace({ keyword: serSug, coordinate: coordinates });
 
     useEffect(() => setSuggest(a), [serSug]);
-    useEffect(() => {
-        axios.get("/data.geojson").then((res) => setTerritory(res.data));
-    }, []);
+    //     useEffect(() => {
+    //         axios.get("/data.geojson").then((res) => setTerritory(res.data));
+    //     }, []);
     useEffect(() => {
         axios
             .get(`${import.meta.env.VITE_BE_URL}/v1/api/gps/all`)
@@ -255,7 +255,7 @@ export function MapContent() {
                     </LayersControl.BaseLayer>
                 </LayersControl>
 
-                {territory && (
+                {/* {territory && (
                     <GeoJSON
                         data={territory}
                         style={() => ({
@@ -266,7 +266,7 @@ export function MapContent() {
                             fillOpacity: 0.2,
                         })}
                     />
-                )}
+                )} */}
 
                 {coordinates?.length > 0 && (
                     <MarkerClusterGroup chunkedLoading>

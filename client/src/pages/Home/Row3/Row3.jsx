@@ -1,102 +1,91 @@
-/** @format */
+import React, { useEffect, useState, useCallback } from "react";
+import axios from "axios";
+import styles from "./Row3.module.scss";
+import {
+    MapContainer,
+    TileLayer,
+    Marker,
+    ZoomControl,
+    LayersControl,
+} from "react-leaflet";
+import L from "leaflet";
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import styles from './Row3.module.scss';
+const markerIcon = new L.DivIcon({
+    className: "",
+    html: `<div style="width:10px;height:10px;background:#2e7d52;border:2px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,0.25)"></div>`,
+    iconSize: [10, 10],
+    iconAnchor: [5, 5],
+});
 
 export default function Row3() {
-    const [places, setPlaces] = useState([]);
-    const [randomPlaces, setRandomPlaces] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    function getRandomElements(arr, n) {
-        if (!arr || arr.length === 0) return [];
-        const shuffled = [...arr].sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, n);
-    }
+    const [coordinates, setCoordinates] = useState([]);
 
     useEffect(() => {
-        const fetchPlaces = async () => {
-            try {
-                setLoading(true);
-                const res = await axios.get(
-                    `${import.meta.env.VITE_BE_URL}/v1/api/gps/all`
-                );
-                setPlaces(res.data);
-                const randomPlaces = getRandomElements(res.data, 4);
-                setRandomPlaces(randomPlaces);
-            } catch (err) {
-                console.error('Error fetching places:', err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchPlaces();
+        axios
+            .get(`${import.meta.env.VITE_BE_URL}/v1/api/gps/all`)
+            .then((res) => setCoordinates(res.data))
+            .catch((err) => console.log(err));
     }, []);
 
-    // ---- GET NAME OF PLACE ----
-    const getPlaceName = name => {
-        if (!name) return 'Đang tải...';
-        const index = name.indexOf(',');
-        return index !== -1 ? name.slice(0, index) : name;
-    };
-
-    const getShortDescription = description => {
-        if (!description) return 'Khám phá địa điểm tuyệt vời này...';
-        return description.length > 120 ?
-                `${description.substring(0, 120)}...`
-            :   description;
-    };
-
-    if (loading) {
-        return (
-            <div className={styles.Container}>
-                <div className={styles.loading}>
-                    <div className={styles.spinner}></div>
-                    <p>Đang tải địa điểm...</p>
-                </div>
-            </div>
-        );
-    }
-
     return (
-        <div className={styles.Container}>
-            <div className={styles.row1}>
-                <h1>Địa điểm nổi bật</h1>
-            </div>
+        <div className={styles.wrapper}>
+            {/* GPS point count */}
 
-            <div className={styles.cards}>
-                {randomPlaces.map((place, index) => (
-                    <div
-                        className={styles.card}
-                        key={index}>
-                        <img
-                            src={place?.img?.[0] || '/imgs/placeholder.jpg'}
-                            alt={getPlaceName(place?.name)}
-                            onError={e => {
-                                e.target.src = '/imgs/placeholder.jpg';
-                            }}
+            <MapContainer
+                center={[10.173, 104.237]}
+                zoom={9}
+                minZoom={9}
+                className={styles.map}
+                zoomControl={false}
+                doubleClickZoom={false}
+                preferCanvas={true}
+            >
+                <ZoomControl position="topright" />
+
+                <LayersControl position="topright">
+                    <LayersControl.BaseLayer checked name="OpenStreetMap">
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
                         />
-                        <div className={styles.content}>
-                            <div className={styles.miniContent}>
-                                <h4>{getPlaceName(place?.name)}</h4>
-                                <p>{getShortDescription(place?.description)}</p>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer name="Carto Light">
+                        <TileLayer
+                            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                            attribution="&copy; OSM &copy; CARTO"
+                        />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer name="Carto Dark">
+                        <TileLayer
+                            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                            attribution="&copy; OSM &copy; CARTO"
+                        />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer name="Esri Satellite">
+                        <TileLayer
+                            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                            attribution="Tiles &copy; Esri"
+                        />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer name="MapTiler Streets">
+                        <TileLayer
+                            url="https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}.png?key=WCKUTbdVx5gBcrVCqpsa"
+                            attribution="&copy; MapTiler &copy; OSM"
+                        />
+                    </LayersControl.BaseLayer>
+                </LayersControl>
 
-            <div className={styles.end}>
-                <Link
-                    to='/Explore/TinhHoa'
-                    className={styles.btn}>
-                    <span>Xem thêm địa điểm</span>
-                    <div className={styles.icon}>→</div>
-                </Link>
-            </div>
+                {coordinates.map((point, i) => (
+                    <Marker
+                        key={i}
+                        position={[
+                            point.lat ?? point.latitude,
+                            point.lng ?? point.longitude,
+                        ]}
+                        icon={markerIcon}
+                    />
+                ))}
+            </MapContainer>
         </div>
     );
 }

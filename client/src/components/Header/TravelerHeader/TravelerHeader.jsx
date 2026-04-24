@@ -211,17 +211,6 @@ export default function TravelerHeader() {
                 <div className={styles.actions}>
                     {user.userId ? (
                         <>
-                            {/* Star button — ẩn trên mobile (có trong drawer) */}
-                            {!isMobile && (
-                                <button
-                                    className={styles.iconBtn}
-                                    onClick={() => setAdd(true)}
-                                    aria-label="Tour AI"
-                                >
-                                    <FaStar />
-                                </button>
-                            )}
-
                             <div className={styles.account} ref={accountRef}>
                                 <button
                                     className={styles.iconBtn}
@@ -400,11 +389,6 @@ export default function TravelerHeader() {
                                         })}
                                         onClick={handleLinkClick}
                                     >
-                                        {item.icon && (
-                                            <span className={styles.drawerIcon}>
-                                                {item.icon}
-                                            </span>
-                                        )}
                                         {item.label}
                                     </Link>
                                 ),
@@ -412,53 +396,6 @@ export default function TravelerHeader() {
                         </nav>
 
                         {/* Footer */}
-                        <div className={styles.drawerFooter}>
-                            {user.userId ? (
-                                <>
-                                    <button
-                                        className={styles.drawerFooterBtn}
-                                        onClick={() => setAdd(true)}
-                                    >
-                                        <FaStar /> Tour AI
-                                    </button>
-                                    <button
-                                        className={styles.drawerFooterBtn}
-                                        onClick={() => {
-                                            navigate("/profile");
-                                            handleLinkClick();
-                                        }}
-                                    >
-                                        <AiFillProfile /> Hồ sơ
-                                    </button>
-                                    <button
-                                        className={clsx(
-                                            styles.drawerFooterBtn,
-                                            styles.drawerLogout,
-                                        )}
-                                        onClick={logout}
-                                    >
-                                        <IoLogInOutline /> Đăng xuất
-                                    </button>
-                                </>
-                            ) : (
-                                <div className={styles.drawerAuth}>
-                                    <Link
-                                        to="/register"
-                                        className={styles.drawerAuthOutline}
-                                        onClick={handleLinkClick}
-                                    >
-                                        Đăng ký
-                                    </Link>
-                                    <Link
-                                        to="/Login"
-                                        className={styles.drawerAuthFill}
-                                        onClick={handleLinkClick}
-                                    >
-                                        Đăng nhập
-                                    </Link>
-                                </div>
-                            )}
-                        </div>
                     </aside>
                 </>
             )}

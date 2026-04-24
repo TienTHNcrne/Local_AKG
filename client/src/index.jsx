@@ -54,7 +54,7 @@ import HistoricTour from "./pages/Auth/Profile/components/Tours/components/TourA
 // Pages - Admin & Testing
 import Admin from "./pages/Admin/Admin";
 import Test from "./pages/Test/Test";
-
+import LoginError from "./pages/Auth/Login/LoginError/LoginError.jsx";
 // Route Constants
 const ROUTES = {
     HOME: "/",
@@ -106,7 +106,7 @@ const router = createBrowserRouter([
             // Authentication
             { path: ROUTES.LOGIN, element: <Login /> },
             { path: ROUTES.REGISTER, element: <Register /> },
-
+            { path: "/login/error", element: <LoginError /> },
             // User Profile
             { path: ROUTES.PROFILE, element: <Profile /> },
             { path: ROUTES.GUIDE, element: <Guide /> },

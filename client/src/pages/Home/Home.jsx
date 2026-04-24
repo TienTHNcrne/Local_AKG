@@ -15,7 +15,6 @@ export default function Home() {
             <Row1 />
             <Row2 />
             <Row3 />
-            {/* <Btn /> */}
         </div>
     );
 }

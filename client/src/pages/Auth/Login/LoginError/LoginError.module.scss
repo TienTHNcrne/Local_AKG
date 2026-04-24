@@ -1,0 +1,288 @@
+// LoginError.module.scss
+
+// ── Tokens ──────────────────────────────────────────────────────────────────
+$bg:        #0a0b10;
+$surface:   #11131c;
+$border:    #1e2235;
+$red:       #e8394a;
+$red-dim:   rgba(232, 57, 74, 0.15);
+$red-glow:  rgba(232, 57, 74, 0.35);
+$text:      #e8eaf2;
+$muted:     #6b708a;
+$accent:    #ff6b7a;
+
+// ── Page wrapper ─────────────────────────────────────────────────────────────
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $bg;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+
+    &.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// ── Ambient blobs ─────────────────────────────────────────────────────────────
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+}
+
+.blob1 {
+    width: 420px;
+    height: 420px;
+    background: rgba(232, 57, 74, 0.12);
+    top: -80px;
+    left: -100px;
+    animation: drift1 9s ease-in-out infinite alternate;
+}
+
+.blob2 {
+    width: 320px;
+    height: 320px;
+    background: rgba(90, 50, 180, 0.1);
+    bottom: -60px;
+    right: -60px;
+    animation: drift2 11s ease-in-out infinite alternate;
+}
+
+@keyframes drift1 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(30px, 40px) scale(1.08); }
+}
+@keyframes drift2 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-20px, -30px) scale(1.05); }
+}
+
+// ── Card ──────────────────────────────────────────────────────────────────────
+.card {
+    position: relative;
+    z-index: 1;
+    background: $surface;
+    border: 1px solid $border;
+    border-radius: 20px;
+    padding: 3rem 2.5rem 2.5rem;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,0.03),
+        0 24px 64px rgba(0,0,0,0.5),
+        0 0 48px rgba(232,57,74,0.06);
+
+    // thin top accent line
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 15%; right: 15%;
+        height: 2px;
+        border-radius: 0 0 4px 4px;
+        background: linear-gradient(90deg, transparent, $red, transparent);
+    }
+}
+
+// ── Icon ──────────────────────────────────────────────────────────────────────
+.iconWrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.75rem;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border-radius: 50%;
+        background: $red-dim;
+        animation: pulse 2.4s ease-in-out infinite;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1;   transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(1.15); }
+}
+
+.icon {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    z-index: 1;
+}
+
+.ring {
+    stroke: $red;
+    opacity: 0.7;
+}
+
+.cross1,
+.cross2 {
+    stroke: $red;
+    transform-origin: 32px 32px;
+    animation: crossIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.cross1 { animation-delay: 0.1s; }
+.cross2 { animation-delay: 0.2s; }
+
+@keyframes crossIn {
+    from { stroke-dasharray: 30; stroke-dashoffset: 30; }
+    to   { stroke-dasharray: 30; stroke-dashoffset: 0; }
+}
+
+// Glitch overlay
+.glitch {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: $red-dim;
+    animation: glitch 4s steps(1) infinite;
+    pointer-events: none;
+}
+
+@keyframes glitch {
+    0%, 90%, 100% { opacity: 0; transform: translate(0); }
+    91%  { opacity: 0.7; transform: translate(-3px, 1px); }
+    93%  { opacity: 0; }
+    95%  { opacity: 0.5; transform: translate(3px, -1px); }
+    97%  { opacity: 0; }
+}
+
+// ── Typography ────────────────────────────────────────────────────────────────
+.title {
+    font-family: "Be Vietnam Pro", "Segoe UI", sans-serif;
+    margin: 0 0 1rem;
+    line-height: 1.1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+}
+
+.titleMain {
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    font-weight: 700;
+    color: $text;
+    letter-spacing: -0.02em;
+}
+
+.titleSub {
+    font-size: clamp(1.3rem, 3.5vw, 1.75rem);
+    font-weight: 800;
+    color: $red;
+    letter-spacing: -0.02em;
+}
+
+.message {
+    font-family: "Be Vietnam Pro", sans-serif;
+    font-size: 0.9375rem;
+    color: $muted;
+    line-height: 1.65;
+    margin: 0 0 2rem;
+    background: rgba(232,57,74,0.06);
+    border: 1px solid rgba(232,57,74,0.14);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    word-break: break-word;
+}
+
+// ── Actions ───────────────────────────────────────────────────────────────────
+.actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+%btn-base {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-family: "Be Vietnam Pro", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.65rem 1.4rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+
+    &:active {
+        transform: scale(0.97);
+    }
+}
+
+.retryBtn {
+    @extend %btn-base;
+    background: $red;
+    color: #fff;
+    box-shadow: 0 4px 20px $red-glow;
+
+    &:hover {
+        background: $accent;
+        box-shadow: 0 6px 28px rgba(232,57,74,0.5);
+        transform: translateY(-1px);
+    }
+}
+
+.homeBtn {
+    @extend %btn-base;
+    background: rgba(255,255,255,0.05);
+    color: $muted;
+    border: 1px solid $border;
+
+    &:hover {
+        background: rgba(255,255,255,0.09);
+        color: $text;
+        transform: translateY(-1px);
+    }
+}
+
+// ── Hint ──────────────────────────────────────────────────────────────────────
+.hint {
+    font-family: "Be Vietnam Pro", sans-serif;
+    font-size: 0.8125rem;
+    color: $muted;
+    margin: 0;
+}
+
+.link {
+    color: $red;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.15s;
+
+    &:hover {
+        color: $accent;
+        text-decoration: underline;
+    }
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+@media (max-width: 480px) {
+    .card {
+        padding: 2.25rem 1.5rem 2rem;
+    }
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .retryBtn,
+    .homeBtn {
+        justify-content: center;
+    }
+}
