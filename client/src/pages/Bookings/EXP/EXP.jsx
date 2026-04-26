@@ -8,7 +8,7 @@ import clsx from "clsx";
 export const MOCK_EXP = [
     {
         _id: "1",
-        name: "Công ty TNHH thương mại dịch vụ du lịch tàu thuyền Thuận Mẫn phục",
+        name: "Công ty TNHH thương mại dịch vụ du lịch tàu thuyền Thuận Mẫn",
         description:
             "An toàn, chu đáo, ân cần, phục vụ tận tình với nhiều loại hình trải nghiệm biển độc đáo.",
         address: "Số 7 đường chữ T, Khu phố 3, Phường Hà Tiên, Tỉnh Kiên Giang",
@@ -19,9 +19,10 @@ export const MOCK_EXP = [
         hours: { open: "06:00", close: "18:00", note: "Hàng ngày" },
         mapUrl: "https://maps.google.com/?q=10.3814806,104.4428275",
         images: [
-            "/imageservices/1.jpg",
+            "/imageservices/4.jpg",
+
             "/imageservices/2.jpg",
-            "/imageservices/3.jpg",
+            "/imageservices/5.jpg",
         ],
         services: [
             "Phao chuối 100k/người",
@@ -54,18 +55,8 @@ export const MOCK_EXP = [
         reviewCount: 38,
         hours: { open: "06:00", close: "18:00", note: "Hàng ngày" },
         mapUrl: "https://maps.google.com/?q=10.3814806,104.4428275",
-        images: ["/imageservices/4.jpg", "/imageservices/5.jpg"],
-        services: [
-            "Phao chuối 100k/người",
-            "Phao bay 150k/người",
-            "Phao sopha 150k/người",
-            "Phao vịt 150k/người",
-            "Dù bay 1.3tr/cặp",
-            "Flycam 300–400k/lượt quay",
-            "Mô tô nước 500k/15 phút",
-            "Chèo thuyền kayak 100k/giờ",
-            "Lặn ngắm san hô 250k/người",
-        ],
+        images: ["/imageservices/6.jpg", "/imageservices/7.jpg"],
+
         contact: {
             name: "Thanh Nguyệt",
             phone: "0896733383",
