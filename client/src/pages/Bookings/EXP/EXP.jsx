@@ -22,8 +22,6 @@ export const MOCK_EXP = [
             "/imageservices/1.jpg",
             "/imageservices/2.jpg",
             "/imageservices/3.jpg",
-            "/imageservices/4.jpg",
-            "/imageservices/5.jpg",
         ],
         services: [
             "Phao chuối 100k/người",
@@ -56,14 +54,7 @@ export const MOCK_EXP = [
         reviewCount: 38,
         hours: { open: "06:00", close: "18:00", note: "Hàng ngày" },
         mapUrl: "https://maps.google.com/?q=10.3814806,104.4428275",
-        images: [
-            "/imageservices/2.jpg",
-
-            "/imageservices/1.jpg",
-            "/imageservices/3.jpg",
-            "/imageservices/4.jpg",
-            "/imageservices/5.jpg",
-        ],
+        images: ["/imageservices/4.jpg", "/imageservices/5.jpg"],
         services: [
             "Phao chuối 100k/người",
             "Phao bay 150k/người",

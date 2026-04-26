@@ -30,7 +30,7 @@ export default function Auth({ children }) {
         console.log("oke");
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div></div>;
 
     return (
         <AuthContext.Provider value={{ user, setUser, logout }}>

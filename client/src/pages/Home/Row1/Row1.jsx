@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import TourAi from "../../Auth/Profile/components/Tours/components/TourAi/TourAi";
 
 export default function Row1() {
-    const [add, setAdd] = useState(false);
     const [picture, setPicture] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(true);
@@ -33,8 +32,6 @@ export default function Row1() {
 
     return (
         <div className={styles.container}>
-            {add && <TourAi setHide={setAdd} />}
-
             <div className={styles.top}>
                 {/* LEFT */}
                 <div className={styles.left}>
@@ -114,7 +111,7 @@ export default function Row1() {
 
                 <button
                     className={`${styles.btn} ${styles.btnTour}`}
-                    onClick={() => setAdd(true)}
+                    onClick={() => navigate("/ai/suggest")}
                 >
                     <span className={styles.btnGlow} />
                     <span className={styles.btnIcon}>🧭</span>
